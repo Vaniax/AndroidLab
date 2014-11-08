@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">InstaMeet</string>
+    <string name="action_settings">Settings</string>
+    <string name="main_tab_contacts">contacts</string>
+    <string name="main_tab_map">map</string>
+
+</resources>
