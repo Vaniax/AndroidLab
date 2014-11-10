@@ -23,7 +23,7 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
 	public Fragment getItem(int index) {
 		switch(index) {
 		case 0: return new ContactsFragment();
-		case 1: return new MapFragment();
+		case 1: return new OverviewMapFragment();
 		}
 		return null;
 	}

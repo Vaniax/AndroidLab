@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+// https://developers.google.com/maps/documentation/android/start#installing_the_google_maps_android_v2_api
+// SHA1: 9A:77:ED:B9:E2:4B:94:D7:37:3F:81:2D:09:9A:AF:89:02:C2:28:38
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
@@ -38,6 +40,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         // Set up the ViewPager with the sections adapter.
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(adapter);
+        // This is required to avoid a black flash when the map is loaded.  The flash is due
+        // to the use of a SurfaceView as the underlying view of the map.
+        viewPager.requestTransparentRegion(viewPager);
 
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
