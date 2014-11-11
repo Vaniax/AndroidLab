@@ -18,7 +18,7 @@ login(passwort, name) -> return token
 ```
 
 ## Token:
-*IP
+* IP
 * Auslaufzeit (vll. bei nichtinteraktion mit Server)
 * Unique Stringkette für Useridentifizierung
 * evtl. als "AccessToken" ausgelegt -> besondere Rechte zum Beispiel für Sysadmins
