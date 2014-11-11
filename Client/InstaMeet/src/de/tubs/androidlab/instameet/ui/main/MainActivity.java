@@ -1,52 +1,91 @@
-package de.tubs.androidlab.instameet;
-
-import java.util.Locale;
+package de.tubs.androidlab.instameet.ui.main;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-// https://developers.google.com/maps/documentation/android/start#installing_the_google_maps_android_v2_api
-// SHA1: 9A:77:ED:B9:E2:4B:94:D7:37:3F:81:2D:09:9A:AF:89:02:C2:28:38
+import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.R.id;
+import de.tubs.androidlab.instameet.R.layout;
+import de.tubs.androidlab.instameet.R.menu;
+import de.tubs.androidlab.instameet.serivce.InstaMeetService;
+import de.tubs.androidlab.instameet.serivce.InstaMeetServiceBinder;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
-	FragmentPagerAdapter adapter;
-    ViewPager viewPager;
-
+    private ViewPager viewPager;
+    private final static String TAG = MainActivity.class.getSimpleName();
+    private InstaMeetService service;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        addTabs();
+        
+        // Start Service if necessary
+        // Omit this if you only want the service to be active during IPC
+        startService(new Intent(InstaMeetService.class.getName()));
+    }
+    
+    @Override
+    protected void onStart() {
+    	super.onStart();
+    	Intent intent = new Intent(this, InstaMeetService.class);
+    	if(!bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
+    		Log.e(TAG, "Service not available");
+    	}
+    }
+    
+    @Override
+    protected void onStop() {
+    	super.onStop();
+    	if(service != null) {
+    		unbindService(serviceConnection);
+    		service = null;
+    	}
+    }
+    
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection serviceConnection = new ServiceConnection() {
 
-        // Set up the action bar.
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+        	service = ( (InstaMeetServiceBinder) binder).getService();
+        	service.doWork();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+        	Log.e(TAG, "Connection lost");
+            service = null;
+        }
+    };
+    
+    @SuppressWarnings("deprecation")
+	private void addTabs() {
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        adapter = new TabsPagerAdapter(getFragmentManager(), getResources());
-
-        // Set up the ViewPager with the sections adapter.
-        viewPager = (ViewPager) findViewById(R.id.pager);
+    	final FragmentPagerAdapter adapter =
+    			new TabsPagerAdapter(getFragmentManager(), getResources());
         viewPager.setAdapter(adapter);
+        
         // This is required to avoid a black flash when the map is loaded.  The flash is due
         // to the use of a SurfaceView as the underlying view of the map.
         viewPager.requestTransparentRegion(viewPager);
 
-        // When swiping between different sections, select the corresponding
-        // tab. We can also use ActionBar.Tab#select() to do this if we have
-        // a reference to the Tab.
+        // When swiping between different sections, select the corresponding tab. 
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -62,7 +101,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                             .setTabListener(this));
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,15 +120,18 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         viewPager.setCurrentItem(tab.getPosition());
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }

@@ -1,5 +1,6 @@
-package de.tubs.androidlab.instameet;
+package de.tubs.androidlab.instameet.ui.main;
 
+import de.tubs.androidlab.instameet.R;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Resources;

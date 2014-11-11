@@ -1,4 +1,4 @@
-package de.tubs.androidlab.instameet;
+package de.tubs.androidlab.instameet.ui.main;
 
 import android.app.ListFragment;
 import android.content.Context;

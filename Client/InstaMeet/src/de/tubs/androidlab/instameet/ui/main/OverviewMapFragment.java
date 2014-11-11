@@ -1,4 +1,4 @@
-package de.tubs.androidlab.instameet;
+package de.tubs.androidlab.instameet.ui.main;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import de.tubs.androidlab.instameet.R;
 
 public class OverviewMapFragment extends Fragment {
 
