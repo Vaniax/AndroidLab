@@ -1,0 +1,11 @@
+SQL Queries
+
+
+Getting all visiting Appointments from user id (x_id)
+SELECT * FROM appointments a, appointments_has_user b WHERE a.id = b.Appointments_id AND b.User_id = x_id 
+
+Getting all hosting Appointments from user id (x_id)
+SELECT * FROM appointments a WHERE a.hostId = x_id 
+
+Getting friends from user id (x_id)
+SELECT * from user u, friends f WHERE f.User_id = u.id AND u.id = x_id
