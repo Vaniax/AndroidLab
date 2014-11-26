@@ -15,12 +15,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import de.tubs.androidlab.instameet.R;
-import de.tubs.androidlab.instameet.R.id;
-import de.tubs.androidlab.instameet.R.layout;
-import de.tubs.androidlab.instameet.R.menu;
 import de.tubs.androidlab.instameet.serivce.InstaMeetService;
 import de.tubs.androidlab.instameet.serivce.InstaMeetServiceBinder;
 
+/**
+ * Main activity of the app which is shown on startup
+ * @author Bjoern
+ */
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
     private ViewPager viewPager;

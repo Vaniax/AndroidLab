@@ -51,7 +51,7 @@ public class OverviewMapFragment extends Fragment {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the MapFragment.
-        	mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map) ).getMap();
+        	mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.main_map) ).getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 setUpMap();

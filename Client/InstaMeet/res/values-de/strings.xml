@@ -2,5 +2,5 @@
 <resources>
     <string name="main_tab_contacts">Kontakte</string>
     <string name="main_tab_map">Karte</string>
-    
+    <string name="main_contact_list_empty">Keine Kontakte</string>
 </resources>
