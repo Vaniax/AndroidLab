@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.serivce.InstaMeetService;
 import de.tubs.androidlab.instameet.serivce.InstaMeetServiceBinder;
+import de.tubs.androidlab.instameet.ui.settings.SettingsActivity;
 
 /**
  * Main activity of the app which is shown on startup
@@ -34,7 +35,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         setContentView(R.layout.activity_main);
         viewPager = (ViewPager) findViewById(R.id.pager);
         addTabs();
-        
         // Start Service if necessary
         // Omit this if you only want the service to be active during IPC
         startService(new Intent(InstaMeetService.class.getName()));
@@ -111,11 +111,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // Handle action bar item clicks here.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+        	Intent intent = new Intent(this, SettingsActivity.class);
+        	startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
