@@ -5,8 +5,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -16,7 +16,10 @@ import java.util.List;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
-	@NamedQuery(name="User.login", query="SELECT a FROM User a WHERE a.username = :name and a.password = :password")
+	@NamedQuery(name="User.login", query="SELECT a FROM User a WHERE a.username = :name and a.password = :password"),
+	@NamedQuery(name="User.findId", query="SELECT a FROM User a WHERE a.id = :id"),
+	@NamedQuery(name="User.findName", query="SELECT a FROM User a WHERE a.username = :name")
+
 })
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -37,18 +40,22 @@ public class User implements Serializable {
 	private String salt;
 
 	private String username;
+	
 
 	//bi-directional many-to-one association to Appointment
 	@OneToMany(mappedBy="hoster")
-	private List<Appointment> hostedAppointments;
+	@MapKey(name="id")
+	private Map<Integer, Appointment> hostedAppointments;
 
 	//bi-directional many-to-one association to Chatmessage
 	@OneToMany(mappedBy="sender")
-	private List<Chatmessage> outChatmessages;
+	@MapKeyJoinColumn(name="receiverId", table="chatmessages")
+	private Map<Integer, Chatmessage> outChatmessages;
 
 	//bi-directional many-to-one association to Chatmessage
 	@OneToMany(mappedBy="receiver")
-	private List<Chatmessage> inChatmessages;
+	@MapKeyJoinColumn(name="senderId", table="chatmessages")
+	private Map<Integer, Chatmessage> inChatmessages;
 
 	//bi-directional many-to-many association to Appointment
 	@ManyToMany
@@ -61,20 +68,22 @@ public class User implements Serializable {
 			@JoinColumn(name="Appointments_id")
 			}
 		)
-	private List<Appointment> visitingAppointments;
+	@MapKeyJoinColumn(name="Appointments_id", table="appointments_has_user")
+	private Map<Integer, Appointment> visitingAppointments;
 
 	//uni-directional many-to-many association to User
 	@ManyToMany
 	@JoinTable(
 		name="friends"
 		, joinColumns={
-			@JoinColumn(name="friend_id")
-			}
-		, inverseJoinColumns={
 			@JoinColumn(name="User_id")
 			}
+		, inverseJoinColumns={
+			@JoinColumn(name="friend_id")
+			}
 		)
-	private List<User> friends;
+	@MapKeyColumn(name="friend_id", table="friends")
+	private java.util.Map<Integer, User> friends;
 
 	public User() {
 	}
@@ -135,18 +144,18 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	public List<Appointment> getHostedAppointments() {
+	public Map<Integer, Appointment> getHostedAppointments() {
 		if(this.hostedAppointments == null)
-			this.hostedAppointments = new ArrayList<Appointment>();
+			this.hostedAppointments = new HashMap<Integer, Appointment>();
 		return this.hostedAppointments;
 	}
 
-	public void setHostedAppointments(List<Appointment> hostedAppointments) {
+	public void setHostedAppointments(Map<Integer, Appointment> hostedAppointments) {
 		this.hostedAppointments = hostedAppointments;
 	}
 
 	public Appointment addHostedAppointment(Appointment hostedAppointment) {
-		getHostedAppointments().add(hostedAppointment);
+		getHostedAppointments().put(hostedAppointment.getId(), hostedAppointment);
 		hostedAppointment.setHoster(this);
 
 		return hostedAppointment;
@@ -159,18 +168,18 @@ public class User implements Serializable {
 		return hostedAppointment;
 	}
 
-	public List<Chatmessage> getOutChatmessages() {
+	public Map<Integer, Chatmessage> getOutChatmessages() {
 		if(this.outChatmessages == null)
-			this.outChatmessages = new ArrayList<Chatmessage>();
+			this.outChatmessages = new HashMap<Integer, Chatmessage>();
 		return this.outChatmessages;
 	}
 
-	public void setOutChatmessages(List<Chatmessage> outChatmessages) {
+	public void setOutChatmessages(Map<Integer, Chatmessage> outChatmessages) {
 		this.outChatmessages = outChatmessages;
 	}
 
 	public Chatmessage addOutChatmessage(Chatmessage outChatmessage) {
-		getOutChatmessages().add(outChatmessage);
+		getOutChatmessages().put(outChatmessage.getId(), outChatmessage);
 		outChatmessage.setSender(this);
 
 		return outChatmessage;
@@ -183,18 +192,18 @@ public class User implements Serializable {
 		return outChatmessage;
 	}
 
-	public List<Chatmessage> getInChatmessages() {
+	public Map<Integer, Chatmessage> getInChatmessages() {
 		if(this.inChatmessages == null)
-			this.inChatmessages = new ArrayList<Chatmessage>();
+			this.inChatmessages = new HashMap<Integer, Chatmessage>();
 		return this.inChatmessages;
 	}
 
-	public void setInChatmessages(List<Chatmessage> inChatmessages) {
+	public void setInChatmessages(Map<Integer, Chatmessage> inChatmessages) {
 		this.inChatmessages = inChatmessages;
 	}
 
 	public Chatmessage addInChatmessage(Chatmessage inChatmessage) {
-		getInChatmessages().add(inChatmessage);
+		getInChatmessages().put(inChatmessage.getId(), inChatmessage);
 		inChatmessage.setReceiver(this);
 
 		return inChatmessage;
@@ -207,23 +216,23 @@ public class User implements Serializable {
 		return inChatmessage;
 	}
 
-	public List<Appointment> getVisitingAppointments() {
+	public Map<Integer, Appointment> getVisitingAppointments() {
 		if(this.visitingAppointments == null)
-			this.visitingAppointments = new ArrayList<Appointment>();
+			this.visitingAppointments = new HashMap<Integer, Appointment>();
 		return this.visitingAppointments;
 	}
 
-	public void setVisitingAppointments(List<Appointment> visitingAppointments) {
+	public void setVisitingAppointments(Map<Integer, Appointment> visitingAppointments) {
 		this.visitingAppointments = visitingAppointments;
 	}
 
-	public List<User> getFriends() {
+	public Map<Integer, User> getFriends() {
 		if(this.friends == null)
-			this.friends = new ArrayList<User>();
+			this.friends = new HashMap<Integer, User>();
 		return this.friends;
 	}
 
-	public void setFriends(List<User> friends) {
+	public void setFriends(Map<Integer, User> friends) {
 		this.friends = friends;
 	}
 

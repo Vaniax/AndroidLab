@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import simpleEntities.simpleAppointment;
+
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -16,7 +18,10 @@ import java.util.List;
 @Entity
 @Table(name="appointments")
 @NamedQueries({
-	@NamedQuery(name="Appointment.findAll", query="SELECT a FROM Appointment a")
+	@NamedQuery(name="Appointment.findAll", query="SELECT a FROM Appointment a"),
+	@NamedQuery(name="Appointment.findId", query="SELECT a FROM Appointment a where a.id = :id"),
+	@NamedQuery(name="Appointment.nearby", query="SELECT a, (3959 * FUNC('acos',FUNC('cos',FUNC('radians',:lat))*FUNC('cos',FUNC('radians',a.lattitude))*FUNC('cos',FUNC('radians',a.longitude)-FUNC('radians',:lon)) + FUNC('sin',FUNC('radians',:lat)) * FUNC('sin',FUNC('radians',a.lattitude)) )) AS distance FROM Appointment a HAVING distance < 10000 ORDER BY distance")
+
 	//@NamedQuery(name="Appointment.visiting", query="SELECT a FROM appointments a, appointments_has_user b WHERE a.id = b.Appointments_id AND b.User_id = :userId")
 })
 public class Appointment implements Serializable {
@@ -36,6 +41,18 @@ public class Appointment implements Serializable {
 	private Time startingTime;
 
 	private String title;
+	
+	public Appointment(simpleAppointment app) {
+		this.id = app.getId();
+		this.title = app.getTitle();
+		this.description = app.getDescription();
+		
+		this.lattitude = app.getLattitude();
+		this.longitude = app.getLongitude();
+		
+		this.startingTime = app.getStartingTime();
+	}
+	
 
 	//bi-directional many-to-one association to User
 	@ManyToOne
@@ -44,7 +61,8 @@ public class Appointment implements Serializable {
 
 	//bi-directional many-to-many association to User
 	@ManyToMany(mappedBy="visitingAppointments")
-	private List<User> visitingUsers;
+	@MapKey(name="id")
+	private Map<Integer, User> visitingUsers;
 
 	public Appointment() {
 	}
@@ -105,13 +123,13 @@ public class Appointment implements Serializable {
 		this.hoster = hoster;
 	}
 
-	public List<User> getVisitingUsers() {
+	public Map<Integer, User> getVisitingUsers() {
 		if(this.visitingUsers == null)
-			this.visitingUsers = new ArrayList<User>();
+			this.visitingUsers = new HashMap<Integer, User>();
 		return this.visitingUsers;
 	}
 
-	public void setVisitingUsers(List<User> visitingUsers) {
+	public void setVisitingUsers(Map<Integer, User> visitingUsers) {
 		this.visitingUsers = visitingUsers;
 	}
 

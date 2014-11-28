@@ -13,9 +13,11 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import simpleEntities.Location;
+import simpleEntities.LoginData;
+import simpleEntities.simpleAppointment;
+import simpleEntities.simpleUser;
 import entities.Appointment;
-import entities.Location;
-import entities.LoginData;
 import entities.User;
 
 @WebService(name="InstaMeetService", serviceName="mInstaMeetService")
@@ -26,16 +28,11 @@ public class InstaMeetService implements ServiceInterface {
 	private Map<String, User> sessions = new HashMap<String, User>();
 
 	
-	public EntityManagerFactory getFactory() {
-		return factory;
-	}
+
 
 	private EntityManager em;
 	
-	public EntityManager getEm() {
-		return em;
-	}
-
+	
 
 	
 	public InstaMeetService() {
@@ -69,14 +66,56 @@ public class InstaMeetService implements ServiceInterface {
 	}
 
 	@WebMethod
-	public List<User> GetFriends(String SecurityToken, int userId) {
-		// TODO Auto-generated method stub
+	public Map<Integer, simpleUser> GetFriends(String SecurityToken, int userId) {
+
+		if(verifyUser(SecurityToken, userId)) {
+			Map<Integer, simpleUser> friendList = new HashMap<Integer, simpleUser>();
+			
+			for(User u : sessions.get(SecurityToken).getFriends().values()) {
+				friendList.put(u.getId(), new simpleUser(u));
+			}
+			return friendList;
+		}
 		return null;
 	}
 
 	@WebMethod
-	public List<Appointment> GetAppointments(String SecurityToken, int userId) {
-		// TODO Auto-generated method stub
+	public Map<Double, simpleAppointment> GetNearAppointments(String SecurityToken, int userId, Location location) {
+		if(verifyUser(SecurityToken, userId)) {
+			//TODO Filter near locations
+			Map<Double, simpleAppointment> appList = new HashMap<Double, simpleAppointment>();
+			
+			@SuppressWarnings("unchecked")
+			List<Object[]> resultList = em.createNamedQuery("Appointment.nearby")
+					.setParameter("lat", location.getLattitude())
+					.setParameter("lon", location.getLongitude())
+					.getResultList();
+			
+			for(Object[] result : resultList) {
+				Appointment app = ((Appointment)result[0]);
+				simpleAppointment sApp = new simpleAppointment(app);
+				sApp.setDistance((double)result[1]);
+				
+				appList.put((double)result[1], sApp);
+				
+			}			
+			
+
+			return appList;
+		}
+		return null;
+	}
+
+	@WebMethod
+	public Map<Integer, simpleAppointment> GetMyVisitingAppointments(String SecurityToken, int userId) {
+		if(verifyUser(SecurityToken, userId)) {
+			Map<Integer, simpleAppointment> appList = new HashMap<Integer, simpleAppointment>();
+			
+			for(Appointment a : sessions.get(SecurityToken).getVisitingAppointments().values()) {
+				appList.put(a.getId(), new simpleAppointment(a));
+			}
+			return appList;
+		}
 		return null;
 	}
 
@@ -128,15 +167,16 @@ public class InstaMeetService implements ServiceInterface {
 	}
 
 	@Override
-	public Appointment CreateAppointments(String SecurityToken, int userId,
-			Appointment appointment) {
+	public simpleAppointment CreateAppointments(String SecurityToken, int userId,
+			simpleAppointment sAppointment) {
 		// TODO Auto-generated method stub
 		if(verifyUser(SecurityToken, userId)) {
+			Appointment appointment = new Appointment(sAppointment);
 			appointment.setHoster(sessions.get(SecurityToken));
 			em.getTransaction().begin();
 			em.persist(appointment);
 			em.getTransaction().commit();
-			return appointment;
+			return new simpleAppointment(appointment);
 		}
 			
 		return null;
@@ -145,11 +185,90 @@ public class InstaMeetService implements ServiceInterface {
 
 
 	@Override
-	public User getOwnData(String SecurityToken, int userId) {
+	public simpleUser getOwnData(String SecurityToken, int userId) {
 		if(sessions.containsKey(SecurityToken)) {
-			return sessions.get(SecurityToken);
+			return new simpleUser(sessions.get(SecurityToken));
 		}
 		return null;
+	}
+
+
+
+	@Override
+	public simpleUser createUser(String name, String password) {
+		TypedQuery<User> results = em.createNamedQuery("User.findName", User.class).setParameter("name", name);
+		try {
+			results.getSingleResult();
+			return null;
+
+		} catch(NoResultException e) {
+			User newUser = new User();
+			newUser.setUsername(name);
+			//TODO: generate salt stuff
+			newUser.setPassword(password);
+			em.getTransaction().begin();
+			em.persist(newUser);
+			em.getTransaction().commit();	
+			return new simpleUser(newUser);			
+		}
+		
+
+	}
+
+
+
+	@Override
+	public boolean visitAppointment(String SecurityToken, int userId,
+			int appointmentId) {
+		if(verifyUser(SecurityToken, userId)) {
+			try {
+				User usr = sessions.get(SecurityToken);
+				TypedQuery<Appointment> result = em.createNamedQuery("Appointment.findId", Appointment.class)
+						.setParameter("id", appointmentId);
+				Appointment app = result.getSingleResult();
+
+				em.getTransaction().begin();
+				if(!app.getVisitingUsers().containsKey(usr.getId())) {
+					app.getVisitingUsers().put(usr.getId(), usr);
+				}
+				if(!usr.getVisitingAppointments().containsKey(app.getId())) {
+					usr.getVisitingAppointments().put(app.getId(),app);					
+				}
+				em.getTransaction().commit();
+				return true;
+			} catch(NoResultException e) {
+				System.out.println("Appointment not found.");
+			}
+		}
+		return false;
+	}
+
+
+
+	@Override
+	public boolean addFriend(String SecurityToken, int userId, int friendId) {
+		// TODO Auto-generated method stub
+		if(verifyUser(SecurityToken, userId)) {
+			try {
+				User usr = sessions.get(SecurityToken);
+				TypedQuery<User> result = em.createNamedQuery("User.findId", User.class)
+						.setParameter("id", friendId);
+				User friend = result.getSingleResult();
+
+				em.getTransaction().begin();
+				if(!friend.getFriends().containsKey(usr.getId())) {
+					friend.getFriends().put(usr.getId(), usr);
+				}
+				if(!usr.getFriends().containsKey(friend.getId())) {
+					usr.getFriends().put(friend.getId(), friend);					
+				}
+				em.getTransaction().commit();
+				return true;
+			} catch(NoResultException e) {
+				System.out.println("Appointment not found.");
+			}
+		}
+		return false;
 	}
 
 }
