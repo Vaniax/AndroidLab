@@ -20,7 +20,7 @@ import java.util.Map;
 @NamedQueries({
 	@NamedQuery(name="Appointment.findAll", query="SELECT a FROM Appointment a"),
 	@NamedQuery(name="Appointment.findId", query="SELECT a FROM Appointment a where a.id = :id"),
-	@NamedQuery(name="Appointment.nearby", query="SELECT a, (3959 * FUNC('acos',FUNC('cos',FUNC('radians',:lat))*FUNC('cos',FUNC('radians',a.lattitude))*FUNC('cos',FUNC('radians',a.longitude)-FUNC('radians',:lon)) + FUNC('sin',FUNC('radians',:lat)) * FUNC('sin',FUNC('radians',a.lattitude)) )) AS distance FROM Appointment a HAVING distance < 10000 ORDER BY distance")
+	@NamedQuery(name="Appointment.nearby", query="SELECT a, (6371 * FUNC('acos',FUNC('cos',FUNC('radians',:lat))*FUNC('cos',FUNC('radians',a.lattitude))*FUNC('cos',FUNC('radians',a.longitude)-FUNC('radians',:lon)) + FUNC('sin',FUNC('radians',:lat)) * FUNC('sin',FUNC('radians',a.lattitude)) )) AS distance FROM Appointment a HAVING distance < 10000 ORDER BY distance")
 
 	//@NamedQuery(name="Appointment.visiting", query="SELECT a FROM appointments a, appointments_has_user b WHERE a.id = b.Appointments_id AND b.User_id = :userId")
 })
