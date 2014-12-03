@@ -49,12 +49,12 @@ public class User implements Serializable {
 
 	//bi-directional many-to-one association to Chatmessage
 	@OneToMany(mappedBy="sender")
-	@MapKey(name="receiverId")
+	@MapKey(name="receiver")
 	private Map<Integer, Chatmessage> outChatmessages;
 
 	//bi-directional many-to-one association to Chatmessage
 	@OneToMany(mappedBy="receiver")
-	@MapKey(name="senderId")
+	@MapKeyColumn(name="sender")
 	private Map<Integer, Chatmessage> inChatmessages;
 
 	//bi-directional many-to-many association to Appointment
