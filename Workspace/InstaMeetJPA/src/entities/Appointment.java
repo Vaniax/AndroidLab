@@ -16,7 +16,7 @@ import java.util.Map;
  * 
  */
 @Entity
-@Table(name="appointments")
+@Table(name="Appointments")
 @NamedQueries({
 	@NamedQuery(name="Appointment.findAll", query="SELECT a FROM Appointment a"),
 	@NamedQuery(name="Appointment.findId", query="SELECT a FROM Appointment a where a.id = :id"),

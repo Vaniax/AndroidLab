@@ -23,12 +23,12 @@ public interface ServiceInterface {
 	
 	//Information functions
 	simpleUser getOwnData(String SecurityToken, int userId);
-	Map<Integer, simpleUser> GetFriends(String SecurityToken, int userId);
+//	Map<Integer, simpleUser> GetFriends(String SecurityToken, int userId);
 	Location GetFriendLocation(String SecurityToken, int userId, int friendId);
 	List<Location> GetFriendLocations(String SecurityToken, int userId);
 	List<String> GetMessages(String SecurityToken, int userId);
-	Map<Double, simpleAppointment> GetNearAppointments(String SecurityToken, int userId, Location location);
-	Map<Integer, simpleAppointment> GetMyVisitingAppointments(String SecurityToken, int userId);
+//	Map<Double, simpleAppointment> GetNearAppointments(String SecurityToken, int userId, Location location);
+//	Map<Integer, simpleAppointment> GetMyVisitingAppointments(String SecurityToken, int userId);
 
 	//Passive update functions
 	boolean UpdateLocation(String SecurityToken, int userId, Location location);

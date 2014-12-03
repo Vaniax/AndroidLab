@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="chatmessages")
+@Table(name="ChatMessages")
 @NamedQuery(name="Chatmessage.findAll", query="SELECT c FROM Chatmessage c")
 public class Chatmessage implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -28,7 +28,7 @@ public class TestJpaStuff {
 		
 
 		
-		loginData = instaService.login("admin", "password");
+		loginData = instaService.login("MrTest3r", "test");
 		if(loginData != null) {
 			System.out.println("Security Token: " + loginData.getToken());
 		} else {
@@ -51,7 +51,7 @@ public class TestJpaStuff {
 		instaService.addFriend(loginData.getToken(), myAcc.getId(), 1);
 
 		
-		instaService.visitAppointment(loginData.getToken(), myAcc.getId(), 2);
+		instaService.visitAppointment(loginData.getToken(), myAcc.getId(), 3);
 
 		
 		

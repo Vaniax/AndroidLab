@@ -60,7 +60,7 @@ public class User implements Serializable {
 	//bi-directional many-to-many association to Appointment
 	@ManyToMany
 	@JoinTable(
-		name="appointments_has_user"
+		name="Appointments_has_User"
 		, joinColumns={
 			@JoinColumn(name="User_id")
 			}
@@ -68,13 +68,13 @@ public class User implements Serializable {
 			@JoinColumn(name="Appointments_id")
 			}
 		)
-	@MapKeyJoinColumn(name="Appointments_id", table="appointments_has_user")
+	@MapKeyColumn(name="Appointments_id", table="Appointments_has_User")
 	private Map<Integer, Appointment> visitingAppointments;
 
 	//uni-directional many-to-many association to User
 	@ManyToMany
 	@JoinTable(
-		name="friends"
+		name="Friends"
 		, joinColumns={
 			@JoinColumn(name="User_id")
 			}
@@ -82,7 +82,7 @@ public class User implements Serializable {
 			@JoinColumn(name="friend_id")
 			}
 		)
-	@MapKeyColumn(name="friend_id", table="friends")
+	@MapKeyColumn(name="friend_id", table="Friends")
 	private java.util.Map<Integer, User> friends;
 
 	public User() {

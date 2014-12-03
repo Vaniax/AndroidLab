@@ -65,60 +65,60 @@ public class InstaMeetService implements ServiceInterface {
 		
 	}
 
-	@WebMethod
-	public Map<Integer, simpleUser> GetFriends(String SecurityToken, int userId) {
-
-		if(verifyUser(SecurityToken, userId)) {
-			Map<Integer, simpleUser> friendList = new HashMap<Integer, simpleUser>();
-			
-			for(User u : sessions.get(SecurityToken).getFriends().values()) {
-				friendList.put(u.getId(), new simpleUser(u));
-			}
-			return friendList;
-		}
-		return null;
-	}
-
-	@WebMethod
-	public Map<Double, simpleAppointment> GetNearAppointments(String SecurityToken, int userId, Location location) {
-		if(verifyUser(SecurityToken, userId)) {
-			//TODO Filter near locations
-			Map<Double, simpleAppointment> appList = new HashMap<Double, simpleAppointment>();
-			
-			@SuppressWarnings("unchecked")
-			List<Object[]> resultList = em.createNamedQuery("Appointment.nearby")
-					.setParameter("lat", location.getLattitude())
-					.setParameter("lon", location.getLongitude())
-					.getResultList();
-			
-			for(Object[] result : resultList) {
-				Appointment app = ((Appointment)result[0]);
-				simpleAppointment sApp = new simpleAppointment(app);
-				sApp.setDistance((double)result[1]);
-				
-				appList.put((double)result[1], sApp);
-				
-			}			
-			
-
-			return appList;
-		}
-		return null;
-	}
-
-	@WebMethod
-	public Map<Integer, simpleAppointment> GetMyVisitingAppointments(String SecurityToken, int userId) {
-		if(verifyUser(SecurityToken, userId)) {
-			Map<Integer, simpleAppointment> appList = new HashMap<Integer, simpleAppointment>();
-			
-			for(Appointment a : sessions.get(SecurityToken).getVisitingAppointments().values()) {
-				appList.put(a.getId(), new simpleAppointment(a));
-			}
-			return appList;
-		}
-		return null;
-	}
-
+////	@WebMethod
+////	public Map<Integer, simpleUser> GetFriends(String SecurityToken, int userId) {
+////
+////		if(verifyUser(SecurityToken, userId)) {
+////			Map<Integer, simpleUser> friendList = new HashMap<Integer, simpleUser>();
+////			
+////			for(User u : sessions.get(SecurityToken).getFriends().values()) {
+////				friendList.put(u.getId(), new simpleUser(u));
+////			}
+////			return friendList;
+////		}
+////		return null;
+////	}
+//
+//	@WebMethod
+//	public Map<Double, simpleAppointment> GetNearAppointments(String SecurityToken, int userId, Location location) {
+//		if(verifyUser(SecurityToken, userId)) {
+//			//TODO Filter near locations
+//			Map<Double, simpleAppointment> appList = new HashMap<Double, simpleAppointment>();
+//			
+//			@SuppressWarnings("unchecked")
+//			List<Object[]> resultList = em.createNamedQuery("Appointment.nearby")
+//					.setParameter("lat", location.getLattitude())
+//					.setParameter("lon", location.getLongitude())
+//					.getResultList();
+//			
+//			for(Object[] result : resultList) {
+//				Appointment app = ((Appointment)result[0]);
+//				simpleAppointment sApp = new simpleAppointment(app);
+//				sApp.setDistance((double)result[1]);
+//				
+//				appList.put((double)result[1], sApp);
+//				
+//			}			
+//			
+//
+//			return appList;
+//		}
+//		return null;
+//	}
+//
+//	@WebMethod
+//	public Map<Integer, simpleAppointment> GetMyVisitingAppointments(String SecurityToken, int userId) {
+//		if(verifyUser(SecurityToken, userId)) {
+//			Map<Integer, simpleAppointment> appList = new HashMap<Integer, simpleAppointment>();
+//			
+//			for(Appointment a : sessions.get(SecurityToken).getVisitingAppointments().values()) {
+//				appList.put(a.getId(), new simpleAppointment(a));
+//			}
+//			return appList;
+//		}
+//		return null;
+//	}
+//
 	@WebMethod
 	public Location GetFriendLocation(String SecurityToken, int userId,
 			int friendId) {
