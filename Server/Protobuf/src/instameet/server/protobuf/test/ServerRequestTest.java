@@ -1,5 +1,6 @@
 package instameet.server.protobuf.test;
 
+import instameet.server.protobuf.ServerRequests.Location;
 import instameet.server.protobuf.ServerRequests.Login;
 import instameet.server.protobuf.ServerRequests.ServerRequest;
 import instameet.server.protobuf.ServerRequests.Time;
@@ -17,6 +18,9 @@ public class ServerRequestTest {
 		
 		Login login = Login.newBuilder().setName("Matthias").setPassword("123").build();
 		System.out.println("Message:\n" + login.toString());
+		
+		Location location = Location.newBuilder().setLattitude(90.0f).setLongitude(90.0f).build();
+		System.out.println("Message:\n" + location.toString());
 		
 		// Build a server request
 		// This is the only message the server can process (multiple messages aren't possible!)
