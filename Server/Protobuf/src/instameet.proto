@@ -1,22 +1,21 @@
 syntax = "proto2";
 
 package instameet.server.protobuf;
-option java_outer_classname = "ServerRequests";
+option java_outer_classname = "Messages";
 
 
-// Proxy Messages
-// Without protobuf-rpc it's not possible to have multiple messages
-// to tcp server\client
-
-// Enum to switch over message types
+/// Proxy Messages
+/// Without protobuf-rpc it's not possible to have multiple messages
+/// to tcp server\client
+/// Enum to switch over message types
 
 message ServerRequest{
 	enum Type {
 		LOGIN = 1;
 		CREATE_USER = 2;
-		SEND_MESSAGE = 3;
-		CREATE_APPOINTMENTS = 4;
-		VISIT_APPOINTMENTS = 5;
+		SEND_CHAT_MESSAGE = 3;
+		CREATE_APPOINTMENT = 4;
+		VISIT_APPOINTMENT = 5;
 		ADD_FRIEND = 6;
 		GET_OWN_DATA = 7;
 		GET_FRIEND_LOCATION = 8;
@@ -31,9 +30,9 @@ message ServerRequest{
 	
 	optional Login login = 2;
 	optional CreateUser createUser = 3;
-	optional SendMessage sendMessage = 4;
-	optional CreateAppointments createAppointments = 5;
-	optional VisitAppointments visitAppointments = 6;
+	optional SendChatMessage sendMessage = 4;
+	optional CreateAppointment createAppointment = 5;
+	optional VisitAppointment visitAppointment = 6;
 	optional AddFriend addFriend = 7;
 	optional GetOwnData getOwnData = 8;
 	optional GetFriendLocation getFriendLocation = 9;
@@ -41,12 +40,33 @@ message ServerRequest{
 	optional GetNearAppointments getNearAppointments = 11;
 	optional GetMyVisitingAppointments getMyVisitingAppointments = 12;
 	optional UpdateLocation updateLocation = 13;
+	optional NoMessage noMessage = 15;
 	
-	optional NoMessage noMessage = 20;
+	optional string messageID = 20;
 };
 
+message ClientResponse {
+	enum Type {
+		LIST_FRIENDS = 1;
+		LIST_LOCATIONS = 2;
+		LIST_CHAT_MESSAGES = 3;
+		BOOL = 4;
+		NO_MESSAGE = 20;
+	};
+	
+	required Type type = 1 [default=NO_MESSAGE];
+	
+	optional ListFriends listFriends= 2;
+	optional ListLocations listLocations = 3;
+	optional ListChatMessages listChatMessages = 4;
+	optional BoolReply boolReply = 5;	
+	optional NoMessage noMessage = 10;
+	
+	optional string messageID = 15;
+}
 
-// Client -> Server Messages
+
+/// Client -> Server Messages
 
 message Login {
 	required string name = 1;
@@ -58,85 +78,127 @@ message CreateUser {
 	required string password = 2;
 };
 
-message SendMessage {
-	required string message = 1;
-	required int32 userID = 2;
-	required string securityToken = 3;
+message SendChatMessage {
+	required string securityToken = 1;
+	required string message = 2;
+	required int32 friendID = 3;
 };
 
-message CreateAppointments {
-	required SimpleAppointment appointment = 1;
-	required int32 userID = 2;
-	required string securityToken = 3;
+message GetMessages { // If some sort of message history needs to be pulled from server
+	required string securityToken = 1;
 };
 
-message VisitAppointments {
-	required int32 appointmentID = 1;
-	required int32 userID  = 2;
-	required string securityToken = 3;
+
+message CreateAppointment {
+	required string securityToken = 1;
+	required SimpleAppointment appointment = 2;
 };
 
-message AddFriend {
-	required int32 friendID = 1;
-	required int32 userID  = 2;
-	required string securityToken = 3;
-};
-
-message GetOwnData {
-	required int32 userID = 1;
-	required string securityToken = 2;
-};
-
-message GetFriends {
-	required int32 userID = 1;
-	required string securityToken = 2;
-};
-
-message GetFriendLocation {
-	required int32 friendID = 1;
-	required int32 userID  = 2;
-	required string securityToken = 3;
-};
-
-message GetMessages {
-	required int32 userID = 1;
-	required string securityToken = 2;
+message VisitAppointment {
+	required string securityToken = 1;
+	required int32 appointmentID = 2;
 };
 
 message GetNearAppointments {
-	required Location location = 1;
-	required int32 userID = 2;
-	required string securityToken = 3;
+	required string securityToken = 1;
+	optional Location location = 2; // (Automatic) regular location update is planned
+};
+
+message AddFriend {
+	required string securityToken = 1;
+	required int32 friendID = 2;
+};
+
+message GetOwnData { // What is exactly returned here?
+	required string securityToken = 1;
+};
+
+message GetFriends {
+	required string securityToken = 1;
+};
+
+message GetFriendLocation {
+	required string securityToken = 1;
+	required int32 friendID = 2;
 };
 
 message GetMyVisitingAppointments {
-	required int32 userID = 1;
-	required string securityToken = 2;
+	required string securityToken = 1;
 };
 
 message UpdateLocation {
-	required Location location = 1;
-	required int32 userID = 2;
-	required string securityToken = 3;
+	required string securityToken = 1;
+	required Location location = 2;
 };
+
+
+/// Server -> Client Replies
+
+message ListFriends {
+	repeated SimpleUser friends = 1;
+}
+
+message ListLocations {
+	repeated Location location = 1;
+}
+
+message ListChatMessages {
+	repeated string message = 1;
+}
+
+message BoolReply {
+	required bool isTrue = 1;
+}
+
+
+/// Message types for both directions
 
 message SimpleAppointment {
 	required int32 id = 1;
 	required string title = 2;
 	required Location location = 3;
 	required Time time = 4;
-	required int32 hosterID = 5;
-	repeated int32 participants = 6 [packed=true];
+	required SimpleUser hoster = 5;
+	repeated SimpleUser participants = 6;
 };
 
-// Server -> Client Replies
-
 message SimpleUser {
- 	required int32 id = 1;
- 	required string userName = 2; 
- 	required Time latestLocationUpdate = 3;
- 	required Location location = 4;
+ 	required string userName = 1; 
+ 	required int32 userID = 2;
+ 	optional Time latestLocationUpdate = 3;
+ 	optional Location location = 4;
 }
+
+message Location {
+	required double longitude = 1;
+	required double lattitude = 2;
+};
+
+message Time {
+	required string time = 1;
+}
+
+/// Helper types -> May be removed later
+
+message NoMessage {
+
+}
+
+message MapFriends {
+	required Pair_Double_SimpleAppointment map = 1;
+};
+
+message MapAppointmentDistance {
+	repeated Pair_Double_SimpleAppointment map = 1;
+};
+
+message MapAppointmentID {
+	repeated Pair_Int32_SimpleAppointment map = 1;
+};
+
+message MapUserID {
+	repeated Pair_Int32_SimpleUser map = 1;
+};
 
 message Pair_Int32_SimpleUser {
 	required int32 key = 1;
@@ -152,43 +214,3 @@ message Pair_Double_SimpleAppointment {
 	required double key = 1;
 	required SimpleAppointment value = 2;
 };
-
-message MapFriends {
-	required Pair_Double_SimpleAppointment map = 1;
-};
-
-message MapAppointmentDistance {
-	required Pair_Int32_SimpleUser map = 1;
-};
-
-message MapAppointmentID {
-	required Pair_Int32_SimpleAppointment map = 1;
-};
-
-message ListLocation {
-	repeated Location location = 1;
-}
-
-message ListMessages {
-	repeated string message = 1;
-}
-
-message boolReply {
-	required bool isTrue = 1;
-}
-
-
-// Message types for both directions
-
-message Location {
-	required double longitude = 1;
-	required double lattitude = 2;
-};
-
-message Time {
-	required string time = 1;
-}
-
-message NoMessage {
-
-}

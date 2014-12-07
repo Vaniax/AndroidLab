@@ -24,7 +24,7 @@ public class InstaMeetServer {
 				.handler(new LoggingHandler())
 				.childHandler(new InstaMeetServerInitializer());
 			
-			ChannelFuture future = bootstrap.bind(8080).sync().channel().closeFuture().sync();;
+			ChannelFuture future = bootstrap.bind(8080).sync().channel().closeFuture().sync();
 		} finally {
 			workerEventGroup.shutdownGracefully();
 			bossEventGroup.shutdownGracefully();
