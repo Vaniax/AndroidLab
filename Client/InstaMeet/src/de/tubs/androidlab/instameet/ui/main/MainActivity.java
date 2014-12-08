@@ -15,8 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import de.tubs.androidlab.instameet.R;
-import de.tubs.androidlab.instameet.serivce.InstaMeetService;
-import de.tubs.androidlab.instameet.serivce.InstaMeetServiceBinder;
+import de.tubs.androidlab.instameet.service.InstaMeetService;
+import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import de.tubs.androidlab.instameet.ui.settings.SettingsActivity;
 
 /**

@@ -70,14 +70,14 @@
 
         <!-- in eigenem Thread: android:process=":remote" -->
         <service
-            android:name=".serivce.InstaMeetService"
+            android:name="de.tubs.androidlab.instameet.service.InstaMeetService"
             android:exported="false" >
             <intent-filter>
                 <action android:name="de.tubs.androidlab.instameet.InstaMeetService" />
             </intent-filter>
         </service>
 
-        <receiver android:name=".serivce.BootReceiver" >
+        <receiver android:name="de.tubs.androidlab.instameet.service.BootReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

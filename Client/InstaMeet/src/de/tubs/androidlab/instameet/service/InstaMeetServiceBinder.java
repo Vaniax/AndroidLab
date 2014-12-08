@@ -1,4 +1,4 @@
-package de.tubs.androidlab.instameet.serivce;
+package de.tubs.androidlab.instameet.service;
 
 import android.os.Binder;
 
