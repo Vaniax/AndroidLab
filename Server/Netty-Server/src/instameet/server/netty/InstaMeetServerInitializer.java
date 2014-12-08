@@ -1,6 +1,6 @@
 package instameet.server.netty;
 
-import instameet.server.protobuf.ServerRequests.ServerRequest;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;

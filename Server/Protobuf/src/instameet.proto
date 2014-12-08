@@ -1,6 +1,7 @@
 syntax = "proto2";
 
-package instameet.server.protobuf;
+//package instameet.server.protobuf;
+package de.tubs.androidlab.instameet.server.protobuf;
 option java_outer_classname = "Messages";
 
 

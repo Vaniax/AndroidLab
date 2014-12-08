@@ -2,7 +2,7 @@ package instameet.server.netty;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import instameet.server.protobuf.ServerRequests.ServerRequest;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
 
 public class ServerHandlerTest extends SimpleChannelInboundHandler<ServerRequest> {
 
