@@ -37,7 +37,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         addTabs();
         // Start Service if necessary
         // Omit this if you only want the service to be active during IPC
-        startService(new Intent(InstaMeetService.class.getName()));
+        startService(new Intent(this,InstaMeetService.class));
     }
     
     @Override
@@ -46,7 +46,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     	Intent intent = new Intent(this, InstaMeetService.class);
     	if(!bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
     		Log.e(TAG, "Service not available");
-    	}
+    	}   	
     }
     
     @Override

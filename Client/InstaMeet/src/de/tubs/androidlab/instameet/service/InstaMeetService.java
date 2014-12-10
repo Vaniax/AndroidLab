@@ -21,6 +21,18 @@ public class InstaMeetService extends Service {
 	}
 	
 	@Override
+	public void onStart(Intent intent, int startId) {
+		Log.i(TAG, "Service onStart");
+		super.onStart(intent, startId);
+	}
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		Log.i(TAG, "Service onStartCommand");
+		return super.onStartCommand(intent, flags, startId);
+	}
+
+	@Override
 	public void onCreate() {
 		Log.i(TAG, "Service started");
 		Thread.currentThread().setName(InstaMeetService.class.getSimpleName());
