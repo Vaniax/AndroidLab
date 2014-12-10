@@ -1,24 +1,15 @@
-package instameet.server.netty;
+package instameet.server.netty.tests;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import service.ServiceInterface;
 
-public class InstaMeetServer implements Runnable {
+public class InstaMeetServer  {
 
-	private ServiceInterface service = null;
-	
-	InstaMeetServer(ServiceInterface service) {
-		this.service = service;
-	}
-	
-	@Override
-	public void run() {
+	public static void main(String[] args) throws InterruptedException {
 		
 		EventLoopGroup bossEventGroup = new NioEventLoopGroup();
 		EventLoopGroup workerEventGroup = new NioEventLoopGroup();
@@ -28,8 +19,8 @@ public class InstaMeetServer implements Runnable {
 			bootstrap
 				.group(bossEventGroup, workerEventGroup)
 				.channel(NioServerSocketChannel.class)
-				.handler(new LoggingHandler(LogLevel.DEBUG))
-				.childHandler(new InstaMeetServerInitializer(service));
+				.handler(new LoggingHandler())
+				.childHandler(new InstaMeetServerInitializer());
 			
 //			ChannelFuture future = bootstrap.bind(8080).sync().channel().closeFuture().sync();
 			ChannelFuture future = bootstrap.bind(8080).sync();
@@ -37,10 +28,7 @@ public class InstaMeetServer implements Runnable {
 			while (future.channel().isOpen()) {
 				
 			}
-			future.channel().closeFuture().sync();
 
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		} finally {
 			workerEventGroup.shutdownGracefully();
 			bossEventGroup.shutdownGracefully();

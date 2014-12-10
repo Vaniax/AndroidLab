@@ -24,8 +24,10 @@ public class InstaMeetClient {
 				.handler(new InstaMeetClientInitializer());
 			
 			ChannelFuture future = bootstrap.connect(InetAddress.getLocalHost(),8080).sync();
+			while (true) {
 			
-			future.channel().close().sync();
+			}
+//			future.channel().close().sync();
 			
 		} finally {
 			workerEventGroup.shutdownGracefully();

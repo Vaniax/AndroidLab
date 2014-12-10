@@ -1,6 +1,5 @@
-package instameet.server.netty;
+package instameet.server.netty.tests;
 
-import service.ServiceInterface;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -12,12 +11,6 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
 public class InstaMeetServerInitializer extends ChannelInitializer<SocketChannel>{
 
-	public ServiceInterface service;
-	
-	InstaMeetServerInitializer(ServiceInterface service) {
-		this.service = service;
-	}
-	
 	@Override
 	protected void initChannel(SocketChannel channel) throws Exception {
 		ChannelPipeline p = channel.pipeline();
@@ -27,7 +20,7 @@ public class InstaMeetServerInitializer extends ChannelInitializer<SocketChannel
 		
 		p.addLast(new ProtobufVarint32LengthFieldPrepender());
 		p.addLast(new ProtobufEncoder());
-		p.addLast(new InstaMeetServerHandler(service));
+		p.addLast(new ServerHandlerTest());
 	}
 
 }

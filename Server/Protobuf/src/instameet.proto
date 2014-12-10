@@ -31,7 +31,7 @@ message ServerRequest{
 	
 	optional Login login = 2;
 	optional CreateUser createUser = 3;
-	optional SendChatMessage sendMessage = 4;
+	optional ChatMessage message = 4;
 	optional CreateAppointment createAppointment = 5;
 	optional VisitAppointment visitAppointment = 6;
 	optional AddFriend addFriend = 7;
@@ -52,6 +52,8 @@ message ClientResponse {
 		LIST_LOCATIONS = 2;
 		LIST_CHAT_MESSAGES = 3;
 		BOOL = 4;
+		SECURITY_TOKEN = 5;
+		CHAT_MESSAGE = 6;
 		NO_MESSAGE = 20;
 	};
 	
@@ -61,6 +63,8 @@ message ClientResponse {
 	optional ListLocations listLocations = 3;
 	optional ListChatMessages listChatMessages = 4;
 	optional BoolReply boolReply = 5;	
+	optional SecurityToken token = 6;
+	optional ChatMessage message = 7;
 	optional NoMessage noMessage = 10;
 	
 	optional string messageID = 15;
@@ -79,7 +83,7 @@ message CreateUser {
 	required string password = 2;
 };
 
-message SendChatMessage {
+message ChatMessage {
 	required string securityToken = 1;
 	required string message = 2;
 	required int32 friendID = 3;
@@ -177,6 +181,10 @@ message Location {
 
 message Time {
 	required string time = 1;
+}
+
+message SecurityToken {
+	required string token = 1;
 }
 
 /// Helper types -> May be removed later
