@@ -8,5 +8,6 @@
     <string name="main_contact_list_empty">No Contacts</string>
     <string name="title_activity_chat">ChatActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="send_button_chat">Send</string>
 
 </resources>

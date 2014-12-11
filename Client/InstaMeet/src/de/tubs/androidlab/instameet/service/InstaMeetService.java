@@ -1,5 +1,9 @@
 package de.tubs.androidlab.instameet.service;
 
+import de.tubs.androidlab.instameet.client.InstaMeetClient;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest.Type;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -14,6 +18,10 @@ public class InstaMeetService extends Service {
 	
 	private static final String TAG = "Service";
 	private final InstaMeetServiceBinder binder = new InstaMeetServiceBinder(this);
+	private InstaMeetService service = null;
+	boolean serviceStarted = false;
+	Thread clientThread = null;
+	InstaMeetClient client = null;
 	
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -34,17 +42,30 @@ public class InstaMeetService extends Service {
 
 	@Override
 	public void onCreate() {
-		Log.i(TAG, "Service started");
+		Log.i(TAG, "Service onCreate");
 		Thread.currentThread().setName(InstaMeetService.class.getSimpleName());
+		client = new InstaMeetClient();
+		clientThread = new Thread(client);
+		clientThread.start();
+		serviceStarted = true;
+		service = this;
 	}
 	
 	@Override
 	public void onDestroy() {
-		Log.i(TAG, "Service stopped. This should NOT happen!");
+		Log.i(TAG, "Service onDestroy. This should NOT happen!");
 	}
 	
 	public synchronized void doWork() {
 		Log.i(TAG, "do work!!!!");
+	}
+	
+	// TODO: Only for some stupid dummy testing
+	public void sendDummyMessage(String msg) {
+		Log.i("ConnectandSend","call");
+		ChatMessage t = ChatMessage.newBuilder().setMessage(msg).setFriendID(2).setSecurityToken("test").build();
+		client.queue.add(ServerRequest.newBuilder().setType(Type.SEND_CHAT_MESSAGE).setMessage(t).build());
+		Log.i("ConnectandSend","queue");
 	}
 
 }

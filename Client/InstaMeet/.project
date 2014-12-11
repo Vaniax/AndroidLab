@@ -30,4 +30,41 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>libs/Netty</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/Protobuf</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/Netty/netty-all-4.1.0.Beta3-sources.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/Netty/netty-all-4.1.0.Beta3-sources.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/Netty/netty-all-4.1.0.Beta3.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/Netty/netty-all-4.1.0.Beta3.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/Protobuf/protobuf-java-2.6.0.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/Protobuf/protobuf-java-2.6.0.jar</locationURI>
+		</link>
+		<link>
+			<name>src/de/tubs/androidlab/instameet/server/protobuf</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>src/de/tubs/androidlab/instameet/server/protobuf/Messages.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Server/Protobuf/src/de/tubs/androidlab/instameet/server/protobuf/Messages.java</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
