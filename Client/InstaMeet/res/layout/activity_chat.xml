@@ -8,7 +8,29 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="de.tubs.androidlab.instameet.ui.chat.ChatActivity" >
 
-<<<<<<< b1ed45b8600a9ea7e6c8cba86896cbe2687de20c
+    <ListView
+        android:id="@+id/chat_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/send_message_chat"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
+
+    </ListView>
+
+    <EditText
+        android:id="@+id/message_field_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/send_message_chat"
+        android:ems="10"
+        android:inputType="text" >
+
+        <requestFocus />
+    </EditText>
+
     <Button
         android:id="@+id/send_message_chat"
         android:layout_width="wrap_content"
@@ -17,44 +39,5 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:text="@string/send_button_chat" />
-
-    <EditText
-        android:id="@+id/message_field_chat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="false"
-        android:layout_alignParentStart="true"
-        android:layout_toEndOf="@id/send_message_chat"
-        android:layout_toLeftOf="@id/send_message_chat"
-        android:layout_toRightOf="@id/send_message_chat"
-        android:layout_toStartOf="@id/send_message_chat"
-        android:ems="10"
-        android:inputType="text" >
-=======
-    <ListView
-        android:id="@+id/chat_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/chat_edit"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
-
-    </ListView>
-
-    <EditText
-        android:id="@+id/chat_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:ems="10" >
->>>>>>> d1a7c653f4787161ed15b5fbc301d0fa87c6759e
-
-        <requestFocus />
-    </EditText>
 
 </RelativeLayout>
