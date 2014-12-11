@@ -64,7 +64,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
         	service = ( (InstaMeetServiceBinder) binder).getService();
-        	service.doWork();
         }
 
         @Override

@@ -68,9 +68,8 @@ public class ContactsFragment extends ListFragment {
 		
 		/**
 		 * Additional data assigned to each entry which holds
-		 * the ids of all widgets
+		 * references to all widgets (to avoid findViewById()-calls)
 		 * @author Bjoern
-		 *
 		 */
 		class ViewHolder {
 			public TextView name;
@@ -110,8 +109,8 @@ public class ContactsFragment extends ListFragment {
 			} else {
 				rowView = inflater.inflate(R.layout.contact_list_entry, parent, false);
 				holder = new ViewHolder();
-				holder.name = (TextView) rowView.findViewById(R.id.main_list_entry_name);
-				holder.picture = (ImageView) rowView.findViewById(R.id.main_list_entry_picture);
+				holder.name = (TextView) rowView.findViewById(R.id.name);
+				holder.picture = (ImageView) rowView.findViewById(R.id.picture);
 				rowView.setTag(holder);
 			}
 			holder.name.setText(values[position]);

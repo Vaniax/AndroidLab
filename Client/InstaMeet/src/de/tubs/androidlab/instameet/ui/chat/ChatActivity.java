@@ -10,9 +10,10 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.view.View;
+import android.widget.ListView;
 import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
@@ -20,19 +21,26 @@ import de.tubs.androidlab.instameet.ui.main.MainActivity;
 
 public class ChatActivity extends Activity {
 	
-	public static final String EXTRA_NAME = "de.tubs.anroidlab.instameet.NAME";
+	public final static String EXTRA_NAME = "de.tubs.anroidlab.instameet.NAME";
 	private final static String TAG = MainActivity.class.getSimpleName();
+	private ChatListAdapter adapter;
     private InstaMeetService service;
 
 	private Button sendBtn = null;
 	private EditText editText = null;
+	private ListView chatList = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);		
 		setContentView(R.layout.activity_chat);
+		
 		sendBtn = (Button) findViewById(R.id.send_message_chat);
 		editText = (EditText) findViewById(R.id.message_field_chat);
+		chatList = (ListView) findViewById(R.id.chat_list);
+		
+		adapter = new ChatListAdapter(ChatActivity.this);
+		chatList.setAdapter(adapter);
 		
 		sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +68,6 @@ public class ChatActivity extends Activity {
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
         	service = ( (InstaMeetServiceBinder) binder).getService();
-        	service.doWork();
-   
         }
 
         @Override
