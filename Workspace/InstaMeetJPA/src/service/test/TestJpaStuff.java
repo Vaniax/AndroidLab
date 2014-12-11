@@ -5,8 +5,10 @@ import java.util.Set;
 
 
 
+
 import service.InstaMeetService;
 import simpleEntities.LoginData;
+import simpleEntities.simpleAppointment;
 import simpleEntities.simpleUser;
 
 
@@ -49,22 +51,20 @@ public class TestJpaStuff {
 		instaService.addFriend(loginData.getToken(), myAcc.getId(), 3);
 		instaService.addFriend(loginData.getToken(), myAcc.getId(), 2);
 		instaService.addFriend(loginData.getToken(), myAcc.getId(), 1);
-
+		//instaService.addFriendRequest(loginData.getToken(), myAcc.getId(), 3);
+		instaService.addFriendReply(loginData.getToken(), myAcc.getId(), 3, true);
 		
 		instaService.visitAppointment(loginData.getToken(), myAcc.getId(), 3);
 
 		
 		
-//		Appointment appoint = new Appointment();
-//		appoint.setHoster(myAcc);
-//		appoint.setTitle("Pulvern beim Arbeitsamt");
-//		appoint.setDescription("Hartz4 abholen");
-//		appoint.setLattitude(5.4f);
-//		appoint.setLongitude(3.3f);		
-//		appoint.getVisitingUsers().add(myAcc);
-//		myAcc.getVisitingAppointments().add(appoint);
-//		instaService.CreateAppointments(loginData.getToken(), loginData.getUserId(), appoint);
-//		System.out.println("Number of hosted Appointments: " + myAcc.getHostedAppointments().size());
+		simpleAppointment appoint = new simpleAppointment();
+		appoint.setTitle("Pulvern beim Arbeitsamt");
+		appoint.setDescription("Hartz4 abholen");
+		appoint.setLattitude(5.4f);
+		appoint.setLongitude(3.3f);		
+		instaService.createAppointment(loginData.getToken(), loginData.getUserId(), appoint);
+		System.out.println("Number of hosted Appointments: " + myAcc.getHostedAppointments().size());
 		
 	}
 

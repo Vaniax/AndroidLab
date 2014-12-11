@@ -1,15 +1,21 @@
 package simpleEntities;
 
 import java.io.Serializable;
-import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 import entities.Appointment;
+import entities.User;
 
 
 public class simpleAppointment implements Serializable {
 
 	private static final long serialVersionUID = -8489951569455977180L;
+	
+	public simpleAppointment() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public simpleAppointment(Appointment app) {
 		this.id = app.getId();
@@ -21,7 +27,11 @@ public class simpleAppointment implements Serializable {
 		
 		this.startingTime = app.getStartingTime();
 		this.hoster = app.getHoster().getId();
-		this.visitingUsers = app.getVisitingUsers().keySet();
+		
+		this.visitingUsers = new HashSet<Integer>();	
+		for(User u : app.getVisitingUsers()) {
+			this.visitingUsers.add(u.getId());
+		}
 	}
 
 	private int id;
@@ -31,7 +41,7 @@ public class simpleAppointment implements Serializable {
 	private double lattitude;
 	private double longitude;
 
-	private Time startingTime;
+	private Timestamp startingTime;
 	private int hoster;
 	
 	private double distance;
@@ -79,11 +89,11 @@ public class simpleAppointment implements Serializable {
 		this.longitude = longitude;
 	}
 
-	public Time getStartingTime() {
+	public Timestamp getStartingTime() {
 		return startingTime;
 	}
 
-	public void setStartingTime(Time startingTime) {
+	public void setStartingTime(Timestamp startingTime) {
 		this.startingTime = startingTime;
 	}
 

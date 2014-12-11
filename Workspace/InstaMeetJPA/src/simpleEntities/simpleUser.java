@@ -2,8 +2,11 @@ package simpleEntities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
+import entities.Appointment;
+import entities.ChatMessage;
 import entities.User;
 
 
@@ -22,12 +25,32 @@ public class simpleUser implements Serializable {
 		this.lattitude = user.getLattitude();
 		this.longitude = user.getLongitude();
 		
-		this.hostedAppointments = user.getHostedAppointments().keySet();
-		//this.visitingAppointments = user.getVisitingAppointments().keySet();
-		this.friends = user.getFriends().keySet();
+		this.hostedAppointments = new HashSet<Integer>();
+		for(Appointment a : user.getHostedAppointments()) {
+			this.hostedAppointments.add(a.getId());
+		}
 
-		//this.outChatmessages = user.getOutChatmessages().keySet();
-		//this.inChatmessages = user.getInChatmessages().keySet();
+		this.visitingAppointments = new HashSet<Integer>();	
+		for(Appointment a : user.getVisitingAppointments()) {
+			this.visitingAppointments.add(a.getId());
+		}
+		
+		this.outChatmessages = new HashSet<Integer>();
+		for(ChatMessage c : user.getSentMessages()) {
+			this.outChatmessages.add(c.getId());
+		}
+		
+		this.inChatmessages = new HashSet<Integer>();
+		for(ChatMessage c : user.getReceivedMessages()) {
+			this.inChatmessages.add(c.getId());
+		}
+		
+		
+		this.friends = new HashSet<Integer>();
+		for(User u : user.getFriends()) {
+			this.friends.add(u.getId());
+		}
+
 }
 
 	private int id;

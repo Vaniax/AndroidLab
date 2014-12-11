@@ -1,5 +1,6 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,9 @@ import simpleEntities.LoginData;
 import simpleEntities.simpleAppointment;
 import simpleEntities.simpleUser;
 import entities.Appointment;
+import entities.ConfirmedFriend;
+import entities.Friend;
+import entities.UnconfirmedFriend;
 import entities.User;
 
 @WebService(name="InstaMeetService", serviceName="mInstaMeetService")
@@ -65,60 +69,61 @@ public class InstaMeetService implements ServiceInterface {
 		
 	}
 
-////	@WebMethod
-////	public Map<Integer, simpleUser> GetFriends(String SecurityToken, int userId) {
-////
-////		if(verifyUser(SecurityToken, userId)) {
-////			Map<Integer, simpleUser> friendList = new HashMap<Integer, simpleUser>();
-////			
-////			for(User u : sessions.get(SecurityToken).getFriends().values()) {
-////				friendList.put(u.getId(), new simpleUser(u));
-////			}
-////			return friendList;
-////		}
-////		return null;
-////	}
-//
-//	@WebMethod
-//	public Map<Double, simpleAppointment> GetNearAppointments(String SecurityToken, int userId, Location location) {
-//		if(verifyUser(SecurityToken, userId)) {
-//			//TODO Filter near locations
-//			Map<Double, simpleAppointment> appList = new HashMap<Double, simpleAppointment>();
-//			
-//			@SuppressWarnings("unchecked")
-//			List<Object[]> resultList = em.createNamedQuery("Appointment.nearby")
-//					.setParameter("lat", location.getLattitude())
-//					.setParameter("lon", location.getLongitude())
-//					.getResultList();
-//			
-//			for(Object[] result : resultList) {
-//				Appointment app = ((Appointment)result[0]);
-//				simpleAppointment sApp = new simpleAppointment(app);
-//				sApp.setDistance((double)result[1]);
-//				
-//				appList.put((double)result[1], sApp);
-//				
-//			}			
-//			
-//
-//			return appList;
-//		}
-//		return null;
-//	}
-//
-//	@WebMethod
-//	public Map<Integer, simpleAppointment> GetMyVisitingAppointments(String SecurityToken, int userId) {
-//		if(verifyUser(SecurityToken, userId)) {
-//			Map<Integer, simpleAppointment> appList = new HashMap<Integer, simpleAppointment>();
-//			
-//			for(Appointment a : sessions.get(SecurityToken).getVisitingAppointments().values()) {
-//				appList.put(a.getId(), new simpleAppointment(a));
-//			}
-//			return appList;
-//		}
-//		return null;
-//	}
-//
+	@WebMethod
+	public List<simpleUser> GetFriends(String SecurityToken, int userId) {
+
+		if(verifyUser(SecurityToken, userId)) {
+			List<simpleUser> friendList = new ArrayList<simpleUser>();
+			
+			for(User u : sessions.get(SecurityToken).getFriends()) {
+				friendList.add(new simpleUser(u));
+			}
+			return friendList;
+		}
+		return null;
+	}
+
+	@WebMethod
+	public List<simpleAppointment> GetNearAppointments(String SecurityToken, int userId, Location location) {
+		if(verifyUser(SecurityToken, userId)) {
+			//TODO Filter near locations
+			List<simpleAppointment> appList = new ArrayList<simpleAppointment>();
+			
+			@SuppressWarnings("unchecked")
+			List<Object[]> resultList = em.createNamedQuery("Appointment.nearby")
+					.setParameter("lat", location.getLattitude())
+					.setParameter("lon", location.getLongitude())
+					.getResultList();
+			
+			int i=0;
+			for(Object[] result : resultList) {
+				Appointment app = ((Appointment)result[0]);
+				simpleAppointment sApp = new simpleAppointment(app);
+				sApp.setDistance((double)result[1]);
+				
+				appList.add(i++,sApp);
+				
+			}			
+			
+
+			return appList;
+		}
+		return null;
+	}
+
+	@WebMethod
+	public List<simpleAppointment> GetMyVisitingAppointments(String SecurityToken, int userId) {
+		if(verifyUser(SecurityToken, userId)) {
+			List<simpleAppointment> appList = new ArrayList<simpleAppointment>();
+			
+			for(Appointment a : sessions.get(SecurityToken).getVisitingAppointments()) {
+				appList.add(new simpleAppointment(a));
+			}
+			return appList;
+		}
+		return null;
+	}
+
 	@WebMethod
 	public Location GetFriendLocation(String SecurityToken, int userId,
 			int friendId) {
@@ -167,7 +172,7 @@ public class InstaMeetService implements ServiceInterface {
 	}
 
 	@Override
-	public simpleAppointment CreateAppointments(String SecurityToken, int userId,
+	public simpleAppointment createAppointment(String SecurityToken, int userId,
 			simpleAppointment sAppointment) {
 		// TODO Auto-generated method stub
 		if(verifyUser(SecurityToken, userId)) {
@@ -228,11 +233,11 @@ public class InstaMeetService implements ServiceInterface {
 				Appointment app = result.getSingleResult();
 
 				em.getTransaction().begin();
-				if(!app.getVisitingUsers().containsKey(usr.getId())) {
-					app.getVisitingUsers().put(usr.getId(), usr);
+				if(!app.getVisitingUsers().contains(usr)) {
+					app.getVisitingUsers().add(usr);
 				}
-				if(!usr.getVisitingAppointments().containsKey(app.getId())) {
-					usr.getVisitingAppointments().put(app.getId(),app);					
+				if(!usr.getVisitingAppointments().contains(app.getId())) {
+					usr.getVisitingAppointments().add(app);					
 				}
 				em.getTransaction().commit();
 				return true;
@@ -245,7 +250,7 @@ public class InstaMeetService implements ServiceInterface {
 
 
 
-	@Override
+	
 	public boolean addFriend(String SecurityToken, int userId, int friendId) {
 		// TODO Auto-generated method stub
 		if(verifyUser(SecurityToken, userId)) {
@@ -256,16 +261,95 @@ public class InstaMeetService implements ServiceInterface {
 				User friend = result.getSingleResult();
 
 				em.getTransaction().begin();
-				if(!friend.getFriends().containsKey(usr.getId())) {
-					friend.getFriends().put(usr.getId(), usr);
+				if(!friend.getFriends().contains(usr)) {
+					friend.getFriends().add(usr);
 				}
-				if(!usr.getFriends().containsKey(friend.getId())) {
-					usr.getFriends().put(friend.getId(), friend);					
+				if(!usr.getFriends().contains(friend)) {
+					usr.getFriends().add(friend);					
 				}
 				em.getTransaction().commit();
 				return true;
 			} catch(NoResultException e) {
 				System.out.println("Appointment not found.");
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void inviteUsertoAppointment(String SecurityToken, int userId,
+			int appointmentId, int inviteUserId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean addFriendRequest(String SecurityToken, int userId,
+			int friendId) {
+		if(verifyUser(SecurityToken, userId)) {
+			try {
+				User usr = sessions.get(SecurityToken);
+				TypedQuery<User> result = em.createNamedQuery("User.findId", User.class)
+						.setParameter("id", friendId);
+				User friend = result.getSingleResult();
+								
+				em.getTransaction().begin();
+				if(!usr.getFriendInvites().contains(friend)) {
+					UnconfirmedFriend request = new UnconfirmedFriend();
+					request.setUser(usr);
+					request.setFriend(friend);
+					usr.getUnconfirmedFriendShips().add(request);
+					em.persist(request);
+				} else {
+					System.out.println("Friend already sent.");
+				}
+								
+				em.getTransaction().commit();
+				return true;
+			} catch(NoResultException e) {
+				System.out.println("Friend request failed.");
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean addFriendReply(String SecurityToken, int userId,
+			int friendId, boolean accepted) {
+		if(verifyUser(SecurityToken, userId)) {
+			try {
+				User usr = sessions.get(SecurityToken);
+				TypedQuery<UnconfirmedFriend> result = em.createNamedQuery("Friend.findRequest", UnconfirmedFriend.class)
+						.setParameter("userId", usr.getId())
+						.setParameter("friendId", friendId);
+				
+				UnconfirmedFriend friend = result.getSingleResult();
+				
+				System.out.println("User friendrequests: " + usr.getFriendRequests().size());
+
+				em.getTransaction().begin();
+				em.remove(friend);
+				em.getTransaction().commit();
+				
+				em.getTransaction().begin();
+				if(accepted) {
+					ConfirmedFriend confirmedFriend = new ConfirmedFriend();
+					confirmedFriend.setUser(usr);
+					confirmedFriend.setFriend(friend.getUser());
+					
+					ConfirmedFriend confirmedFriend2 = new ConfirmedFriend();
+					confirmedFriend2.setUser(friend.getUser());
+					confirmedFriend2.setFriend(usr);
+					
+					em.persist(confirmedFriend);
+					em.persist(confirmedFriend2);
+					
+				}
+				em.getTransaction().commit();
+				
+				return true;
+			} catch(NoResultException e) {
+				System.out.println("No request do confirm / deny.");
 			}
 		}
 		return false;
