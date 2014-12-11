@@ -12,6 +12,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.FutureListener;
 
 public class InstaMeetClient implements Runnable {
 	
@@ -32,7 +34,19 @@ public class InstaMeetClient implements Runnable {
 				.handler(new LoggingHandler())
 				.handler(new InstaMeetClientInitializer());
 			
-			ChannelFuture future = bootstrap.connect("192.168.178.25",8080).sync();
+			ChannelFuture future = bootstrap.connect("192.168.178.25",8080);
+			
+		    future.addListener(new FutureListener<Void>() {
+
+		        @Override
+		        public void operationComplete(Future<Void> future) throws Exception {
+		            if (!future.isSuccess()) {
+		                System.out.println("Test Connection failed");
+//		                handleException(future.cause());
+		            }
+		        }
+
+		    });
 						
 			while (future.channel().isOpen()) {
 				if(!queue.isEmpty()) {
@@ -44,7 +58,7 @@ public class InstaMeetClient implements Runnable {
 			future.channel().close().sync();
 			
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} finally {
 			workerEventGroup.shutdownGracefully();
