@@ -42,6 +42,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>src/simpleEntities</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>libs/Netty/netty-all-4.1.0.Beta3-sources.jar</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libraries/Netty/netty-all-4.1.0.Beta3-sources.jar</locationURI>
@@ -55,6 +60,26 @@
 			<name>libs/Protobuf/protobuf-java-2.6.0.jar</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libraries/Protobuf/protobuf-java-2.6.0.jar</locationURI>
+		</link>
+		<link>
+			<name>src/simpleEntities/Location.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Workspace/InstaMeetJPA/src/simpleEntities/Location.java</locationURI>
+		</link>
+		<link>
+			<name>src/simpleEntities/LoginData.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Workspace/InstaMeetJPA/src/simpleEntities/LoginData.java</locationURI>
+		</link>
+		<link>
+			<name>src/simpleEntities/SimpleAppointment.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Workspace/InstaMeetJPA/src/simpleEntities/SimpleAppointment.java</locationURI>
+		</link>
+		<link>
+			<name>src/simpleEntities/SimpleUser.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Workspace/InstaMeetJPA/src/simpleEntities/SimpleUser.java</locationURI>
 		</link>
 		<link>
 			<name>src/de/tubs/androidlab/instameet/server/protobuf</name>
