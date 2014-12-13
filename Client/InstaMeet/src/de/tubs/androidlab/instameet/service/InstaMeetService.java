@@ -2,6 +2,7 @@ package de.tubs.androidlab.instameet.service;
 
 import java.util.Map;
 
+import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
 import de.tubs.androidlab.instameet.client.InstaMeetClient;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
@@ -28,7 +29,7 @@ public class InstaMeetService extends Service {
 	//Blackboard Data
 	private SimpleUser ownData; //Conatins all data over the logged in user
 	private Map<Integer, SimpleUser> users;		//Contains all fetched users
-	private Map<Integer, SimpleUser> appointments;	//Contains all fetched appointments
+	private Map<Integer, SimpleAppointment> appointments;	//Contains all fetched appointments
 	
 	
 	@Override
@@ -74,7 +75,7 @@ public class InstaMeetService extends Service {
 		return users;
 	}
 
-	public Map<Integer, SimpleUser> getAppointments() {
+	public Map<Integer, SimpleAppointment> getAppointments() {
 		return appointments;
 	}
 

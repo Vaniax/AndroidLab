@@ -3,6 +3,7 @@ package de.tubs.androidlab.instameet.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
 import android.os.Binder;
 
@@ -29,7 +30,7 @@ public class InstaMeetServiceBinder extends Binder {
 		if(service.getOwnData() == null)
 			return null;
 		
-		List<SimpleUser> friends = new ArrayList<SimpleUser>();
+		List<SimpleUser> friends = new ArrayList<SimpleUser>(service.getOwnData().getFriends().size());
 		for(int i : service.getOwnData().getFriends()) {
 			if(!service.getUsers().containsKey(i)) {
 				//Add new getUser Request and maybe placeholder in application
@@ -40,5 +41,19 @@ public class InstaMeetServiceBinder extends Binder {
 		
 		
 	}
+	
+	public List<SimpleAppointment> getVisitingAppointments() {
+		if(service.getOwnData() == null)
+			return null;
+		
+		List<SimpleAppointment> visitingAppointments = new ArrayList<SimpleAppointment>(service.getOwnData().getVisitingAppointments().size());
+		for(int i : service.getOwnData().getVisitingAppointments()) {
+			if(!service.getAppointments().containsKey(i)) {
+				//Add new getApplication Request and maybe placeholder in application
+			}
+			visitingAppointments.add(service.getAppointments().get(i));
+		}
+		return visitingAppointments;
+	}	
 
 }
