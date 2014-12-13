@@ -4,13 +4,17 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import simpleEntities.SimpleUser;
+
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 /**
- * The persistent class for the user database table.
+ * The persistent class for the User database table.
  * 
  */
 @Entity
@@ -19,7 +23,6 @@ import java.util.Map;
 	@NamedQuery(name="User.login", query="SELECT a FROM User a WHERE a.username = :name and a.password = :password"),
 	@NamedQuery(name="User.findId", query="SELECT a FROM User a WHERE a.id = :id"),
 	@NamedQuery(name="User.findName", query="SELECT a FROM User a WHERE a.username = :name")
-
 })
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -40,50 +43,38 @@ public class User implements Serializable {
 	private String salt;
 
 	private String username;
-	
 
 	//bi-directional many-to-one association to Appointment
 	@OneToMany(mappedBy="hoster")
-	@MapKey(name="id")
-	private Map<Integer, Appointment> hostedAppointments;
+	private List<Appointment> hostedAppointments;
 
-	//bi-directional many-to-one association to Chatmessage
+	//bi-directional many-to-one association to ChatMessage
 	@OneToMany(mappedBy="sender")
-	@MapKey(name="receiver")
-	private Map<Integer, Chatmessage> outChatmessages;
+	private List<ChatMessage> sentMessages;
 
-	//bi-directional many-to-one association to Chatmessage
+	//bi-directional many-to-one association to ChatMessage
 	@OneToMany(mappedBy="receiver")
-	@MapKeyColumn(name="sender")
-	private Map<Integer, Chatmessage> inChatmessages;
+	private List<ChatMessage> receivedMessages;
 
-	//bi-directional many-to-many association to Appointment
-	@ManyToMany
-	@JoinTable(
-		name="Appointments_has_User"
-		, joinColumns={
-			@JoinColumn(name="User_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="Appointments_id")
-			}
-		)
-	@MapKeyColumn(name="Appointments_id", table="Appointments_has_User")
-	private Map<Integer, Appointment> visitingAppointments;
+	//bi-directional many-to-one association to Friend
+	@OneToMany(mappedBy="user")
+	private List<ConfirmedFriend> confirmedFriendShips;
 
-	//uni-directional many-to-many association to User
-	@ManyToMany
-	@JoinTable(
-		name="Friends"
-		, joinColumns={
-			@JoinColumn(name="User_id")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="friend_id")
-			}
-		)
-	@MapKeyColumn(name="friend_id", table="Friends")
-	private java.util.Map<Integer, User> friends;
+	/** Friendships requests from me**/
+	//bi-directional many-to-one association to Friend
+	@OneToMany(mappedBy="user")
+	private List<UnconfirmedFriend> unconfirmedFriendShips;
+	
+	/** Friendships requests to me**/
+	@OneToMany(mappedBy="friend")
+	private List<UnconfirmedFriend> requestedFriendShips;
+
+	//bi-directional many-to-one association to Visitor
+	@OneToMany(mappedBy="user")
+	private List<Visitor> confirmedVisitors;
+	
+	@OneToMany(mappedBy="user")
+	private List<Visitor> invitedVisitors;
 
 	public User() {
 	}
@@ -144,18 +135,16 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	public Map<Integer, Appointment> getHostedAppointments() {
-		if(this.hostedAppointments == null)
-			this.hostedAppointments = new HashMap<Integer, Appointment>();
+	public List<Appointment> getHostedAppointments() {
 		return this.hostedAppointments;
 	}
 
-	public void setHostedAppointments(Map<Integer, Appointment> hostedAppointments) {
+	public void setHostedAppointments(List<Appointment> hostedAppointments) {
 		this.hostedAppointments = hostedAppointments;
 	}
 
 	public Appointment addHostedAppointment(Appointment hostedAppointment) {
-		getHostedAppointments().put(hostedAppointment.getId(), hostedAppointment);
+		getHostedAppointments().add(hostedAppointment);
 		hostedAppointment.setHoster(this);
 
 		return hostedAppointment;
@@ -168,72 +157,199 @@ public class User implements Serializable {
 		return hostedAppointment;
 	}
 
-	public Map<Integer, Chatmessage> getOutChatmessages() {
-		if(this.outChatmessages == null)
-			this.outChatmessages = new HashMap<Integer, Chatmessage>();
-		return this.outChatmessages;
+	public List<ChatMessage> getSentMessages() {
+		return this.sentMessages;
 	}
 
-	public void setOutChatmessages(Map<Integer, Chatmessage> outChatmessages) {
-		this.outChatmessages = outChatmessages;
+	public void setSentMessages(List<ChatMessage> sentMessages) {
+		this.sentMessages = sentMessages;
 	}
 
-	public Chatmessage addOutChatmessage(Chatmessage outChatmessage) {
-		getOutChatmessages().put(outChatmessage.getId(), outChatmessage);
-		outChatmessage.setSender(this);
+	public ChatMessage addSentMessage(ChatMessage sentMessage) {
+		getSentMessages().add(sentMessage);
+		sentMessage.setSender(this);
 
-		return outChatmessage;
+		return sentMessage;
 	}
 
-	public Chatmessage removeOutChatmessage(Chatmessage outChatmessage) {
-		getOutChatmessages().remove(outChatmessage);
-		outChatmessage.setSender(null);
+	public ChatMessage removeSentMessage(ChatMessage sentMessage) {
+		getSentMessages().remove(sentMessage);
+		sentMessage.setSender(null);
 
-		return outChatmessage;
+		return sentMessage;
 	}
 
-	public Map<Integer, Chatmessage> getInChatmessages() {
-		if(this.inChatmessages == null)
-			this.inChatmessages = new HashMap<Integer, Chatmessage>();
-		return this.inChatmessages;
+	public List<ChatMessage> getReceivedMessages() {
+		return this.receivedMessages;
 	}
 
-	public void setInChatmessages(Map<Integer, Chatmessage> inChatmessages) {
-		this.inChatmessages = inChatmessages;
+	public void setReceivedMessages(List<ChatMessage> receivedMessages) {
+		this.receivedMessages = receivedMessages;
 	}
 
-	public Chatmessage addInChatmessage(Chatmessage inChatmessage) {
-		getInChatmessages().put(inChatmessage.getId(), inChatmessage);
-		inChatmessage.setReceiver(this);
+	public ChatMessage addReceivedMessage(ChatMessage receivedMessage) {
+		getReceivedMessages().add(receivedMessage);
+		receivedMessage.setReceiver(this);
 
-		return inChatmessage;
+		return receivedMessage;
 	}
 
-	public Chatmessage removeInChatmessage(Chatmessage inChatmessage) {
-		getInChatmessages().remove(inChatmessage);
-		inChatmessage.setReceiver(null);
+	public ChatMessage removeReceivedMessage(ChatMessage receivedMessage) {
+		getReceivedMessages().remove(receivedMessage);
+		receivedMessage.setReceiver(null);
 
-		return inChatmessage;
+		return receivedMessage;
 	}
 
-	public Map<Integer, Appointment> getVisitingAppointments() {
-		if(this.visitingAppointments == null)
-			this.visitingAppointments = new HashMap<Integer, Appointment>();
-		return this.visitingAppointments;
+	public List<ConfirmedFriend> getConfirmedFriendShips() {
+		return this.confirmedFriendShips;
 	}
 
-	public void setVisitingAppointments(Map<Integer, Appointment> visitingAppointments) {
-		this.visitingAppointments = visitingAppointments;
+	public void setConfirmedFriendShips(List<ConfirmedFriend> confirmedFriendShips) {
+		this.confirmedFriendShips = confirmedFriendShips;
 	}
 
-	public Map<Integer, User> getFriends() {
-		if(this.friends == null)
-			this.friends = new HashMap<Integer, User>();
-		return this.friends;
+	public ConfirmedFriend addConfirmedFriendShip(ConfirmedFriend confirmedFriendShip) {
+		getConfirmedFriendShips().add(confirmedFriendShip);
+		confirmedFriendShip.setUser(this);
+
+		return confirmedFriendShip;
 	}
 
-	public void setFriends(Map<Integer, User> friends) {
-		this.friends = friends;
+	public ConfirmedFriend removeConfirmedFriendShip(ConfirmedFriend confirmedFriendShip) {
+		getConfirmedFriendShips().remove(confirmedFriendShip);
+		confirmedFriendShip.setUser(null);
+
+		return confirmedFriendShip;
 	}
 
+	public List<UnconfirmedFriend> getUnconfirmedFriendShips() {
+		return this.unconfirmedFriendShips;
+	}
+	
+
+	public void setUnconfirmedFriendShips(List<UnconfirmedFriend> unconfirmedFriendShips) {
+		this.unconfirmedFriendShips = unconfirmedFriendShips;
+	}
+
+	public UnconfirmedFriend addUnconfirmedFriendShip(UnconfirmedFriend unconfirmedFriendShip) {
+		getUnconfirmedFriendShips().add(unconfirmedFriendShip);
+		unconfirmedFriendShip.setUser(this);
+
+		return unconfirmedFriendShip;
+	}
+
+	public UnconfirmedFriend removeUnconfirmedFriendShip(UnconfirmedFriend unconfirmedFriendShip) {
+		getUnconfirmedFriendShips().remove(unconfirmedFriendShip);
+		unconfirmedFriendShip.setUser(null);
+
+		return unconfirmedFriendShip;
+	}
+
+	public List<Visitor> getConfirmedVisitors() {
+		return this.confirmedVisitors;
+	}
+	
+	public List<UnconfirmedFriend> getRequestedFriendShips() {
+		return this.requestedFriendShips;
+	}
+
+
+	public void setConfirmedVisitors(List<Visitor> visitors) {
+		this.confirmedVisitors = visitors;
+	}
+
+	public Visitor addConfirmedVisitor(Visitor visitor) {
+		getConfirmedVisitors().add(visitor);
+		visitor.setUser(this);
+
+		return visitor;
+	}
+
+	public Visitor removeVisitor(Visitor visitor) {
+		getConfirmedVisitors().remove(visitor);
+		visitor.setUser(null);
+
+		return visitor;
+	}
+	
+    private List<User> getFriends(List<?  extends Friend> friendships){
+        List<User> friends = new ArrayList<User>();
+
+        for(Friend friendship : friendships) {
+            friends.add(friendship.getFriend());
+        }
+
+        return friends;
+    }
+    
+    private List<User> getFriendsRequest(List<?  extends Friend> friendships){
+        List<User> friends = new ArrayList<User>();
+
+        for(Friend friendship : friendships) {
+            friends.add(friendship.getUser());
+        }
+
+        return friends;
+    }
+    
+    public List<User> getFriends() {
+    	return getFriends(confirmedFriendShips);
+    }
+    public List<User> getFriendInvites() {
+    	return getFriends(unconfirmedFriendShips);
+    }
+    public List<User> getFriendRequests() {
+    	return getFriendsRequest(requestedFriendShips);
+    }
+
+    
+    private List<Appointment> getAppointments(List<?  extends Visitor> visitors){
+        List<Appointment> appointments = new ArrayList<Appointment>();
+
+        for(Visitor appointment : visitors) {
+            appointments.add(appointment.getAppointment());
+        }
+
+        return appointments;
+    }    
+    
+    public List<Appointment> getVisitingAppointments() {
+    	return getAppointments(confirmedVisitors);
+    }
+
+    public List<Appointment> getInvitedAppointments() {
+    	return getAppointments(invitedVisitors);
+    }
+    
+    public SimpleUser toSimpleUser() {
+    	SimpleUser user = new SimpleUser();
+    	user.setId(id);
+    	user.setUsername(username);
+    	user.setLattitude(lattitude);
+    	user.setLongitude(longitude);
+    	user.setLatestLocationUpdate(latestLocationUpdate);
+    	
+    	Set<Integer> friends = new HashSet<Integer>();
+    	for(User u : this.getFriends()) {
+    		friends.add(u.getId());
+    	}
+    	user.setFriends(friends);
+ 
+    	Set<Integer> apps = new HashSet<Integer>();
+    	for(Appointment a : this.getVisitingAppointments()) {
+    		apps.add(a.getId());
+    	}
+    	user.setVisitingAppointments(apps);
+    	
+    	Set<Integer> hApps = new HashSet<Integer>();
+    	for(Appointment a : this.getHostedAppointments()) {
+    		hApps.add(a.getId());
+    	}
+    	user.setVisitingAppointments(hApps);    	
+    	
+		return user;
+    	
+    }
+    
 }

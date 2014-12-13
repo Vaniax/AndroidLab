@@ -8,8 +8,8 @@ import java.util.Set;
 
 import service.InstaMeetService;
 import simpleEntities.LoginData;
-import simpleEntities.simpleAppointment;
-import simpleEntities.simpleUser;
+import simpleEntities.SimpleAppointment;
+import simpleEntities.SimpleUser;
 
 
 public class TestJpaStuff {
@@ -21,7 +21,7 @@ public class TestJpaStuff {
 		// TODO Auto-generated method stub
 		InstaMeetService instaService = new InstaMeetService();
 		
-		simpleUser newUser = instaService.createUser("MrTest3r", "test");
+		SimpleUser newUser = instaService.createUser("MrTest3r", "test");
 		if(newUser == null) {
 			System.err.println("User already existing");
 		} else {
@@ -36,7 +36,7 @@ public class TestJpaStuff {
 		} else {
 			System.err.println("Login failed");
 		}
-		simpleUser myAcc = instaService.getOwnData(loginData.getToken(), loginData.getUserId());
+		SimpleUser myAcc = instaService.getOwnData(loginData.getToken(), loginData.getUserId());
 		
 		
 		Set<Integer> friendIds = myAcc.getFriends();
@@ -58,7 +58,7 @@ public class TestJpaStuff {
 
 		
 		
-		simpleAppointment appoint = new simpleAppointment();
+		SimpleAppointment appoint = new SimpleAppointment();
 		appoint.setTitle("Pulvern beim Arbeitsamt");
 		appoint.setDescription("Hartz4 abholen");
 		appoint.setLattitude(5.4f);

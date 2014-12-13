@@ -16,11 +16,10 @@ import javax.persistence.TypedQuery;
 
 import simpleEntities.Location;
 import simpleEntities.LoginData;
-import simpleEntities.simpleAppointment;
-import simpleEntities.simpleUser;
+import simpleEntities.SimpleAppointment;
+import simpleEntities.SimpleUser;
 import entities.Appointment;
 import entities.ConfirmedFriend;
-import entities.Friend;
 import entities.UnconfirmedFriend;
 import entities.User;
 
@@ -70,13 +69,13 @@ public class InstaMeetService implements ServiceInterface {
 	}
 
 	@WebMethod
-	public List<simpleUser> GetFriends(String SecurityToken, int userId) {
+	public List<SimpleUser> GetFriends(String SecurityToken, int userId) {
 
 		if(verifyUser(SecurityToken, userId)) {
-			List<simpleUser> friendList = new ArrayList<simpleUser>();
+			List<SimpleUser> friendList = new ArrayList<SimpleUser>();
 			
 			for(User u : sessions.get(SecurityToken).getFriends()) {
-				friendList.add(new simpleUser(u));
+				friendList.add(u.toSimpleUser());
 			}
 			return friendList;
 		}
@@ -84,10 +83,10 @@ public class InstaMeetService implements ServiceInterface {
 	}
 
 	@WebMethod
-	public List<simpleAppointment> GetNearAppointments(String SecurityToken, int userId, Location location) {
+	public List<SimpleAppointment> GetNearAppointments(String SecurityToken, int userId, Location location) {
 		if(verifyUser(SecurityToken, userId)) {
 			//TODO Filter near locations
-			List<simpleAppointment> appList = new ArrayList<simpleAppointment>();
+			List<SimpleAppointment> appList = new ArrayList<SimpleAppointment>();
 			
 			@SuppressWarnings("unchecked")
 			List<Object[]> resultList = em.createNamedQuery("Appointment.nearby")
@@ -98,7 +97,7 @@ public class InstaMeetService implements ServiceInterface {
 			int i=0;
 			for(Object[] result : resultList) {
 				Appointment app = ((Appointment)result[0]);
-				simpleAppointment sApp = new simpleAppointment(app);
+				SimpleAppointment sApp = app.toSimpleAppointment();
 				sApp.setDistance((double)result[1]);
 				
 				appList.add(i++,sApp);
@@ -112,12 +111,12 @@ public class InstaMeetService implements ServiceInterface {
 	}
 
 	@WebMethod
-	public List<simpleAppointment> GetMyVisitingAppointments(String SecurityToken, int userId) {
+	public List<SimpleAppointment> GetMyVisitingAppointments(String SecurityToken, int userId) {
 		if(verifyUser(SecurityToken, userId)) {
-			List<simpleAppointment> appList = new ArrayList<simpleAppointment>();
+			List<SimpleAppointment> appList = new ArrayList<SimpleAppointment>();
 			
 			for(Appointment a : sessions.get(SecurityToken).getVisitingAppointments()) {
-				appList.add(new simpleAppointment(a));
+				appList.add(a.toSimpleAppointment());
 			}
 			return appList;
 		}
@@ -172,8 +171,8 @@ public class InstaMeetService implements ServiceInterface {
 	}
 
 	@Override
-	public simpleAppointment createAppointment(String SecurityToken, int userId,
-			simpleAppointment sAppointment) {
+	public SimpleAppointment createAppointment(String SecurityToken, int userId,
+			SimpleAppointment sAppointment) {
 		// TODO Auto-generated method stub
 		if(verifyUser(SecurityToken, userId)) {
 			Appointment appointment = new Appointment(sAppointment);
@@ -181,7 +180,7 @@ public class InstaMeetService implements ServiceInterface {
 			em.getTransaction().begin();
 			em.persist(appointment);
 			em.getTransaction().commit();
-			return new simpleAppointment(appointment);
+			return appointment.toSimpleAppointment();
 		}
 			
 		return null;
@@ -190,9 +189,9 @@ public class InstaMeetService implements ServiceInterface {
 
 
 	@Override
-	public simpleUser getOwnData(String SecurityToken, int userId) {
+	public SimpleUser getOwnData(String SecurityToken, int userId) {
 		if(sessions.containsKey(SecurityToken)) {
-			return new simpleUser(sessions.get(SecurityToken));
+			return sessions.get(SecurityToken).toSimpleUser();
 		}
 		return null;
 	}
@@ -200,7 +199,7 @@ public class InstaMeetService implements ServiceInterface {
 
 
 	@Override
-	public simpleUser createUser(String name, String password) {
+	public SimpleUser createUser(String name, String password) {
 		TypedQuery<User> results = em.createNamedQuery("User.findName", User.class).setParameter("name", name);
 		try {
 			results.getSingleResult();
@@ -214,7 +213,7 @@ public class InstaMeetService implements ServiceInterface {
 			em.getTransaction().begin();
 			em.persist(newUser);
 			em.getTransaction().commit();	
-			return new simpleUser(newUser);			
+			return newUser.toSimpleUser();			
 		}
 		
 

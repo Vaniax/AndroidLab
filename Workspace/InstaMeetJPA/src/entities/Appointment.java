@@ -4,15 +4,17 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import simpleEntities.simpleAppointment;
+import simpleEntities.SimpleAppointment;
 
-import java.sql.Time;
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 /**
- * The persistent class for the appointments database table.
+ * The persistent class for the Appointments database table.
  * 
  */
 @Entity
@@ -26,23 +28,8 @@ import java.util.Map;
 })
 public class Appointment implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-
-	private String description;
-
-	private double lattitude;
-
-	private double longitude;
-
-	@Column(name="starting_time")
-	private Time startingTime;
-
-	private String title;
 	
-	public Appointment(simpleAppointment app) {
+	public Appointment(SimpleAppointment app) {
 		this.id = app.getId();
 		this.title = app.getTitle();
 		this.description = app.getDescription();
@@ -54,15 +41,35 @@ public class Appointment implements Serializable {
 	}
 	
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
+
+	private String description;
+
+	private double lattitude;
+
+	private double longitude;
+
+	@Column(name="private")
+	private String private_;
+
+	@Column(name="starting_time")
+	private Timestamp startingTime;
+
+	private String title;
+
 	//bi-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="hostId")
 	private User hoster;
 
-	//bi-directional many-to-many association to User
-	@ManyToMany(mappedBy="visitingAppointments")
-	@MapKey(name="id")
-	private Map<Integer, User> visitingUsers;
+	//bi-directional many-to-one association to Visitor
+	@OneToMany(mappedBy="appointment")
+	private List<Visitor> confirmedVisitors;
+	
+	@OneToMany(mappedBy="appointment")
+	private List<Visitor> invitedVisitors;
 
 	public Appointment() {
 	}
@@ -99,11 +106,19 @@ public class Appointment implements Serializable {
 		this.longitude = longitude;
 	}
 
-	public Time getStartingTime() {
+	public String getPrivate_() {
+		return this.private_;
+	}
+
+	public void setPrivate_(String private_) {
+		this.private_ = private_;
+	}
+
+	public Timestamp getStartingTime() {
 		return this.startingTime;
 	}
 
-	public void setStartingTime(Time startingTime) {
+	public void setStartingTime(Timestamp startingTime) {
 		this.startingTime = startingTime;
 	}
 
@@ -123,14 +138,86 @@ public class Appointment implements Serializable {
 		this.hoster = hoster;
 	}
 
-	public Map<Integer, User> getVisitingUsers() {
-		if(this.visitingUsers == null)
-			this.visitingUsers = new HashMap<Integer, User>();
-		return this.visitingUsers;
+	public List<Visitor> getConfirmedVisitors() {
+		return this.confirmedVisitors;
 	}
 
-	public void setVisitingUsers(Map<Integer, User> visitingUsers) {
-		this.visitingUsers = visitingUsers;
+	public void setConfirmedVisitors(List<Visitor> confirmedVisitors) {
+		this.confirmedVisitors = confirmedVisitors;
 	}
 
+	public Visitor addConfirmedVisitor(Visitor confirmedVisitor) {
+		getConfirmedVisitors().add(confirmedVisitor);
+		confirmedVisitor.setAppointment(this);
+
+		return confirmedVisitor;
+	}
+
+	public Visitor removeConfirmedVisitor(Visitor confirmedVisitor) {
+		getConfirmedVisitors().remove(confirmedVisitor);
+		confirmedVisitor.setAppointment(null);
+
+		return confirmedVisitor;
+	}
+
+	public List<Visitor> getInvitedVisitors() {
+		return this.invitedVisitors;
+	}
+
+	public void setInvitedVisitors(List<Visitor> invitedVisitors) {
+		this.invitedVisitors = invitedVisitors;
+	}
+
+	public Visitor addInvitedVisitor(Visitor invitedVisitor) {
+		getInvitedVisitors().add(invitedVisitor);
+		invitedVisitor.setAppointment(this);
+
+		return invitedVisitor;
+	}
+
+	public Visitor removeInvitedVisitor(Visitor invitedVisitor) {
+		getInvitedVisitors().remove(invitedVisitor);
+		invitedVisitor.setAppointment(null);
+
+		return invitedVisitor;
+	}
+	
+    private List<User> getVisitors(List<?  extends Visitor> visitors){
+        List<User> visitingUsers = new ArrayList<User>();
+
+        for(Visitor visitingUser : visitors) {
+            visitingUsers.add(visitingUser.getUser());
+        }
+
+        return visitingUsers;
+    }
+    
+	public List<User> getVisitingUsers() {
+		return getVisitors(confirmedVisitors);
+	}
+
+	public List<User> getInvitedUsers() {
+		return getVisitors(invitedVisitors);
+	}
+	
+	
+	public SimpleAppointment toSimpleAppointment() {
+		SimpleAppointment app = new SimpleAppointment();
+		app.setId(id);
+		app.setTitle(title);
+		app.setDescription(description);
+		app.setLattitude(lattitude);
+		app.setLongitude(longitude);
+		app.setStartingTime(startingTime);
+		
+		app.setHoster(hoster.getId());
+		
+		Set<Integer> visitingUsers = new HashSet<Integer>();	
+		for(User u : this.getVisitingUsers()) {
+			visitingUsers.add(u.getId());
+		}
+		app.setVisitingUsers(visitingUsers);
+
+		return app;
+	}
 }

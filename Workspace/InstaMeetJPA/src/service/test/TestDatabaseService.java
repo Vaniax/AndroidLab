@@ -29,6 +29,7 @@ public class TestDatabaseService {
 				.setParameter("lon", longitude)
 				.setMaxResults(50);
 		
+		@SuppressWarnings("unchecked")
 		List<Object[]> list = q.getResultList();
 		for(Object[] obj : list) {
 			appointmentDistanceTable.put(((Appointment)obj[0]).getId(), (double)obj[1]);
