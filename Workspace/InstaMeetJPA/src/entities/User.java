@@ -20,9 +20,10 @@ import java.util.Set;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
-	@NamedQuery(name="User.login", query="SELECT a FROM User a WHERE a.username = :name and a.password = :password"),
-	@NamedQuery(name="User.findId", query="SELECT a FROM User a WHERE a.id = :id"),
-	@NamedQuery(name="User.findName", query="SELECT a FROM User a WHERE a.username = :name")
+	@NamedQuery(name="User.login", query="SELECT u FROM User u WHERE u.username = :name and u.password = :password"),
+	@NamedQuery(name="User.findId", query="SELECT u FROM User u WHERE u.id = :id"),
+	@NamedQuery(name="User.findName", query="SELECT u FROM User u WHERE u.username = :name"),
+	@NamedQuery(name="User.findIds", query="SELECT u FROM User u WHERE  u.id IN :userIds")
 })
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;

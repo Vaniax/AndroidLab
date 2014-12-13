@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -352,6 +353,16 @@ public class InstaMeetService implements ServiceInterface {
 			}
 		}
 		return false;
+	}
+	
+	public List<SimpleUser> getUsers(Set<Integer> ids) {
+		TypedQuery<User> result = em.createNamedQuery("User.findIds", User.class).setParameter("userIds", ids);
+		List<SimpleUser> users = new ArrayList<SimpleUser>(result.getResultList().size());
+		for(User u : result.getResultList()) {
+			users.add(u.toSimpleUser());
+		}
+		return null;
+		
 	}
 
 }

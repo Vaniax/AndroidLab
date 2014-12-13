@@ -1,6 +1,8 @@
 package service;
 
 import java.util.List;
+import java.util.Set;
+
 import simpleEntities.Location;
 import simpleEntities.LoginData;
 import simpleEntities.SimpleAppointment;
@@ -29,7 +31,7 @@ public interface ServiceInterface {
 	List<String> GetMessages(String SecurityToken, int userId);
 	List<SimpleAppointment> GetNearAppointments(String SecurityToken, int userId, Location location);
 	List<SimpleAppointment> GetMyVisitingAppointments(String SecurityToken, int userId);
-
+	public List<SimpleUser> getUsers(Set<Integer> ids);
 	//Passive update functions (called from android service)
 	boolean UpdateLocation(String SecurityToken, int userId, Location location);
 
