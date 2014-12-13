@@ -1,5 +1,8 @@
 package de.tubs.androidlab.instameet.service;
 
+import java.util.Map;
+
+import simpleEntities.SimpleUser;
 import de.tubs.androidlab.instameet.client.InstaMeetClient;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
@@ -21,6 +24,12 @@ public class InstaMeetService extends Service {
 	private final InstaMeetServiceBinder binder = new InstaMeetServiceBinder(this);
 	private Thread clientThread = null;
 	private InstaMeetClient client = null;
+	
+	//Blackboard Data
+	private SimpleUser ownData; //Conatins all data over the logged in user
+	private Map<Integer, SimpleUser> users;		//Contains all fetched users
+	private Map<Integer, SimpleUser> appointments;	//Contains all fetched appointments
+	
 	
 	@Override
 	public void onCreate() {
@@ -55,6 +64,18 @@ public class InstaMeetService extends Service {
 		ChatMessage t = ChatMessage.newBuilder().setMessage(msg).setFriendID(2).setSecurityToken("test").build();
 		client.queue.add(ServerRequest.newBuilder().setType(Type.SEND_CHAT_MESSAGE).setMessage(t).build());
 		Log.i(TAG,"queue");
+	}
+
+	public SimpleUser getOwnData() {
+		return ownData;
+	}
+
+	public Map<Integer, SimpleUser> getUsers() {
+		return users;
+	}
+
+	public Map<Integer, SimpleUser> getAppointments() {
+		return appointments;
 	}
 
 }
