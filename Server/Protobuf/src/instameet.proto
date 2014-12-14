@@ -84,7 +84,7 @@ message CreateUser {
 };
 
 message ChatMessage {
-	required string securityToken = 1;
+	optional string securityToken = 1; // Clients should not get tokens from other users
 	required string message = 2;
 	required int32 friendID = 3;
 };

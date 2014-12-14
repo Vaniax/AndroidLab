@@ -6745,15 +6745,27 @@ public final class Messages {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>required string securityToken = 1;</code>
+     * <code>optional string securityToken = 1;</code>
+     *
+     * <pre>
+     * Clients should not get tokens from other users
+     * </pre>
      */
     boolean hasSecurityToken();
     /**
-     * <code>required string securityToken = 1;</code>
+     * <code>optional string securityToken = 1;</code>
+     *
+     * <pre>
+     * Clients should not get tokens from other users
+     * </pre>
      */
     java.lang.String getSecurityToken();
     /**
-     * <code>required string securityToken = 1;</code>
+     * <code>optional string securityToken = 1;</code>
+     *
+     * <pre>
+     * Clients should not get tokens from other users
+     * </pre>
      */
     com.google.protobuf.ByteString
         getSecurityTokenBytes();
@@ -6893,13 +6905,21 @@ public final class Messages {
     public static final int SECURITYTOKEN_FIELD_NUMBER = 1;
     private java.lang.Object securityToken_;
     /**
-     * <code>required string securityToken = 1;</code>
+     * <code>optional string securityToken = 1;</code>
+     *
+     * <pre>
+     * Clients should not get tokens from other users
+     * </pre>
      */
     public boolean hasSecurityToken() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required string securityToken = 1;</code>
+     * <code>optional string securityToken = 1;</code>
+     *
+     * <pre>
+     * Clients should not get tokens from other users
+     * </pre>
      */
     public java.lang.String getSecurityToken() {
       java.lang.Object ref = securityToken_;
@@ -6916,7 +6936,11 @@ public final class Messages {
       }
     }
     /**
-     * <code>required string securityToken = 1;</code>
+     * <code>optional string securityToken = 1;</code>
+     *
+     * <pre>
+     * Clients should not get tokens from other users
+     * </pre>
      */
     public com.google.protobuf.ByteString
         getSecurityTokenBytes() {
@@ -7000,10 +7024,6 @@ public final class Messages {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
-      if (!hasSecurityToken()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       if (!hasMessage()) {
         memoizedIsInitialized = 0;
         return false;
@@ -7246,10 +7266,6 @@ public final class Messages {
       }
 
       public final boolean isInitialized() {
-        if (!hasSecurityToken()) {
-          
-          return false;
-        }
         if (!hasMessage()) {
           
           return false;
@@ -7282,13 +7298,21 @@ public final class Messages {
 
       private java.lang.Object securityToken_ = "";
       /**
-       * <code>required string securityToken = 1;</code>
+       * <code>optional string securityToken = 1;</code>
+       *
+       * <pre>
+       * Clients should not get tokens from other users
+       * </pre>
        */
       public boolean hasSecurityToken() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required string securityToken = 1;</code>
+       * <code>optional string securityToken = 1;</code>
+       *
+       * <pre>
+       * Clients should not get tokens from other users
+       * </pre>
        */
       public java.lang.String getSecurityToken() {
         java.lang.Object ref = securityToken_;
@@ -7305,7 +7329,11 @@ public final class Messages {
         }
       }
       /**
-       * <code>required string securityToken = 1;</code>
+       * <code>optional string securityToken = 1;</code>
+       *
+       * <pre>
+       * Clients should not get tokens from other users
+       * </pre>
        */
       public com.google.protobuf.ByteString
           getSecurityTokenBytes() {
@@ -7321,7 +7349,11 @@ public final class Messages {
         }
       }
       /**
-       * <code>required string securityToken = 1;</code>
+       * <code>optional string securityToken = 1;</code>
+       *
+       * <pre>
+       * Clients should not get tokens from other users
+       * </pre>
        */
       public Builder setSecurityToken(
           java.lang.String value) {
@@ -7334,7 +7366,11 @@ public final class Messages {
         return this;
       }
       /**
-       * <code>required string securityToken = 1;</code>
+       * <code>optional string securityToken = 1;</code>
+       *
+       * <pre>
+       * Clients should not get tokens from other users
+       * </pre>
        */
       public Builder clearSecurityToken() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -7343,7 +7379,11 @@ public final class Messages {
         return this;
       }
       /**
-       * <code>required string securityToken = 1;</code>
+       * <code>optional string securityToken = 1;</code>
+       *
+       * <pre>
+       * Clients should not get tokens from other users
+       * </pre>
        */
       public Builder setSecurityTokenBytes(
           com.google.protobuf.ByteString value) {
@@ -24490,7 +24530,7 @@ public final class Messages {
       "\022\020\n\014CHAT_MESSAGE\020\006\022\016\n\nNO_MESSAGE\020\024\"\'\n\005Lo",
       "gin\022\014\n\004name\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\",\n\nC" +
       "reateUser\022\014\n\004name\030\001 \002(\t\022\020\n\010password\030\002 \002(" +
-      "\t\"G\n\013ChatMessage\022\025\n\rsecurityToken\030\001 \002(\t\022" +
+      "\t\"G\n\013ChatMessage\022\025\n\rsecurityToken\030\001 \001(\t\022" +
       "\017\n\007message\030\002 \002(\t\022\020\n\010friendID\030\003 \002(\005\"$\n\013Ge" +
       "tMessages\022\025\n\rsecurityToken\030\001 \002(\t\"\200\001\n\021Cre" +
       "ateAppointment\022\025\n\rsecurityToken\030\001 \002(\t\022T\n" +
