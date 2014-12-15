@@ -4043,6 +4043,12 @@ public final class Messages {
           return false;
         }
       }
+      if (hasListChatMessages()) {
+        if (!getListChatMessages().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
       if (hasBoolReply()) {
         if (!getBoolReply().isInitialized()) {
           memoizedIsInitialized = 0;
@@ -4464,6 +4470,12 @@ public final class Messages {
         }
         if (hasListLocations()) {
           if (!getListLocations().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasListChatMessages()) {
+          if (!getListChatMessages().isInitialized()) {
             
             return false;
           }
@@ -7532,6 +7544,19 @@ public final class Messages {
      */
     com.google.protobuf.ByteString
         getSecurityTokenBytes();
+
+    /**
+     * <code>repeated int32 friendIDs = 2;</code>
+     */
+    java.util.List<java.lang.Integer> getFriendIDsList();
+    /**
+     * <code>repeated int32 friendIDs = 2;</code>
+     */
+    int getFriendIDsCount();
+    /**
+     * <code>repeated int32 friendIDs = 2;</code>
+     */
+    int getFriendIDs(int index);
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.GetMessages}
@@ -7595,6 +7620,27 @@ public final class Messages {
               securityToken_ = bs;
               break;
             }
+            case 16: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                friendIDs_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              friendIDs_.add(input.readInt32());
+              break;
+            }
+            case 18: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
+                friendIDs_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                friendIDs_.add(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -7603,6 +7649,9 @@ public final class Messages {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          friendIDs_ = java.util.Collections.unmodifiableList(friendIDs_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -7677,8 +7726,31 @@ public final class Messages {
       }
     }
 
+    public static final int FRIENDIDS_FIELD_NUMBER = 2;
+    private java.util.List<java.lang.Integer> friendIDs_;
+    /**
+     * <code>repeated int32 friendIDs = 2;</code>
+     */
+    public java.util.List<java.lang.Integer>
+        getFriendIDsList() {
+      return friendIDs_;
+    }
+    /**
+     * <code>repeated int32 friendIDs = 2;</code>
+     */
+    public int getFriendIDsCount() {
+      return friendIDs_.size();
+    }
+    /**
+     * <code>repeated int32 friendIDs = 2;</code>
+     */
+    public int getFriendIDs(int index) {
+      return friendIDs_.get(index);
+    }
+
     private void initFields() {
       securityToken_ = "";
+      friendIDs_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -7700,6 +7772,9 @@ public final class Messages {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeBytes(1, getSecurityTokenBytes());
       }
+      for (int i = 0; i < friendIDs_.size(); i++) {
+        output.writeInt32(2, friendIDs_.get(i));
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -7712,6 +7787,15 @@ public final class Messages {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(1, getSecurityTokenBytes());
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < friendIDs_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(friendIDs_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getFriendIDsList().size();
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -7836,6 +7920,8 @@ public final class Messages {
         super.clear();
         securityToken_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
+        friendIDs_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -7868,6 +7954,11 @@ public final class Messages {
           to_bitField0_ |= 0x00000001;
         }
         result.securityToken_ = securityToken_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          friendIDs_ = java.util.Collections.unmodifiableList(friendIDs_);
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.friendIDs_ = friendIDs_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -7887,6 +7978,16 @@ public final class Messages {
         if (other.hasSecurityToken()) {
           bitField0_ |= 0x00000001;
           securityToken_ = other.securityToken_;
+          onChanged();
+        }
+        if (!other.friendIDs_.isEmpty()) {
+          if (friendIDs_.isEmpty()) {
+            friendIDs_ = other.friendIDs_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureFriendIDsIsMutable();
+            friendIDs_.addAll(other.friendIDs_);
+          }
           onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
@@ -7992,6 +8093,72 @@ public final class Messages {
   }
   bitField0_ |= 0x00000001;
         securityToken_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<java.lang.Integer> friendIDs_ = java.util.Collections.emptyList();
+      private void ensureFriendIDsIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          friendIDs_ = new java.util.ArrayList<java.lang.Integer>(friendIDs_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public java.util.List<java.lang.Integer>
+          getFriendIDsList() {
+        return java.util.Collections.unmodifiableList(friendIDs_);
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public int getFriendIDsCount() {
+        return friendIDs_.size();
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public int getFriendIDs(int index) {
+        return friendIDs_.get(index);
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public Builder setFriendIDs(
+          int index, int value) {
+        ensureFriendIDsIsMutable();
+        friendIDs_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public Builder addFriendIDs(int value) {
+        ensureFriendIDsIsMutable();
+        friendIDs_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public Builder addAllFriendIDs(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureFriendIDsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, friendIDs_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public Builder clearFriendIDs() {
+        friendIDs_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
@@ -14681,23 +14848,28 @@ public final class Messages {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated string message = 1;</code>
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
      */
-    com.google.protobuf.ProtocolStringList
-        getMessageList();
+    java.util.List<de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage> 
+        getMessagesList();
     /**
-     * <code>repeated string message = 1;</code>
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
      */
-    int getMessageCount();
+    de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage getMessages(int index);
     /**
-     * <code>repeated string message = 1;</code>
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
      */
-    java.lang.String getMessage(int index);
+    int getMessagesCount();
     /**
-     * <code>repeated string message = 1;</code>
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
      */
-    com.google.protobuf.ByteString
-        getMessageBytes(int index);
+    java.util.List<? extends de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessageOrBuilder> 
+        getMessagesOrBuilderList();
+    /**
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
+     */
+    de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessageOrBuilder getMessagesOrBuilder(
+        int index);
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.ListChatMessages}
@@ -14752,12 +14924,11 @@ public final class Messages {
               break;
             }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-                message_ = new com.google.protobuf.LazyStringArrayList();
+                messages_ = new java.util.ArrayList<de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              message_.add(bs);
+              messages_.add(input.readMessage(de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.PARSER, extensionRegistry));
               break;
             }
           }
@@ -14769,7 +14940,7 @@ public final class Messages {
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
         if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-          message_ = message_.getUnmodifiableView();
+          messages_ = java.util.Collections.unmodifiableList(messages_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -14802,37 +14973,43 @@ public final class Messages {
       return PARSER;
     }
 
-    public static final int MESSAGE_FIELD_NUMBER = 1;
-    private com.google.protobuf.LazyStringList message_;
+    public static final int MESSAGES_FIELD_NUMBER = 1;
+    private java.util.List<de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage> messages_;
     /**
-     * <code>repeated string message = 1;</code>
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
      */
-    public com.google.protobuf.ProtocolStringList
-        getMessageList() {
-      return message_;
+    public java.util.List<de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage> getMessagesList() {
+      return messages_;
     }
     /**
-     * <code>repeated string message = 1;</code>
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
      */
-    public int getMessageCount() {
-      return message_.size();
+    public java.util.List<? extends de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessageOrBuilder> 
+        getMessagesOrBuilderList() {
+      return messages_;
     }
     /**
-     * <code>repeated string message = 1;</code>
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
      */
-    public java.lang.String getMessage(int index) {
-      return message_.get(index);
+    public int getMessagesCount() {
+      return messages_.size();
     }
     /**
-     * <code>repeated string message = 1;</code>
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getMessageBytes(int index) {
-      return message_.getByteString(index);
+    public de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage getMessages(int index) {
+      return messages_.get(index);
+    }
+    /**
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
+     */
+    public de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessageOrBuilder getMessagesOrBuilder(
+        int index) {
+      return messages_.get(index);
     }
 
     private void initFields() {
-      message_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      messages_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -14840,6 +15017,12 @@ public final class Messages {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
+      for (int i = 0; i < getMessagesCount(); i++) {
+        if (!getMessages(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -14847,8 +15030,8 @@ public final class Messages {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
-      for (int i = 0; i < message_.size(); i++) {
-        output.writeBytes(1, message_.getByteString(i));
+      for (int i = 0; i < messages_.size(); i++) {
+        output.writeMessage(1, messages_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -14859,14 +15042,9 @@ public final class Messages {
       if (size != -1) return size;
 
       size = 0;
-      {
-        int dataSize = 0;
-        for (int i = 0; i < message_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeBytesSizeNoTag(message_.getByteString(i));
-        }
-        size += dataSize;
-        size += 1 * getMessageList().size();
+      for (int i = 0; i < messages_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, messages_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -14977,6 +15155,7 @@ public final class Messages {
       }
       private void maybeForceBuilderInitialization() {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getMessagesFieldBuilder();
         }
       }
       private static Builder create() {
@@ -14985,8 +15164,12 @@ public final class Messages {
 
       public Builder clear() {
         super.clear();
-        message_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000001);
+        if (messagesBuilder_ == null) {
+          messages_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          messagesBuilder_.clear();
+        }
         return this;
       }
 
@@ -15014,11 +15197,15 @@ public final class Messages {
       public de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages buildPartial() {
         de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages result = new de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages(this);
         int from_bitField0_ = bitField0_;
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
-          message_ = message_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000001);
+        if (messagesBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            messages_ = java.util.Collections.unmodifiableList(messages_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.messages_ = messages_;
+        } else {
+          result.messages_ = messagesBuilder_.build();
         }
-        result.message_ = message_;
         onBuilt();
         return result;
       }
@@ -15034,21 +15221,43 @@ public final class Messages {
 
       public Builder mergeFrom(de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages other) {
         if (other == de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages.getDefaultInstance()) return this;
-        if (!other.message_.isEmpty()) {
-          if (message_.isEmpty()) {
-            message_ = other.message_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureMessageIsMutable();
-            message_.addAll(other.message_);
+        if (messagesBuilder_ == null) {
+          if (!other.messages_.isEmpty()) {
+            if (messages_.isEmpty()) {
+              messages_ = other.messages_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureMessagesIsMutable();
+              messages_.addAll(other.messages_);
+            }
+            onChanged();
           }
-          onChanged();
+        } else {
+          if (!other.messages_.isEmpty()) {
+            if (messagesBuilder_.isEmpty()) {
+              messagesBuilder_.dispose();
+              messagesBuilder_ = null;
+              messages_ = other.messages_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              messagesBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getMessagesFieldBuilder() : null;
+            } else {
+              messagesBuilder_.addAllMessages(other.messages_);
+            }
+          }
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
+        for (int i = 0; i < getMessagesCount(); i++) {
+          if (!getMessages(i).isInitialized()) {
+            
+            return false;
+          }
+        }
         return true;
       }
 
@@ -15071,97 +15280,244 @@ public final class Messages {
       }
       private int bitField0_;
 
-      private com.google.protobuf.LazyStringList message_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureMessageIsMutable() {
+      private java.util.List<de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage> messages_ =
+        java.util.Collections.emptyList();
+      private void ensureMessagesIsMutable() {
         if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-          message_ = new com.google.protobuf.LazyStringArrayList(message_);
+          messages_ = new java.util.ArrayList<de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage>(messages_);
           bitField0_ |= 0x00000001;
          }
       }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage, de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.Builder, de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessageOrBuilder> messagesBuilder_;
+
       /**
-       * <code>repeated string message = 1;</code>
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
        */
-      public com.google.protobuf.ProtocolStringList
-          getMessageList() {
-        return message_.getUnmodifiableView();
+      public java.util.List<de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage> getMessagesList() {
+        if (messagesBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(messages_);
+        } else {
+          return messagesBuilder_.getMessageList();
+        }
       }
       /**
-       * <code>repeated string message = 1;</code>
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
        */
-      public int getMessageCount() {
-        return message_.size();
+      public int getMessagesCount() {
+        if (messagesBuilder_ == null) {
+          return messages_.size();
+        } else {
+          return messagesBuilder_.getCount();
+        }
       }
       /**
-       * <code>repeated string message = 1;</code>
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
        */
-      public java.lang.String getMessage(int index) {
-        return message_.get(index);
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage getMessages(int index) {
+        if (messagesBuilder_ == null) {
+          return messages_.get(index);
+        } else {
+          return messagesBuilder_.getMessage(index);
+        }
       }
       /**
-       * <code>repeated string message = 1;</code>
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
        */
-      public com.google.protobuf.ByteString
-          getMessageBytes(int index) {
-        return message_.getByteString(index);
-      }
-      /**
-       * <code>repeated string message = 1;</code>
-       */
-      public Builder setMessage(
-          int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureMessageIsMutable();
-        message_.set(index, value);
-        onChanged();
+      public Builder setMessages(
+          int index, de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage value) {
+        if (messagesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureMessagesIsMutable();
+          messages_.set(index, value);
+          onChanged();
+        } else {
+          messagesBuilder_.setMessage(index, value);
+        }
         return this;
       }
       /**
-       * <code>repeated string message = 1;</code>
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
        */
-      public Builder addMessage(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureMessageIsMutable();
-        message_.add(value);
-        onChanged();
+      public Builder setMessages(
+          int index, de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.Builder builderForValue) {
+        if (messagesBuilder_ == null) {
+          ensureMessagesIsMutable();
+          messages_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          messagesBuilder_.setMessage(index, builderForValue.build());
+        }
         return this;
       }
       /**
-       * <code>repeated string message = 1;</code>
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
        */
-      public Builder addAllMessage(
-          java.lang.Iterable<java.lang.String> values) {
-        ensureMessageIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, message_);
-        onChanged();
+      public Builder addMessages(de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage value) {
+        if (messagesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureMessagesIsMutable();
+          messages_.add(value);
+          onChanged();
+        } else {
+          messagesBuilder_.addMessage(value);
+        }
         return this;
       }
       /**
-       * <code>repeated string message = 1;</code>
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
        */
-      public Builder clearMessage() {
-        message_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
+      public Builder addMessages(
+          int index, de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage value) {
+        if (messagesBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureMessagesIsMutable();
+          messages_.add(index, value);
+          onChanged();
+        } else {
+          messagesBuilder_.addMessage(index, value);
+        }
         return this;
       }
       /**
-       * <code>repeated string message = 1;</code>
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
        */
-      public Builder addMessageBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureMessageIsMutable();
-        message_.add(value);
-        onChanged();
+      public Builder addMessages(
+          de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.Builder builderForValue) {
+        if (messagesBuilder_ == null) {
+          ensureMessagesIsMutable();
+          messages_.add(builderForValue.build());
+          onChanged();
+        } else {
+          messagesBuilder_.addMessage(builderForValue.build());
+        }
         return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
+       */
+      public Builder addMessages(
+          int index, de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.Builder builderForValue) {
+        if (messagesBuilder_ == null) {
+          ensureMessagesIsMutable();
+          messages_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          messagesBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
+       */
+      public Builder addAllMessages(
+          java.lang.Iterable<? extends de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage> values) {
+        if (messagesBuilder_ == null) {
+          ensureMessagesIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, messages_);
+          onChanged();
+        } else {
+          messagesBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
+       */
+      public Builder clearMessages() {
+        if (messagesBuilder_ == null) {
+          messages_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          messagesBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
+       */
+      public Builder removeMessages(int index) {
+        if (messagesBuilder_ == null) {
+          ensureMessagesIsMutable();
+          messages_.remove(index);
+          onChanged();
+        } else {
+          messagesBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
+       */
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.Builder getMessagesBuilder(
+          int index) {
+        return getMessagesFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
+       */
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessageOrBuilder getMessagesOrBuilder(
+          int index) {
+        if (messagesBuilder_ == null) {
+          return messages_.get(index);  } else {
+          return messagesBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
+       */
+      public java.util.List<? extends de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessageOrBuilder> 
+           getMessagesOrBuilderList() {
+        if (messagesBuilder_ != null) {
+          return messagesBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(messages_);
+        }
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
+       */
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.Builder addMessagesBuilder() {
+        return getMessagesFieldBuilder().addBuilder(
+            de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
+       */
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.Builder addMessagesBuilder(
+          int index) {
+        return getMessagesFieldBuilder().addBuilder(
+            index, de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.ChatMessage messages = 1;</code>
+       */
+      public java.util.List<de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.Builder> 
+           getMessagesBuilderList() {
+        return getMessagesFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage, de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.Builder, de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessageOrBuilder> 
+          getMessagesFieldBuilder() {
+        if (messagesBuilder_ == null) {
+          messagesBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage, de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage.Builder, de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessageOrBuilder>(
+                  messages_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          messages_ = null;
+        }
+        return messagesBuilder_;
       }
 
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.ListChatMessages)
@@ -17189,6 +17545,45 @@ public final class Messages {
      * <code>optional .de.tubs.androidlab.instameet.server.protobuf.Location location = 4;</code>
      */
     de.tubs.androidlab.instameet.server.protobuf.Messages.LocationOrBuilder getLocationOrBuilder();
+
+    /**
+     * <code>repeated int32 friendIDs = 5;</code>
+     */
+    java.util.List<java.lang.Integer> getFriendIDsList();
+    /**
+     * <code>repeated int32 friendIDs = 5;</code>
+     */
+    int getFriendIDsCount();
+    /**
+     * <code>repeated int32 friendIDs = 5;</code>
+     */
+    int getFriendIDs(int index);
+
+    /**
+     * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+     */
+    java.util.List<java.lang.Integer> getHostedAppointmentIDsList();
+    /**
+     * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+     */
+    int getHostedAppointmentIDsCount();
+    /**
+     * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+     */
+    int getHostedAppointmentIDs(int index);
+
+    /**
+     * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+     */
+    java.util.List<java.lang.Integer> getVisitingAppointmentIDsList();
+    /**
+     * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+     */
+    int getVisitingAppointmentIDsCount();
+    /**
+     * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+     */
+    int getVisitingAppointmentIDs(int index);
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.SimpleUser}
@@ -17279,6 +17674,69 @@ public final class Messages {
               bitField0_ |= 0x00000008;
               break;
             }
+            case 40: {
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+                friendIDs_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000010;
+              }
+              friendIDs_.add(input.readInt32());
+              break;
+            }
+            case 42: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010) && input.getBytesUntilLimit() > 0) {
+                friendIDs_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000010;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                friendIDs_.add(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 48: {
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+                hostedAppointmentIDs_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000020;
+              }
+              hostedAppointmentIDs_.add(input.readInt32());
+              break;
+            }
+            case 50: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020) && input.getBytesUntilLimit() > 0) {
+                hostedAppointmentIDs_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000020;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                hostedAppointmentIDs_.add(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 56: {
+              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+                visitingAppointmentIDs_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000040;
+              }
+              visitingAppointmentIDs_.add(input.readInt32());
+              break;
+            }
+            case 58: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040) && input.getBytesUntilLimit() > 0) {
+                visitingAppointmentIDs_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000040;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                visitingAppointmentIDs_.add(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -17287,6 +17745,15 @@ public final class Messages {
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e.getMessage()).setUnfinishedMessage(this);
       } finally {
+        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+          friendIDs_ = java.util.Collections.unmodifiableList(friendIDs_);
+        }
+        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+          hostedAppointmentIDs_ = java.util.Collections.unmodifiableList(hostedAppointmentIDs_);
+        }
+        if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+          visitingAppointmentIDs_ = java.util.Collections.unmodifiableList(visitingAppointmentIDs_);
+        }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
       }
@@ -17418,11 +17885,80 @@ public final class Messages {
       return location_;
     }
 
+    public static final int FRIENDIDS_FIELD_NUMBER = 5;
+    private java.util.List<java.lang.Integer> friendIDs_;
+    /**
+     * <code>repeated int32 friendIDs = 5;</code>
+     */
+    public java.util.List<java.lang.Integer>
+        getFriendIDsList() {
+      return friendIDs_;
+    }
+    /**
+     * <code>repeated int32 friendIDs = 5;</code>
+     */
+    public int getFriendIDsCount() {
+      return friendIDs_.size();
+    }
+    /**
+     * <code>repeated int32 friendIDs = 5;</code>
+     */
+    public int getFriendIDs(int index) {
+      return friendIDs_.get(index);
+    }
+
+    public static final int HOSTEDAPPOINTMENTIDS_FIELD_NUMBER = 6;
+    private java.util.List<java.lang.Integer> hostedAppointmentIDs_;
+    /**
+     * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+     */
+    public java.util.List<java.lang.Integer>
+        getHostedAppointmentIDsList() {
+      return hostedAppointmentIDs_;
+    }
+    /**
+     * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+     */
+    public int getHostedAppointmentIDsCount() {
+      return hostedAppointmentIDs_.size();
+    }
+    /**
+     * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+     */
+    public int getHostedAppointmentIDs(int index) {
+      return hostedAppointmentIDs_.get(index);
+    }
+
+    public static final int VISITINGAPPOINTMENTIDS_FIELD_NUMBER = 7;
+    private java.util.List<java.lang.Integer> visitingAppointmentIDs_;
+    /**
+     * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+     */
+    public java.util.List<java.lang.Integer>
+        getVisitingAppointmentIDsList() {
+      return visitingAppointmentIDs_;
+    }
+    /**
+     * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+     */
+    public int getVisitingAppointmentIDsCount() {
+      return visitingAppointmentIDs_.size();
+    }
+    /**
+     * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+     */
+    public int getVisitingAppointmentIDs(int index) {
+      return visitingAppointmentIDs_.get(index);
+    }
+
     private void initFields() {
       userName_ = "";
       userID_ = 0;
       latestLocationUpdate_ = de.tubs.androidlab.instameet.server.protobuf.Messages.Time.getDefaultInstance();
       location_ = de.tubs.androidlab.instameet.server.protobuf.Messages.Location.getDefaultInstance();
+      friendIDs_ = java.util.Collections.emptyList();
+      hostedAppointmentIDs_ = java.util.Collections.emptyList();
+      visitingAppointmentIDs_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -17469,6 +18005,15 @@ public final class Messages {
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeMessage(4, location_);
       }
+      for (int i = 0; i < friendIDs_.size(); i++) {
+        output.writeInt32(5, friendIDs_.get(i));
+      }
+      for (int i = 0; i < hostedAppointmentIDs_.size(); i++) {
+        output.writeInt32(6, hostedAppointmentIDs_.get(i));
+      }
+      for (int i = 0; i < visitingAppointmentIDs_.size(); i++) {
+        output.writeInt32(7, visitingAppointmentIDs_.get(i));
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -17493,6 +18038,33 @@ public final class Messages {
       if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, location_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < friendIDs_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(friendIDs_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getFriendIDsList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < hostedAppointmentIDs_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(hostedAppointmentIDs_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getHostedAppointmentIDsList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < visitingAppointmentIDs_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(visitingAppointmentIDs_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getVisitingAppointmentIDsList().size();
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -17629,6 +18201,12 @@ public final class Messages {
           locationBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000008);
+        friendIDs_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000010);
+        hostedAppointmentIDs_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000020);
+        visitingAppointmentIDs_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
 
@@ -17681,6 +18259,21 @@ public final class Messages {
         } else {
           result.location_ = locationBuilder_.build();
         }
+        if (((bitField0_ & 0x00000010) == 0x00000010)) {
+          friendIDs_ = java.util.Collections.unmodifiableList(friendIDs_);
+          bitField0_ = (bitField0_ & ~0x00000010);
+        }
+        result.friendIDs_ = friendIDs_;
+        if (((bitField0_ & 0x00000020) == 0x00000020)) {
+          hostedAppointmentIDs_ = java.util.Collections.unmodifiableList(hostedAppointmentIDs_);
+          bitField0_ = (bitField0_ & ~0x00000020);
+        }
+        result.hostedAppointmentIDs_ = hostedAppointmentIDs_;
+        if (((bitField0_ & 0x00000040) == 0x00000040)) {
+          visitingAppointmentIDs_ = java.util.Collections.unmodifiableList(visitingAppointmentIDs_);
+          bitField0_ = (bitField0_ & ~0x00000040);
+        }
+        result.visitingAppointmentIDs_ = visitingAppointmentIDs_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -17710,6 +18303,36 @@ public final class Messages {
         }
         if (other.hasLocation()) {
           mergeLocation(other.getLocation());
+        }
+        if (!other.friendIDs_.isEmpty()) {
+          if (friendIDs_.isEmpty()) {
+            friendIDs_ = other.friendIDs_;
+            bitField0_ = (bitField0_ & ~0x00000010);
+          } else {
+            ensureFriendIDsIsMutable();
+            friendIDs_.addAll(other.friendIDs_);
+          }
+          onChanged();
+        }
+        if (!other.hostedAppointmentIDs_.isEmpty()) {
+          if (hostedAppointmentIDs_.isEmpty()) {
+            hostedAppointmentIDs_ = other.hostedAppointmentIDs_;
+            bitField0_ = (bitField0_ & ~0x00000020);
+          } else {
+            ensureHostedAppointmentIDsIsMutable();
+            hostedAppointmentIDs_.addAll(other.hostedAppointmentIDs_);
+          }
+          onChanged();
+        }
+        if (!other.visitingAppointmentIDs_.isEmpty()) {
+          if (visitingAppointmentIDs_.isEmpty()) {
+            visitingAppointmentIDs_ = other.visitingAppointmentIDs_;
+            bitField0_ = (bitField0_ & ~0x00000040);
+          } else {
+            ensureVisitingAppointmentIDsIsMutable();
+            visitingAppointmentIDs_.addAll(other.visitingAppointmentIDs_);
+          }
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -18096,6 +18719,204 @@ public final class Messages {
           location_ = null;
         }
         return locationBuilder_;
+      }
+
+      private java.util.List<java.lang.Integer> friendIDs_ = java.util.Collections.emptyList();
+      private void ensureFriendIDsIsMutable() {
+        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
+          friendIDs_ = new java.util.ArrayList<java.lang.Integer>(friendIDs_);
+          bitField0_ |= 0x00000010;
+         }
+      }
+      /**
+       * <code>repeated int32 friendIDs = 5;</code>
+       */
+      public java.util.List<java.lang.Integer>
+          getFriendIDsList() {
+        return java.util.Collections.unmodifiableList(friendIDs_);
+      }
+      /**
+       * <code>repeated int32 friendIDs = 5;</code>
+       */
+      public int getFriendIDsCount() {
+        return friendIDs_.size();
+      }
+      /**
+       * <code>repeated int32 friendIDs = 5;</code>
+       */
+      public int getFriendIDs(int index) {
+        return friendIDs_.get(index);
+      }
+      /**
+       * <code>repeated int32 friendIDs = 5;</code>
+       */
+      public Builder setFriendIDs(
+          int index, int value) {
+        ensureFriendIDsIsMutable();
+        friendIDs_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 friendIDs = 5;</code>
+       */
+      public Builder addFriendIDs(int value) {
+        ensureFriendIDsIsMutable();
+        friendIDs_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 friendIDs = 5;</code>
+       */
+      public Builder addAllFriendIDs(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureFriendIDsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, friendIDs_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 friendIDs = 5;</code>
+       */
+      public Builder clearFriendIDs() {
+        friendIDs_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000010);
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<java.lang.Integer> hostedAppointmentIDs_ = java.util.Collections.emptyList();
+      private void ensureHostedAppointmentIDsIsMutable() {
+        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
+          hostedAppointmentIDs_ = new java.util.ArrayList<java.lang.Integer>(hostedAppointmentIDs_);
+          bitField0_ |= 0x00000020;
+         }
+      }
+      /**
+       * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+       */
+      public java.util.List<java.lang.Integer>
+          getHostedAppointmentIDsList() {
+        return java.util.Collections.unmodifiableList(hostedAppointmentIDs_);
+      }
+      /**
+       * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+       */
+      public int getHostedAppointmentIDsCount() {
+        return hostedAppointmentIDs_.size();
+      }
+      /**
+       * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+       */
+      public int getHostedAppointmentIDs(int index) {
+        return hostedAppointmentIDs_.get(index);
+      }
+      /**
+       * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+       */
+      public Builder setHostedAppointmentIDs(
+          int index, int value) {
+        ensureHostedAppointmentIDsIsMutable();
+        hostedAppointmentIDs_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+       */
+      public Builder addHostedAppointmentIDs(int value) {
+        ensureHostedAppointmentIDsIsMutable();
+        hostedAppointmentIDs_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+       */
+      public Builder addAllHostedAppointmentIDs(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureHostedAppointmentIDsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, hostedAppointmentIDs_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 hostedAppointmentIDs = 6;</code>
+       */
+      public Builder clearHostedAppointmentIDs() {
+        hostedAppointmentIDs_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000020);
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<java.lang.Integer> visitingAppointmentIDs_ = java.util.Collections.emptyList();
+      private void ensureVisitingAppointmentIDsIsMutable() {
+        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
+          visitingAppointmentIDs_ = new java.util.ArrayList<java.lang.Integer>(visitingAppointmentIDs_);
+          bitField0_ |= 0x00000040;
+         }
+      }
+      /**
+       * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+       */
+      public java.util.List<java.lang.Integer>
+          getVisitingAppointmentIDsList() {
+        return java.util.Collections.unmodifiableList(visitingAppointmentIDs_);
+      }
+      /**
+       * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+       */
+      public int getVisitingAppointmentIDsCount() {
+        return visitingAppointmentIDs_.size();
+      }
+      /**
+       * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+       */
+      public int getVisitingAppointmentIDs(int index) {
+        return visitingAppointmentIDs_.get(index);
+      }
+      /**
+       * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+       */
+      public Builder setVisitingAppointmentIDs(
+          int index, int value) {
+        ensureVisitingAppointmentIDsIsMutable();
+        visitingAppointmentIDs_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+       */
+      public Builder addVisitingAppointmentIDs(int value) {
+        ensureVisitingAppointmentIDsIsMutable();
+        visitingAppointmentIDs_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+       */
+      public Builder addAllVisitingAppointmentIDs(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureVisitingAppointmentIDsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, visitingAppointmentIDs_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 visitingAppointmentIDs = 7;</code>
+       */
+      public Builder clearVisitingAppointmentIDs() {
+        visitingAppointmentIDs_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000040);
+        onChanged();
+        return this;
       }
 
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.SimpleUser)
@@ -24531,63 +25352,67 @@ public final class Messages {
       "gin\022\014\n\004name\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\",\n\nC" +
       "reateUser\022\014\n\004name\030\001 \002(\t\022\020\n\010password\030\002 \002(" +
       "\t\"G\n\013ChatMessage\022\025\n\rsecurityToken\030\001 \001(\t\022" +
-      "\017\n\007message\030\002 \002(\t\022\020\n\010friendID\030\003 \002(\005\"$\n\013Ge" +
-      "tMessages\022\025\n\rsecurityToken\030\001 \002(\t\"\200\001\n\021Cre" +
-      "ateAppointment\022\025\n\rsecurityToken\030\001 \002(\t\022T\n" +
-      "\013appointment\030\002 \002(\0132?.de.tubs.androidlab." +
-      "instameet.server.protobuf.SimpleAppointm" +
-      "ent\"@\n\020VisitAppointment\022\025\n\rsecurityToken" +
-      "\030\001 \002(\t\022\025\n\rappointmentID\030\002 \002(\005\"v\n\023GetNear",
-      "Appointments\022\025\n\rsecurityToken\030\001 \002(\t\022H\n\010l" +
-      "ocation\030\002 \001(\01326.de.tubs.androidlab.insta" +
-      "meet.server.protobuf.Location\"4\n\tAddFrie" +
-      "nd\022\025\n\rsecurityToken\030\001 \002(\t\022\020\n\010friendID\030\002 " +
-      "\002(\005\"#\n\nGetOwnData\022\025\n\rsecurityToken\030\001 \002(\t" +
-      "\"#\n\nGetFriends\022\025\n\rsecurityToken\030\001 \002(\t\"<\n" +
-      "\021GetFriendLocation\022\025\n\rsecurityToken\030\001 \002(" +
-      "\t\022\020\n\010friendID\030\002 \002(\005\"2\n\031GetMyVisitingAppo" +
-      "intments\022\025\n\rsecurityToken\030\001 \002(\t\"q\n\016Updat" +
-      "eLocation\022\025\n\rsecurityToken\030\001 \002(\t\022H\n\010loca",
-      "tion\030\002 \002(\01326.de.tubs.androidlab.instamee" +
-      "t.server.protobuf.Location\"X\n\013ListFriend" +
-      "s\022I\n\007friends\030\001 \003(\01328.de.tubs.androidlab." +
-      "instameet.server.protobuf.SimpleUser\"Y\n\r" +
-      "ListLocations\022H\n\010location\030\001 \003(\01326.de.tub" +
-      "s.androidlab.instameet.server.protobuf.L" +
-      "ocation\"#\n\020ListChatMessages\022\017\n\007message\030\001" +
-      " \003(\t\"\033\n\tBoolReply\022\016\n\006isTrue\030\001 \002(\010\"\324\002\n\021Si" +
-      "mpleAppointment\022\n\n\002id\030\001 \002(\005\022\r\n\005title\030\002 \002" +
-      "(\t\022H\n\010location\030\003 \002(\01326.de.tubs.androidla",
-      "b.instameet.server.protobuf.Location\022@\n\004" +
-      "time\030\004 \002(\01322.de.tubs.androidlab.instamee" +
-      "t.server.protobuf.Time\022H\n\006hoster\030\005 \002(\01328" +
-      ".de.tubs.androidlab.instameet.server.pro" +
-      "tobuf.SimpleUser\022N\n\014participants\030\006 \003(\01328" +
-      ".de.tubs.androidlab.instameet.server.pro" +
-      "tobuf.SimpleUser\"\312\001\n\nSimpleUser\022\020\n\010userN" +
-      "ame\030\001 \002(\t\022\016\n\006userID\030\002 \002(\005\022P\n\024latestLocat" +
-      "ionUpdate\030\003 \001(\01322.de.tubs.androidlab.ins" +
-      "tameet.server.protobuf.Time\022H\n\010location\030",
-      "\004 \001(\01326.de.tubs.androidlab.instameet.ser" +
-      "ver.protobuf.Location\"0\n\010Location\022\021\n\tlon" +
+      "\017\n\007message\030\002 \002(\t\022\020\n\010friendID\030\003 \002(\005\"7\n\013Ge" +
+      "tMessages\022\025\n\rsecurityToken\030\001 \002(\t\022\021\n\tfrie" +
+      "ndIDs\030\002 \003(\005\"\200\001\n\021CreateAppointment\022\025\n\rsec" +
+      "urityToken\030\001 \002(\t\022T\n\013appointment\030\002 \002(\0132?." +
+      "de.tubs.androidlab.instameet.server.prot" +
+      "obuf.SimpleAppointment\"@\n\020VisitAppointme" +
+      "nt\022\025\n\rsecurityToken\030\001 \002(\t\022\025\n\rappointment",
+      "ID\030\002 \002(\005\"v\n\023GetNearAppointments\022\025\n\rsecur" +
+      "ityToken\030\001 \002(\t\022H\n\010location\030\002 \001(\01326.de.tu" +
+      "bs.androidlab.instameet.server.protobuf." +
+      "Location\"4\n\tAddFriend\022\025\n\rsecurityToken\030\001" +
+      " \002(\t\022\020\n\010friendID\030\002 \002(\005\"#\n\nGetOwnData\022\025\n\r" +
+      "securityToken\030\001 \002(\t\"#\n\nGetFriends\022\025\n\rsec" +
+      "urityToken\030\001 \002(\t\"<\n\021GetFriendLocation\022\025\n" +
+      "\rsecurityToken\030\001 \002(\t\022\020\n\010friendID\030\002 \002(\005\"2" +
+      "\n\031GetMyVisitingAppointments\022\025\n\rsecurityT" +
+      "oken\030\001 \002(\t\"q\n\016UpdateLocation\022\025\n\rsecurity",
+      "Token\030\001 \002(\t\022H\n\010location\030\002 \002(\01326.de.tubs." +
+      "androidlab.instameet.server.protobuf.Loc" +
+      "ation\"X\n\013ListFriends\022I\n\007friends\030\001 \003(\01328." +
+      "de.tubs.androidlab.instameet.server.prot" +
+      "obuf.SimpleUser\"Y\n\rListLocations\022H\n\010loca" +
+      "tion\030\001 \003(\01326.de.tubs.androidlab.instamee" +
+      "t.server.protobuf.Location\"_\n\020ListChatMe" +
+      "ssages\022K\n\010messages\030\001 \003(\01329.de.tubs.andro" +
+      "idlab.instameet.server.protobuf.ChatMess" +
+      "age\"\033\n\tBoolReply\022\016\n\006isTrue\030\001 \002(\010\"\324\002\n\021Sim",
+      "pleAppointment\022\n\n\002id\030\001 \002(\005\022\r\n\005title\030\002 \002(" +
+      "\t\022H\n\010location\030\003 \002(\01326.de.tubs.androidlab" +
+      ".instameet.server.protobuf.Location\022@\n\004t" +
+      "ime\030\004 \002(\01322.de.tubs.androidlab.instameet" +
+      ".server.protobuf.Time\022H\n\006hoster\030\005 \002(\01328." +
+      "de.tubs.androidlab.instameet.server.prot" +
+      "obuf.SimpleUser\022N\n\014participants\030\006 \003(\01328." +
+      "de.tubs.androidlab.instameet.server.prot" +
+      "obuf.SimpleUser\"\233\002\n\nSimpleUser\022\020\n\010userNa" +
+      "me\030\001 \002(\t\022\016\n\006userID\030\002 \002(\005\022P\n\024latestLocati",
+      "onUpdate\030\003 \001(\01322.de.tubs.androidlab.inst" +
+      "ameet.server.protobuf.Time\022H\n\010location\030\004" +
+      " \001(\01326.de.tubs.androidlab.instameet.serv" +
+      "er.protobuf.Location\022\021\n\tfriendIDs\030\005 \003(\005\022" +
+      "\034\n\024hostedAppointmentIDs\030\006 \003(\005\022\036\n\026visitin" +
+      "gAppointmentIDs\030\007 \003(\005\"0\n\010Location\022\021\n\tlon" +
       "gitude\030\001 \002(\001\022\021\n\tlattitude\030\002 \002(\001\"\024\n\004Time\022" +
       "\014\n\004time\030\001 \002(\t\"\036\n\rSecurityToken\022\r\n\005token\030" +
       "\001 \002(\t\"\013\n\tNoMessage\"f\n\nMapFriends\022X\n\003map\030" +
-      "\001 \002(\0132K.de.tubs.androidlab.instameet.ser" +
+      "\001 \002(\0132K.de.tubs.androidlab.instameet.ser",
       "ver.protobuf.Pair_Double_SimpleAppointme" +
       "nt\"r\n\026MapAppointmentDistance\022X\n\003map\030\001 \003(" +
       "\0132K.de.tubs.androidlab.instameet.server." +
-      "protobuf.Pair_Double_SimpleAppointment\"k",
+      "protobuf.Pair_Double_SimpleAppointment\"k" +
       "\n\020MapAppointmentID\022W\n\003map\030\001 \003(\0132J.de.tub" +
       "s.androidlab.instameet.server.protobuf.P" +
       "air_Int32_SimpleAppointment\"]\n\tMapUserID" +
       "\022P\n\003map\030\001 \003(\0132C.de.tubs.androidlab.insta" +
       "meet.server.protobuf.Pair_Int32_SimpleUs" +
-      "er\"m\n\025Pair_Int32_SimpleUser\022\013\n\003key\030\001 \002(\005" +
+      "er\"m\n\025Pair_Int32_SimpleUser\022\013\n\003key\030\001 \002(\005",
       "\022G\n\005value\030\002 \002(\01328.de.tubs.androidlab.ins" +
       "tameet.server.protobuf.SimpleUser\"{\n\034Pai" +
       "r_Int32_SimpleAppointment\022\013\n\003key\030\001 \002(\005\022N" +
-      "\n\005value\030\002 \002(\0132?.de.tubs.androidlab.insta",
+      "\n\005value\030\002 \002(\0132?.de.tubs.androidlab.insta" +
       "meet.server.protobuf.SimpleAppointment\"|" +
       "\n\035Pair_Double_SimpleAppointment\022\013\n\003key\030\001" +
       " \002(\001\022N\n\005value\030\002 \002(\0132?.de.tubs.androidlab" +
@@ -24641,7 +25466,7 @@ public final class Messages {
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetMessages_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_GetMessages_descriptor,
-        new java.lang.String[] { "SecurityToken", });
+        new java.lang.String[] { "SecurityToken", "FriendIDs", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_CreateAppointment_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_CreateAppointment_fieldAccessorTable = new
@@ -24713,7 +25538,7 @@ public final class Messages {
     internal_static_de_tubs_androidlab_instameet_server_protobuf_ListChatMessages_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_ListChatMessages_descriptor,
-        new java.lang.String[] { "Message", });
+        new java.lang.String[] { "Messages", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_BoolReply_descriptor =
       getDescriptor().getMessageTypes().get(18);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_BoolReply_fieldAccessorTable = new
@@ -24731,7 +25556,7 @@ public final class Messages {
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleUser_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleUser_descriptor,
-        new java.lang.String[] { "UserName", "UserID", "LatestLocationUpdate", "Location", });
+        new java.lang.String[] { "UserName", "UserID", "LatestLocationUpdate", "Location", "FriendIDs", "HostedAppointmentIDs", "VisitingAppointmentIDs", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Location_descriptor =
       getDescriptor().getMessageTypes().get(21);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Location_fieldAccessorTable = new

@@ -91,6 +91,7 @@ message ChatMessage {
 
 message GetMessages { // If some sort of message history needs to be pulled from server
 	required string securityToken = 1;
+	repeated int32 friendIDs = 2;
 };
 
 
@@ -148,7 +149,7 @@ message ListLocations {
 }
 
 message ListChatMessages {
-	repeated string message = 1;
+	repeated ChatMessage messages = 1;
 }
 
 message BoolReply {
@@ -172,6 +173,9 @@ message SimpleUser {
  	required int32 userID = 2;
  	optional Time latestLocationUpdate = 3;
  	optional Location location = 4;
+ 	repeated int32 friendIDs = 5;
+ 	repeated int32 hostedAppointmentIDs = 6;
+ 	repeated int32 visitingAppointmentIDs = 7;
 }
 
 message Location {
