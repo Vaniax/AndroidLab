@@ -1,11 +1,10 @@
 package de.tubs.androidlab.instameet.client;
 
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import android.util.Log;
-import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
-import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse.Type;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
+import de.tubs.androidlab.instameet.service.ReceivedMessageCallbacks;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
@@ -17,10 +16,18 @@ import io.netty.util.concurrent.FutureListener;
 
 public class InstaMeetClient implements Runnable {
 	
-	public ConcurrentLinkedQueue<ServerRequest> queue = new ConcurrentLinkedQueue<ServerRequest>();
-	
-	public InstaMeetClient() {
+	private final static String TAG = "TCP-CLient";
+
+	private LinkedBlockingQueue<ServerRequest> requestQueue = new LinkedBlockingQueue<ServerRequest>();
 		
+	private ReceivedMessageCallbacks callbacks = null;
+	
+	public InstaMeetClient(ReceivedMessageCallbacks callbacks) {
+		this.callbacks = callbacks;
+	}
+	
+	public void insertToQueue(ServerRequest request) {
+		requestQueue.add(request);
 	}
 	
 	@Override
@@ -32,27 +39,27 @@ public class InstaMeetClient implements Runnable {
 				.group(workerEventGroup)
 				.channel(NioSocketChannel.class)
 				.handler(new LoggingHandler())
-				.handler(new InstaMeetClientInitializer());
+				.handler(new InstaMeetClientInitializer(callbacks));
 			
-			ChannelFuture future = bootstrap.connect("192.168.178.25",8080);
+			ChannelFuture future = bootstrap.connect("192.168.178.21",8080);
 			
 		    future.addListener(new FutureListener<Void>() {
 
 		        @Override
 		        public void operationComplete(Future<Void> future) throws Exception {
 		            if (!future.isSuccess()) {
-		                System.out.println("Test Connection failed");
-//		                handleException(future.cause());
+		            	Log.i(TAG,"Connection to Server cannot be established");
+		            } else {
+						Log.i(TAG,"Connection to Server established");
 		            }
 		        }
-
 		    });
 						
 			while (future.channel().isOpen()) {
-				if(!queue.isEmpty()) {
-					Log.i("Client","queue not empty");
-					future.channel().pipeline().writeAndFlush(queue.poll());
-				}
+				ServerRequest request = requestQueue.take();
+				Log.d(TAG,request.toString());
+				future.channel().pipeline().writeAndFlush(request); // Wait until element is available
+				Log.d(TAG,"Send request to server successful");
 			}
 			
 			future.channel().close().sync();
@@ -64,5 +71,4 @@ public class InstaMeetClient implements Runnable {
 			workerEventGroup.shutdownGracefully();
 		}
 	}
-
 }

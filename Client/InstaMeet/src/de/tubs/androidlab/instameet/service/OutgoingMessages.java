@@ -1,0 +1,42 @@
+package de.tubs.androidlab.instameet.service;
+
+import java.util.Set;
+
+import simpleEntities.Location;
+import simpleEntities.SimpleAppointment;
+
+public interface OutgoingMessages {
+	public void login(String passwort, String name);
+
+	public void createUser(String name, String password);
+
+	public void SendMessage(String securityToken, int userId, String message);
+
+//	public void createAppointment(String SecurityToken, int userId,SimpleAppointment appointment);
+//
+//	public void inviteUsertoAppointment(String SecurityToken, int userId,int appointmentId, int inviteUserId);
+//
+//	public void visitAppointment(String SecurityToken, int userId,int appointmentId);
+//
+//	public void addFriendRequest(String SecurityToken, int userId, int friendId);
+//
+//	public void addFriendReply(String SecurityToken, int userId, int friendId,boolean accepted);
+//
+//	public void getOwnData(String SecurityToken, int userId);
+//
+//	public void GetFriends(String SecurityToken, int userId);
+//
+//	public void GetFriendLocation(String SecurityToken, int userId, int friendId);
+//
+//	public void GetFriendLocations(String SecurityToken, int userId);
+//
+//	public void GetMessages(String SecurityToken, int userId);
+//
+//	public void GetNearAppointments(String SecurityToken, int userId,Location location);
+//
+//	public void GetMyVisitingAppointments(String SecurityToken, int userId);
+//
+//	public void getUsers(Set<Integer> ids);
+//
+//	public void UpdateLocation(String SecurityToken, int userId,Location location);
+}
