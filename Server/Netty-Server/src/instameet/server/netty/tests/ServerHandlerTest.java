@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentMap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.SecurityToken;
@@ -37,7 +38,11 @@ public class ServerHandlerTest extends SimpleChannelInboundHandler<ServerRequest
 			SecurityToken token = SecurityToken.newBuilder().setToken("testtoken").build();
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.SECURITY_TOKEN).setToken(token).build());
 			break;
-
+		case SEND_CHAT_MESSAGE:
+			ChatMessage message = msg.getMessage();
+			
+			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.CHAT_MESSAGE).setMessage(message).build());
+			break;	
 		default:
 			break;
 		}

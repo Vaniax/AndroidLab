@@ -1,4 +1,4 @@
-package instameet.client.netty;
+package instameet.client.netty.tests;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -10,7 +10,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
 
-public class InstaMeetClient {
+public class InstaMeetClientTest {
 
 	public static void main(String[] args) throws UnknownHostException, InterruptedException {
 		EventLoopGroup workerEventGroup = new NioEventLoopGroup();
@@ -21,7 +21,7 @@ public class InstaMeetClient {
 				.group(workerEventGroup)
 				.channel(NioSocketChannel.class)
 				.handler(new LoggingHandler())
-				.handler(new InstaMeetClientInitializer());
+				.handler(new InstaMeetClientInitializerTest());
 			
 			ChannelFuture future = bootstrap.connect(InetAddress.getLocalHost(),8080).sync();
 			while (true) {

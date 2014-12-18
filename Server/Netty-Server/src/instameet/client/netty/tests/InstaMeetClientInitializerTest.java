@@ -1,6 +1,6 @@
-package instameet.server.netty.tests;
+package instameet.client.netty.tests;
 
-import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -9,18 +9,19 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
-public class InstaMeetServerInitializer extends ChannelInitializer<SocketChannel>{
+public class InstaMeetClientInitializerTest extends ChannelInitializer<SocketChannel> {
 
 	@Override
-	protected void initChannel(SocketChannel channel) throws Exception {
-		ChannelPipeline p = channel.pipeline();
-		
-		p.addLast(new ProtobufVarint32FrameDecoder());
-		p.addLast(new ProtobufDecoder(ServerRequest.getDefaultInstance()));
+	protected void initChannel(SocketChannel ch) throws Exception {
+		ChannelPipeline p = ch.pipeline();
 		
 		p.addLast(new ProtobufVarint32LengthFieldPrepender());
 		p.addLast(new ProtobufEncoder());
-		p.addLast(new ServerHandlerTest());
+		
+		p.addLast(new ProtobufVarint32FrameDecoder());
+		p.addLast(new ProtobufDecoder(ClientResponse.getDefaultInstance()));
+		
+		p.addLast(new ClientHandlerTest());
 	}
-
+	
 }

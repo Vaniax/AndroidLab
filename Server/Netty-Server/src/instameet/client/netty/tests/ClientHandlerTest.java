@@ -1,4 +1,4 @@
-package instameet.client.netty;
+package instameet.client.netty.tests;
 
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
