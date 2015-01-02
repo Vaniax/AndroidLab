@@ -7,8 +7,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.view.MenuItem;
 import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
+import de.tubs.androidlab.instameet.ui.login.LoginActivity;
 import de.tubs.androidlab.instameet.ui.settings.SettingsActivity;
 
 /**
@@ -25,19 +28,31 @@ import de.tubs.androidlab.instameet.ui.settings.SettingsActivity;
  */
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
-    private ViewPager viewPager;
+    private ViewPager viewPager = null;
     private final static String TAG = MainActivity.class.getSimpleName();
-    private InstaMeetService service;
+    private InstaMeetService service = null;
+    
+    private SharedPreferences pref = null;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        addTabs();
+        
         // Start Service if necessary
         // Omit this if you only want the service to be active during IPC
         startService(new Intent(this,InstaMeetService.class));
+        
+    	pref = PreferenceManager.getDefaultSharedPreferences(this);
+    	if (!pref.contains("securityToken")) {
+    		finish();
+    		startLoginActivity();
+    		return;
+    	}
+    	
+        setContentView(R.layout.activity_main);
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        addTabs();
+
     }
     
     @Override
@@ -135,4 +150,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
+    
+    private void startLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
 }

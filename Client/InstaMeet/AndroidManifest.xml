@@ -52,6 +52,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="de.tubs.androidlab.instameet.ui.login.LoginActivity"
+            android:label="@string/title_login_activity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.tubs.androidlab.instameet.ui.main.MainActivity" />
+        </activity>
+        <activity
             android:name="de.tubs.androidlab.instameet.ui.chat.ChatActivity"
             android:label="@string/title_activity_chat"
             android:parentActivityName="de.tubs.androidlab.instameet.ui.main.MainActivity" >

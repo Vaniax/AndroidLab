@@ -7,6 +7,7 @@
     <string name="main_tab_map">map</string>
     <string name="main_contact_list_empty">No Contacts</string>
     <string name="title_activity_chat">ChatActivity</string>
+    <string name="title_login_activity">LoginActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="send_button_chat">Send</string>
     <string name="login_name_first">First Name</string>

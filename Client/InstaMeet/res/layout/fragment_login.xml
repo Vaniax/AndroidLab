@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="top|center"
     android:orientation="vertical" >
 
     <EditText
@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:gravity="center_vertical"
         android:hint="@string/login_name_first"
         android:inputType="textPersonName" >
 
@@ -25,9 +26,15 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/login_button_create_user"
+        android:id="@+id/login_register_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_login" />
+
+    <Button
+        android:id="@+id/login_button_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_register" />
 
 </LinearLayout>
