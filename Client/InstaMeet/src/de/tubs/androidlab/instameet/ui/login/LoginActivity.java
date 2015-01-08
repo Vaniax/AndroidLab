@@ -10,8 +10,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class LoginActivity extends Activity {
@@ -20,7 +23,8 @@ public class LoginActivity extends Activity {
 
     private InstaMeetService service = null;
 
-	
+    private SharedPreferences pref = null;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,7 +45,8 @@ public class LoginActivity extends Activity {
     	Intent intent = new Intent(this, InstaMeetService.class);
     	if(!bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
     		Log.e(TAG, "Service not available");
-    	}   	
+    	}   
+    	PreferenceManager.getDefaultSharedPreferences(this);
 	}
 
 	@Override
@@ -70,5 +75,9 @@ public class LoginActivity extends Activity {
 
     public InstaMeetService getService() {
     	return this.service;
+    }
+    
+    public SharedPreferences getPreferences() {
+    	return this.pref;
     }
 }

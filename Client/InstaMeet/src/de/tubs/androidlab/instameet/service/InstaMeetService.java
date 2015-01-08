@@ -9,12 +9,15 @@ import java.util.Map;
 import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
 import de.tubs.androidlab.instameet.client.InstaMeetClient;
+import de.tubs.androidlab.instameet.client.listener.InboundListener;
 import de.tubs.androidlab.instameet.server.protobuf.Messages;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.BoolReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateUser;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListFriends;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.SecurityToken;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest.Type;
 import android.app.Service;
@@ -34,7 +37,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	private final InstaMeetServiceBinder binder = new InstaMeetServiceBinder(this);
 	private Thread clientThread = null;
 	private InstaMeetClient client = null;
-	final private IncomingMessageProcessor processor = new IncomingMessageProcessor();
+	final public IncomingMessageProcessor processor = new IncomingMessageProcessor();
 	
 	//Blackboard Data
 	//Contains all data over the logged in user
@@ -159,9 +162,11 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	}
 	
 	
-	private class IncomingMessageProcessor implements ReceivedMessageCallbacks {
+	public class IncomingMessageProcessor implements ReceivedMessageCallbacks {
 
 		private final static String TAG = "InstaMeetService MessageProcessor";
+		public final InboundListener listener = new InboundListener();
+		
 
 		@Override
 		public void chatMessage(ChatMessage msg) {
@@ -216,6 +221,19 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				}
 			}
 		}
+
+		@Override
+		public void securityToken(SecurityToken token) {
+			Log.d(TAG,"Incoming security token");
+			listener.notifyToken(token.getToken());
+		}
+
+		@Override
+		public void bool(BoolReply bool) {
+			Log.d(TAG,"Incoming bool");
+			listener.notifyBool(bool.getIsTrue());
+		}
+		
 	}
 
 }

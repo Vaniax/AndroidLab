@@ -40,9 +40,11 @@ public class ClientHandler extends SimpleChannelInboundHandler<ClientResponse> {
 			break;
 		case SECURITY_TOKEN:
 			Log.i(TAG,"Message type" + type);
+			cb.securityToken(msg.getToken());
 			break;
 		case BOOL:
 			Log.i(TAG,"Message type" + type);
+			cb.bool(msg.getBoolReply());
 			break;
 		case NO_MESSAGE:
 			Log.i(TAG,"Message type" + type);

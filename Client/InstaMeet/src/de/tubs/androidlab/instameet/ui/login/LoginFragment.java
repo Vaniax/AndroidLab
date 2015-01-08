@@ -1,9 +1,12 @@
 package de.tubs.androidlab.instameet.ui.login;
 
 import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.client.listener.AbstractInboundMessageListener;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +40,14 @@ public class LoginFragment extends Fragment {
 		return view;
 	}
 
-
-
+	private class TokenListener extends AbstractInboundMessageListener {
+		@Override
+		public void securityToken(String token) {
+			super.securityToken(token);
+			Log.d("TokenListener","Token listener activated\nContent: " + token);
+			Editor edit = ((LoginActivity)getActivity()).getPreferences().edit();
+			edit.putString("securityToken", token);
+			edit.commit();
+		}
+	}
 }
