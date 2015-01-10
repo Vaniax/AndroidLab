@@ -17,7 +17,8 @@ import java.util.Set;
  * The persistent class for the User database table.
  * 
  */
-@Entity
+@Table(name="User")
+@Entity(name="User")
 @NamedQueries({
 	@NamedQuery(name="User.findAll", query="SELECT u FROM User u"),
 	@NamedQuery(name="User.login", query="SELECT u FROM User u WHERE u.username = :name and u.password = :password"),
@@ -137,6 +138,8 @@ public class User implements Serializable {
 	}
 
 	public List<Appointment> getHostedAppointments() {
+		if(this.hostedAppointments == null)
+			this.hostedAppointments = new ArrayList<Appointment>();
 		return this.hostedAppointments;
 	}
 
@@ -159,6 +162,8 @@ public class User implements Serializable {
 	}
 
 	public List<ChatMessage> getSentMessages() {
+		if(this.sentMessages == null)
+			this.sentMessages = new ArrayList<ChatMessage>();
 		return this.sentMessages;
 	}
 
@@ -181,6 +186,8 @@ public class User implements Serializable {
 	}
 
 	public List<ChatMessage> getReceivedMessages() {
+		if(this.receivedMessages == null)
+			this.receivedMessages = new ArrayList<ChatMessage>();
 		return this.receivedMessages;
 	}
 
@@ -203,6 +210,8 @@ public class User implements Serializable {
 	}
 
 	public List<ConfirmedFriend> getConfirmedFriendShips() {
+		if(this.confirmedFriendShips == null)
+			this.confirmedFriendShips = new ArrayList<ConfirmedFriend>();
 		return this.confirmedFriendShips;
 	}
 
@@ -225,6 +234,8 @@ public class User implements Serializable {
 	}
 
 	public List<UnconfirmedFriend> getUnconfirmedFriendShips() {
+		if(this.unconfirmedFriendShips == null)
+			this.unconfirmedFriendShips = new ArrayList<UnconfirmedFriend>();
 		return this.unconfirmedFriendShips;
 	}
 	
@@ -248,10 +259,14 @@ public class User implements Serializable {
 	}
 
 	public List<Visitor> getConfirmedVisitors() {
+		if(this.confirmedVisitors == null)
+			this.confirmedVisitors = new ArrayList<Visitor>();
 		return this.confirmedVisitors;
 	}
 	
 	public List<UnconfirmedFriend> getRequestedFriendShips() {
+		if(this.requestedFriendShips == null)
+			this.requestedFriendShips = new ArrayList<UnconfirmedFriend>();
 		return this.requestedFriendShips;
 	}
 
