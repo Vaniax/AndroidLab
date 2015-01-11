@@ -7,11 +7,13 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import service.InstaMeetService;
 import service.ServiceInterface;
 
 public class InstaMeetServer implements Runnable {
 
-	private ServiceInterface service = null;
+	private ServiceInterface service;
+	static private InstaMeetServer server = null;
 	
 	InstaMeetServer(ServiceInterface service) {
 		this.service = service;
@@ -35,7 +37,7 @@ public class InstaMeetServer implements Runnable {
 			ChannelFuture future = bootstrap.bind(8080).sync();
 			
 			while (future.channel().isOpen()) {
-				
+
 			}
 			future.channel().closeFuture().sync();
 
@@ -45,6 +47,11 @@ public class InstaMeetServer implements Runnable {
 			workerEventGroup.shutdownGracefully();
 			bossEventGroup.shutdownGracefully();
 		}
+	}
+	
+	public static void main(String[] args) {
+		server = new InstaMeetServer(new InstaMeetService());
+		new Thread(server).start();
 	}
 
 }

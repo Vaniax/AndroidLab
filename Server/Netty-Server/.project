@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Netty-Server</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>libs/Netty</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/Protobuf</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/Netty/netty-all-4.0.24.Final.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/Netty/netty-all-4.0.24.Final.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/Protobuf/protobuf-java-2.6.0.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/Protobuf/protobuf-java-2.6.0.jar</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

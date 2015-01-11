@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>InstaMeetJPA</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>libs/EclipseLink 2.5.2</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/mysql-connector-java.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/mysql-connector-java.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/about.html</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/about.html</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/bin</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/eclipselink-javadocs.zip</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/eclipselink-javadocs.zip</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/eclipselink-jpars-javadocs.zip</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/eclipselink-jpars-javadocs.zip</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/license.html</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/license.html</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/readme.html</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/readme.html</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/bin/jaxb-compiler.cmd</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/bin/jaxb-compiler.cmd</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/bin/jaxb-compiler.sh</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/bin/jaxb-compiler.sh</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/bin/sdo-compiler.cmd</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/bin/sdo-compiler.cmd</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/bin/sdo-compiler.sh</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/bin/sdo-compiler.sh</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/bin/sdo-jaxb-compiler.cmd</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/bin/sdo-jaxb-compiler.cmd</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/bin/sdo-jaxb-compiler.sh</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/bin/sdo-jaxb-compiler.sh</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/bin/setenv.cmd</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/bin/setenv.cmd</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/bin/setenv.sh</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/bin/setenv.sh</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/eclipselink-src.zip</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/eclipselink-src.zip</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/eclipselink.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/eclipselink.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/jpa</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/moxy</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/sdo</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/dbws</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/rename</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/jpa/javax.persistence.source_2.1.0.v201304241213.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/jpa/javax.persistence.source_2.1.0.v201304241213.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/jpa/javax.persistence_2.1.0.v201304241213.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/jpa/javax.persistence_2.1.0.v201304241213.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/jpa/org.eclipse.persistence.jpa.modelgen.source_2.5.2.v20140319-9ad6abd.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/jpa/org.eclipse.persistence.jpa.modelgen.source_2.5.2.v20140319-9ad6abd.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/jpa/org.eclipse.persistence.jpa.modelgen_2.5.2.v20140319-9ad6abd.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/jpa/org.eclipse.persistence.jpa.modelgen_2.5.2.v20140319-9ad6abd.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/jpa/org.eclipse.persistence.jpars.source_2.5.2.v20140319-9ad6abd.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/jpa/org.eclipse.persistence.jpars.source_2.5.2.v20140319-9ad6abd.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/jpa/org.eclipse.persistence.jpars_2.5.2.v20140319-9ad6abd.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/jpa/org.eclipse.persistence.jpars_2.5.2.v20140319-9ad6abd.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/moxy/com.sun.tools.xjc_2.2.0.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/moxy/com.sun.tools.xjc_2.2.0.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/moxy/com.sun.xml.bind_2.2.0.v201004141950.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/moxy/com.sun.xml.bind_2.2.0.v201004141950.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/moxy/javax.activation_1.1.0.v201108011116.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/moxy/javax.activation_1.1.0.v201108011116.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/moxy/javax.mail_1.4.0.v201005080615.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/moxy/javax.mail_1.4.0.v201005080615.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/moxy/javax.xml.bind_2.2.0.v201105210648.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/moxy/javax.xml.bind_2.2.0.v201105210648.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/moxy/javax.xml.stream_1.0.1.v201004272200.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/moxy/javax.xml.stream_1.0.1.v201004272200.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/jlib/sdo/commonj.sdo_2.1.1.v201112051852.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/jlib/sdo/commonj.sdo_2.1.1.v201112051852.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/dbws/dbwsbuilder.cmd</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/dbws/dbwsbuilder.cmd</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/dbws/dbwsbuilder.sh</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/dbws/dbwsbuilder.sh</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/dbws/eclipselink-dbwsutils.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/dbws/eclipselink-dbwsutils.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/dbws/javax.servlet_2.4.0.v200806031604.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/dbws/javax.servlet_2.4.0.v200806031604.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/dbws/javax.wsdl_1.6.2.v201012040545.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/dbws/javax.wsdl_1.6.2.v201012040545.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/dbws/org.eclipse.persistence.oracleddlparser.source_1.0.0.v20130531.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/dbws/org.eclipse.persistence.oracleddlparser.source_1.0.0.v20130531.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/dbws/org.eclipse.persistence.oracleddlparser_1.0.0.v20130531.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/dbws/org.eclipse.persistence.oracleddlparser_1.0.0.v20130531.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/rename/package-rename.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/rename/package-rename.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/rename/package-rename.properties</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/rename/package-rename.properties</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/rename/packageRename.cmd</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/rename/packageRename.cmd</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/rename/packageRename.sh</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/rename/packageRename.sh</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/rename/readme.html</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/rename/readme.html</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/bin</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/jlib</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/readme.html</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/readme.html</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/bin/workbench.cmd</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/bin/workbench.cmd</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/bin/workbench.sh</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/bin/workbench.sh</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms.dpr</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms.dpr</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/workbench.ico</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/workbench.ico</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/jlib/connector.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/jlib/connector.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/jlib/eclipselinkmw.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/jlib/eclipselinkmw.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/jlib/elmwcore.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/jlib/elmwcore.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/jlib/xercesImpl.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/jlib/xercesImpl.jar</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/attunity.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/attunity.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/cloudscape.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/cloudscape.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/db2.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/db2.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/dbase.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/dbase.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/derby.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/derby.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/hsql.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/hsql.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/informix.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/informix.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/javadb.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/javadb.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/msaccess.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/msaccess.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/mysql.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/mysql.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/mysql4.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/mysql4.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/oracle.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/oracle.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/oracle10g.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/oracle10g.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/oracle11.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/oracle11.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/oracle8i.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/oracle8i.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/oracle9i.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/oracle9i.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/other.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/other.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/pointbase.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/pointbase.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/postgresql.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/postgresql.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/sqlanywhere.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/sqlanywhere.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/sqlserver.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/sqlserver.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/sybase.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/sybase.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/timesten.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/timesten.xml</locationURI>
+		</link>
+		<link>
+			<name>libs/EclipseLink 2.5.2/eclipselink/utils/workbench/config/platforms/timesten7.xml</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/EclipseLink%202.5.2/eclipselink/utils/workbench/config/platforms/timesten7.xml</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

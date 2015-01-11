@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+version="2.1">
+	<persistence-unit name="InstaMeetJPA">
+		<class>entities.Appointment</class>
+		<class>entities.ChatMessage</class>
+		<class>entities.Friend</class>
+		<class>entities.FriendPK</class>
+		<class>entities.User</class>
+		<class>entities.Visitor</class>
+		<class>entities.VisitorPK</class>
+		<class>entities.ConfirmedFriend</class>
+		<class>entities.UnconfirmedFriend</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://134.169.47.94:3306/InstaMeet" />
+			<property name="javax.persistence.jdbc.user" value="admin" />
+			<property name="javax.persistence.jdbc.password" value="7kZZ3ap6kueswlgAANCy5alv6dhwHgNc/EGhx9+B8Z8=" />
+       </properties>
+	</persistence-unit>
+</persistence>

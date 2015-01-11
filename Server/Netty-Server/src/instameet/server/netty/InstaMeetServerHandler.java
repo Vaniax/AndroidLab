@@ -6,7 +6,9 @@ import java.util.concurrent.ConcurrentMap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.BoolReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateUser;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.SecurityToken;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
@@ -14,6 +16,7 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse.Type;
 import service.ServiceInterface;
 import simpleEntities.LoginData;
+import simpleEntities.SimpleUser;
 
 public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRequest> {
 
@@ -34,15 +37,16 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		
 		case LOGIN:
 			// TODO: Call Service
-			Login login = msg.getLogin();
-			LoginData data = service.login(login.getPassword(), login.getName());
-
-			int userID = data.getUserId();
-			if (!channels.containsKey(userID)) { // TODO: also test for successful login
-				channels.put(userID, ctx.channel());
-				System.out.println("Add new channel for user id: " + userID);
-			}
-			SecurityToken token = SecurityToken.newBuilder().setToken(data.getToken()).build();
+//			Login login = msg.getLogin();
+//			LoginData data = service.login(login.getPassword(), login.getName());
+//
+//			int userID = data.getUserId();
+//			if (!channels.containsKey(userID)) { // TODO: also test for successful login
+//				channels.put(userID, ctx.channel());
+//				System.out.println("Add new channel for user id: " + userID);
+//			}
+//			SecurityToken token = SecurityToken.newBuilder().setToken(data.getToken()).build();
+			SecurityToken token = SecurityToken.newBuilder().setToken("TestResponseToken").build();
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.SECURITY_TOKEN).setToken(token).build());
 			break;
 		
@@ -52,7 +56,11 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.CHAT_MESSAGE).setMessage(message).build());
 			break;
-
+		case CREATE_USER:
+			BoolReply bool = BoolReply.newBuilder().setIsTrue(true).build();
+			CreateUser user = msg.getCreateUser();
+			SimpleUser createdUser  = service.createUser(user.getName(), user.getPassword());
+			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.BOOL).setBoolReply(bool).build());
 		default:
 			break;
 		}
