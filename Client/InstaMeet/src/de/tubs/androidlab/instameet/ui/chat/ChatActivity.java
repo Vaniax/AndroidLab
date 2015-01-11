@@ -49,7 +49,6 @@ public class ChatActivity extends Activity {
                 editText.setText(null);
             }
         });
-		
 		Intent intent = getIntent();
 		getActionBar().setTitle(intent.getStringExtra(EXTRA_NAME));
 		

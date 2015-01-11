@@ -14,6 +14,7 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.BoolReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateUser;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.GetOwnData;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListFriends;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
@@ -50,6 +51,10 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	private Map<Integer, List<String>> chatMessages = new HashMap<Integer, List<String>>(); 
 	// Contains the history messages by users
 	private Map<Integer, List<String>> chatMessageHistory = new HashMap<Integer, List<String>>();
+	// Contains all friends of the user
+	List<SimpleUser> friends = new ArrayList<SimpleUser>();
+	// SecurityToken
+	String securityToken = new String();
 	
 	@Override
 	public void onCreate() {
@@ -69,6 +74,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.i(TAG, "Service started by 'startService()'");
 		return super.onStartCommand(intent, flags, startId);
+//		return START_STICKY;
 	}
 
 	@Override
@@ -79,6 +85,13 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	}
 	
 	public List<SimpleUser> getFriends() {
+		if (friends == null) {
+			fetchFriends();
+		}
+		return friends;
+	}
+	
+	public List<SimpleUser> fetchFriends() {
 		if(ownData == null)
 			return null;
 		
@@ -92,6 +105,16 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		return friends;
 	}
 	
+	private void fetchOwnData() {
+		GetOwnData t = GetOwnData.newBuilder().setSecurityToken(securityToken).build();
+		ServerRequest request = ServerRequest
+				.newBuilder()
+				.setType(Type.GET_OWN_DATA)
+				.setGetOwnData(t)
+				.build();
+		client.insertToQueue(request);
+	}
+		
 	public List<SimpleAppointment> getVisitingAppointments() {
 		if(ownData == null)
 			return null;
@@ -105,6 +128,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		}
 		return visitingAppointments;
 	}	
+	
 	// Only for some stupid dummy testing
 	// Synchronization not necessary here
 	public void sendDummyMessage(String msg) {
@@ -122,7 +146,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	}
 	
 	@Override
-	public void login(String password, String name) {
+	public void login(String name, String password) {
 		Login login = Login.newBuilder().setName(name).setPassword(password).build();
 		ServerRequest request = ServerRequest
 				.newBuilder()
@@ -146,7 +170,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	}
 
 	@Override
-	public void SendMessage(String securityToken, int userId, String message) {
+	public void sendMessage(String securityToken, int userId, String message) {
 		ChatMessage chatMessage = ChatMessage
 				.newBuilder()
 				.setFriendID(userId)
@@ -180,6 +204,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			synchronized (chatMessages) {
 				chatMessages.put(msg.getFriendID(), message);
 			}
+			
 		}
 
 		@Override

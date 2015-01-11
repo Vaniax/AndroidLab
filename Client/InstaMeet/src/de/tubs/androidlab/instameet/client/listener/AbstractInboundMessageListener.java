@@ -9,5 +9,9 @@ public abstract class AbstractInboundMessageListener implements InboundMessageLi
 	public void bool(boolean isTrue) {
 		// Empty implementation
 	}
+
+	public void chatMessage(String message) {
+		// Empty implementation
+	}
 	
 }

@@ -4,11 +4,17 @@ import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.client.listener.AbstractInboundMessageListener;
 import de.tubs.androidlab.instameet.client.listener.InboundListener;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
+import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +25,7 @@ import android.widget.Toast;
 
 public class CreateUserFragment extends Fragment {
 	
+    private final static String TAG = LoginFragment.class.getSimpleName();
 	private Button registerButton = null;
 	private EditText password = null;
 	private EditText passwordRep = null;
@@ -33,7 +40,7 @@ public class CreateUserFragment extends Fragment {
 		
 		View view = inflater.inflate(R.layout.fragment_login_create_user, container, false);
 		
-		registerButton = (Button) view.findViewById(R.id.login_register_button);
+		registerButton = (Button) view.findViewById(R.id.login_button_login);
 		userName = (EditText) view.findViewById(R.id.login_firstname);
 		password = (EditText) view.findViewById(R.id.login_password);
 		passwordRep = (EditText) view.findViewById(R.id.login_password_repeat);		
@@ -42,7 +49,7 @@ public class CreateUserFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				if (isUserNameAcceptable() && isPasswordAcceptable()) {
-					service.createUser(password.getText().toString(), userName.getText().toString());; // TODO: Implementation in main branch necessary
+					service.createUser(userName.getText().toString(), password.getText().toString());; // TODO: Implementation in main branch necessary
 					Toast.makeText(getActivity().getBaseContext(), "Creating new user", Toast.LENGTH_LONG).show();
 					// TODO: Implementation of some callback mechanism to check when there is a valid security token
 					service.processor.listener.addListener(boolListener);
@@ -57,7 +64,10 @@ public class CreateUserFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		service = ((LoginActivity) activity).getService();
+    	Intent intent = new Intent(activity, InstaMeetService.class);
+    	if(!getActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
+    		Log.e(TAG, "Service not available");
+    	}
 	}
 	
 		
@@ -123,5 +133,20 @@ public class CreateUserFragment extends Fragment {
 		}
 
 	}
+	
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+        	service = ( (InstaMeetServiceBinder) binder).getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+        	Log.e(TAG, "Connection lost");
+            service = null;
+        }
+    };
 	
 }

@@ -6,11 +6,11 @@ import simpleEntities.Location;
 import simpleEntities.SimpleAppointment;
 
 public interface OutgoingMessages {
-	public void login(String passwort, String name);
+	public void login(String name, String password);
 
 	public void createUser(String name, String password);
 
-	public void SendMessage(String securityToken, int userId, String message);
+	public void sendMessage(String securityToken, int userId, String message);
 
 //	public void createAppointment(String SecurityToken, int userId,SimpleAppointment appointment);
 //

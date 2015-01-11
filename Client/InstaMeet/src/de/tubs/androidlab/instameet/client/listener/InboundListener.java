@@ -9,9 +9,9 @@ public class InboundListener {
 	private List<AbstractInboundMessageListener> listeners = new ArrayList<AbstractInboundMessageListener>();
 	
 	public void addListener(AbstractInboundMessageListener listener)
-	 {
+	{
 	    listeners.add(listener);
-	 }
+	}
 
 	public void removeListener(AbstractInboundMessageListener listener)
 	{
@@ -27,6 +27,12 @@ public class InboundListener {
 	public synchronized void notifyBool(boolean isTrue) {
 		for (AbstractInboundMessageListener l : listeners) {
 			l.bool(isTrue);
+		}
+	}
+	
+	public synchronized void notifyChatMessage(String message) {
+		for (AbstractInboundMessageListener l : listeners) {
+			l.chatMessage(message);
 		}
 	}
 }

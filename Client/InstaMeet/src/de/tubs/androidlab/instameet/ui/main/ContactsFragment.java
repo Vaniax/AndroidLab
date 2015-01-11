@@ -1,5 +1,7 @@
 package de.tubs.androidlab.instameet.ui.main;
 
+import java.util.ArrayList;
+
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -46,7 +48,7 @@ public class ContactsFragment extends ListFragment {
      */
 	private class ContactsListAdapter extends BaseAdapter
 	{
-		
+		ArrayList<String> contacts = new ArrayList<String>();
 	    String[] values = new String[] { "Hans Wurst", 
                 "Peter Schmidt",
                 "Angela Merkel",

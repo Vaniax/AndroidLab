@@ -41,8 +41,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         // Start Service if necessary
         // Omit this if you only want the service to be active during IPC
         startService(new Intent(this,InstaMeetService.class));
-        
+
     	pref = PreferenceManager.getDefaultSharedPreferences(this);
+
     	if (!pref.contains("securityToken")) {
     		finish();
     		startLoginActivity();
