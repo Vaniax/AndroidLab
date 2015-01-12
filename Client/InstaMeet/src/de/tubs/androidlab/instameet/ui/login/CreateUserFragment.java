@@ -75,6 +75,10 @@ public class CreateUserFragment extends Fragment {
 	public void onDestroyView() {
 		super.onDestroyView();
 		service.processor.listener.removeListener(boolListener);
+    	if(service != null) {
+    		getActivity().unbindService(serviceConnection);
+    		service = null;
+    	}
 	}
 
 	private boolean isPasswordAcceptable() {

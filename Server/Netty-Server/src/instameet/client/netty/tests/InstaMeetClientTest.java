@@ -9,6 +9,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.FutureListener;
 
 public class InstaMeetClientTest {
 
@@ -24,6 +26,19 @@ public class InstaMeetClientTest {
 				.handler(new InstaMeetClientInitializerTest());
 			
 			ChannelFuture future = bootstrap.connect(InetAddress.getLocalHost(),8080).sync();
+//			ChannelFuture future = bootstrap.connect("134.169.47.94",8081).sync();
+			
+		    future.addListener(new FutureListener<Void>() {
+
+		        @Override
+		        public void operationComplete(Future<Void> future) throws Exception {
+		            if (!future.isSuccess()) {
+		            	System.out.println("Connection to Server cannot be established");
+		            } else {
+		            	System.out.println("Connection to Server established");
+		            }
+		        }
+		    });
 			while (true) {
 			
 			}

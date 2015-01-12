@@ -98,7 +98,17 @@ public class LoginFragment extends Fragment {
 		}
 	}
 	
-    /** Defines callbacks for service binding, passed to bindService() */
+    @Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		service.processor.listener.removeListener(tokenListener);
+    	if(service != null) {
+    		getActivity().unbindService(serviceConnection);
+    		service = null;
+    	}
+	}
+
+	/** Defines callbacks for service binding, passed to bindService() */
     private ServiceConnection serviceConnection = new ServiceConnection() {
 
         @Override

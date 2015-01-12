@@ -27,13 +27,16 @@ public class LoginActivity extends Activity {
 
 		setContentView(R.layout.activity_login);
 		
-		LoginFragment loginFragment = new LoginFragment();
-		
-		FragmentManager manager = getFragmentManager();
-		FragmentTransaction transaction = manager.beginTransaction();
-		
-		transaction.add(R.id.activity_login_fragment_container, loginFragment);
-		transaction.commit();
+		if(savedInstanceState == null) {
+			LoginFragment loginFragment = new LoginFragment();
+			
+			FragmentManager manager = getFragmentManager();
+			FragmentTransaction transaction = manager.beginTransaction();
+			
+			transaction.add(R.id.activity_login_fragment_container, loginFragment);
+			transaction.commit();
+		}
+
 	}
 
 	@Override
