@@ -112,7 +112,8 @@ message GetNearAppointments {
 
 message AddFriend {
 	required string securityToken = 1;
-	required int32 friendID = 2;
+	optional int32 friendID = 2;
+	optional string friendName = 3;
 };
 
 message GetOwnData { // What is exactly returned here?
