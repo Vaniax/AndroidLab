@@ -57,9 +57,10 @@ public class ChatActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-	    
-		Intent intent = new Intent(this, InstaMeetService.class);
-        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+    	Intent intent = new Intent(this, InstaMeetService.class);
+    	if(!bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
+    		Log.e(TAG, "Service not available");
+    	}   
 	}
 
 	private ServiceConnection serviceConnection = new ServiceConnection() {
@@ -79,7 +80,10 @@ public class ChatActivity extends Activity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		
+    	if(service != null) {
+    		unbindService(serviceConnection);
+    		service = null;
+    	}		
 	}
 
 	@Override
