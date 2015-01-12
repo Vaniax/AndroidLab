@@ -11,6 +11,7 @@ import simpleEntities.SimpleUser;
 import de.tubs.androidlab.instameet.client.InstaMeetClient;
 import de.tubs.androidlab.instameet.client.listener.InboundListener;
 import de.tubs.androidlab.instameet.server.protobuf.Messages;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.AddFriend;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.BoolReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateUser;
@@ -185,6 +186,21 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		Log.d(TAG,"Insert send request to queue with content:\n" + chatMessage.toString());
 	}
 	
+	@Override
+	public void addFriendRequest(String securityToken, String friendName) {
+		AddFriend addFriend = AddFriend.newBuilder()
+				.setSecurityToken(securityToken)
+				.setFriendName(friendName)
+				.build();
+		
+		ServerRequest request = ServerRequest
+				.newBuilder()
+				.setType(Type.ADD_FRIEND)
+				.setAddFriend(addFriend)
+				.build();
+		this.client.insertToQueue(request);
+		Log.d(TAG,"Insert send request to queue with content:\n" + addFriend.toString());
+	}
 	
 	public class IncomingMessageProcessor implements ReceivedMessageCallbacks {
 

@@ -3,11 +3,13 @@
 
     <string name="app_name">InstaMeet</string>
     <string name="action_settings">Settings</string>
+    <string name="action_addFriend">Add</string>
     <string name="main_tab_contacts">contacts</string>
     <string name="main_tab_map">map</string>
     <string name="main_contact_list_empty">No Contacts</string>
     <string name="title_activity_chat">ChatActivity</string>
     <string name="title_login_activity">LoginActivity</string>
+    <string name="title_activity_addfriend">Add Friend</string>
     <string name="hello_world">Hello world!</string>
     <string name="send_button_chat">Send</string>
     <string name="login_name_first">First Name</string>
@@ -15,5 +17,7 @@
     <string name="login_login">Login</string>
     <string name="login_password_repeat">Repeat password</string>
     <string name="login_register">Register</string>
+    <string name="addfriend_username">User name to add</string>
+    <string name="addfriend_button_add">Add</string>
 
 </resources>

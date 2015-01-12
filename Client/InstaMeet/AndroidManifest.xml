@@ -75,6 +75,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.tubs.androidlab.instameet.ui.main.MainActivity" />
         </activity>
+        <activity
+            android:name="de.tubs.androidlab.instameet.ui.addfriend.AddFriendActivity"
+            android:label="@string/title_activity_addfriend"
+            android:parentActivityName="de.tubs.androidlab.instameet.ui.main.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.tubs.androidlab.instameet.ui.main.MainActivity" />
+        </activity>
 
         <!-- in eigenem Thread: android:process=":remote" -->
         <service

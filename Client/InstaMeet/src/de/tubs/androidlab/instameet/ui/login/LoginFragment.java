@@ -81,7 +81,7 @@ public class LoginFragment extends Fragment {
     	}
 	}
 	
-    private void startMainActivity() {
+    private void toMainActivity() {
         Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
         startActivity(intent);
     }
@@ -94,7 +94,7 @@ public class LoginFragment extends Fragment {
 			Editor edit = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
 			edit.putString("securityToken", token);
 			edit.commit();
-			startMainActivity();
+			toMainActivity();
 		}
 	}
 	

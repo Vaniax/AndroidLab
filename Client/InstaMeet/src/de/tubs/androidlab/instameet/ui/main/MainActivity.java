@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
+import de.tubs.androidlab.instameet.ui.addfriend.AddFriendActivity;
 import de.tubs.androidlab.instameet.ui.login.LoginActivity;
 import de.tubs.androidlab.instameet.ui.settings.SettingsActivity;
 
@@ -132,6 +133,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         	Intent intent = new Intent(this, SettingsActivity.class);
         	startActivity(intent);
             return true;
+        }
+        if (id == R.id.action_addFriend) {
+        	Intent intent = new Intent(this, AddFriendActivity.class);
+        	startActivity(intent);
+        	return true;
         }
         return super.onOptionsItemSelected(item);
     }
