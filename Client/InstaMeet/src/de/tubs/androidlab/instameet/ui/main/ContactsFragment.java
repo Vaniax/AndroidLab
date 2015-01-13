@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -28,7 +31,25 @@ public class ContactsFragment extends ListFragment {
 		super.onCreate(savedInstanceState);
 		adapter = new ContactsListAdapter(getActivity());
 		setListAdapter(adapter);
+		setHasOptionsMenu(true);
 	}
+	
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.contacts, menu);
+    }
+	
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here.
+        int id = item.getItemId();
+        if (id == R.id.action_addFriend) {
+        	//Intent intent = new Intent(this, AddFriendActivity.class);
+        	//startActivity(intent);
+        	return true;
+        }
+        return false;
+    }
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

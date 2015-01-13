@@ -4,6 +4,9 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,8 +20,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.ui.appointment.EditAppointmentActivity;
 import de.tubs.androidlab.instameet.ui.appointment.ViewAppointmentActivity;
-import de.tubs.androidlab.instameet.ui.login.LoginActivity;
 
 public class OverviewMapFragment extends Fragment implements OnInfoWindowClickListener {
 
@@ -28,7 +31,25 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
         setUpMapIfAvailable();
+        setHasOptionsMenu(true);
         return rootView;
+    }
+	
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.overview_map, menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here.
+        int id = item.getItemId();
+        if (id == R.id.action_create_appointment) {
+        	Intent intent = new Intent(getActivity(), EditAppointmentActivity.class);
+        	startActivity(intent);
+        	return true;
+        }
+        return false;
     }
     
     @Override

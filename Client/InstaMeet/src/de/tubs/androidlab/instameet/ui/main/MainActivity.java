@@ -134,11 +134,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         	startActivity(intent);
             return true;
         }
-        if (id == R.id.action_addFriend) {
-        	//Intent intent = new Intent(this, AddFriendActivity.class);
-        	//startActivity(intent);
-        	return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
