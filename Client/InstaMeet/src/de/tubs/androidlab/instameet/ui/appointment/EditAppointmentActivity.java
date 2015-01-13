@@ -50,6 +50,8 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 			isNewAppointment = false;
 			appointmentId = extras.getInt(EXTRA_APPOINTMENT_ID);
 			//TODO: fill form widgets with information
+			editTitle.setText("Known title");
+			editDescription.setText("This appointment already exists.");
 		} else {
 			isNewAppointment = true;
 		}

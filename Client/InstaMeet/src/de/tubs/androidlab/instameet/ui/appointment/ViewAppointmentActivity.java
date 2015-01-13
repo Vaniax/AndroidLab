@@ -1,10 +1,11 @@
 package de.tubs.androidlab.instameet.ui.appointment;
 
-import de.tubs.androidlab.instameet.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import de.tubs.androidlab.instameet.R;
 
 public class ViewAppointmentActivity extends Activity {
 	
@@ -19,18 +20,20 @@ public class ViewAppointmentActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.view_appointment, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		switch(item.getItemId()) {
+		case R.id.action_calender:
+			return true;
+		case R.id.action_edit:
+			Intent intent = new Intent(this, EditAppointmentActivity.class);
+			//TODO: this must be the correct appointment id
+			intent.putExtra(EditAppointmentActivity.EXTRA_APPOINTMENT_ID, 123);
+			startActivity(intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
