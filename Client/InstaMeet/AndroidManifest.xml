@@ -109,12 +109,7 @@
         </activity>
         <activity
             android:name="de.tubs.androidlab.instameet.ui.appointment.EditAppointmentActivity"
-            android:label="@string/title_activity_edit_appointment"
-            android:parentActivityName=".ui.main.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.tubs.androidlab.instameet.ui.main.MainActivity" />
-        </activity>
+            android:label="@string/title_activity_edit_appointment"/>
     </application>
 
 </manifest>

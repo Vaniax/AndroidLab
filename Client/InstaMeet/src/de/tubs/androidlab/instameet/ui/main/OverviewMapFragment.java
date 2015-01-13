@@ -92,6 +92,7 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
         mMap.addMarker(new MarkerOptions().position(new LatLng(52.273821, 10.531404)).title("Feuerzangenbowle"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(52.266993, 10.553677)).title("Öffentl. Grillen"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(52.263499, 10.527799)).title("Demo gegen alles")).showInfoWindow();
+        
         mMap.setMyLocationEnabled(true);
         mMap.moveCamera(
         		CameraUpdateFactory.newLatLngZoom(new LatLng(52.262948, 10.521834), 13f)

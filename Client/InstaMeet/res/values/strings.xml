@@ -2,6 +2,11 @@
 <resources>
 
     <string name="app_name">InstaMeet</string>
+    <string name="action_discard">Discard</string>
+    <string name="action_save">Save</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_store_in_calender">Store in calender</string>
+    <string name="dialog_save_appointment">Do you want to save this appointment?</string>
     <string name="action_settings">Settings</string>
     <string name="action_addFriend">Add friend</string>
     <string name="action_create_appointment">Create appointment</string>
@@ -20,7 +25,9 @@
     <string name="login_register">Register</string>
     <string name="addfriend_username">User name to add</string>
     <string name="addfriend_button_add">Add</string>
-    <string name="title_activity_view_appointment">CreateAppointment</string>
-    <string name="title_activity_edit_appointment">EditAppointmentActivity</string>
+    <string name="title_activity_view_appointment">View Appointment</string>
+    <string name="title_activity_edit_appointment">Edit Appointment</string>
+    <string name="appointment_edit_title">Title</string>
+    <string name="appointment_edit_description">Description</string>
 
 </resources>
