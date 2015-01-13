@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
-import de.tubs.androidlab.instameet.ui.addfriend.AddFriendActivity;
+//import de.tubs.androidlab.instameet.ui.addfriend.AddFriendActivity;
 import de.tubs.androidlab.instameet.ui.login.LoginActivity;
 import de.tubs.androidlab.instameet.ui.settings.SettingsActivity;
 
@@ -46,9 +46,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     	pref = PreferenceManager.getDefaultSharedPreferences(this);
 
     	if (!pref.contains("securityToken")) {
-    		finish();
-    		startLoginActivity();
-    		return;
+//    		finish();
+//    		startLoginActivity();
+//    		return;
     	}
     	
         setContentView(R.layout.activity_main);
@@ -135,8 +135,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             return true;
         }
         if (id == R.id.action_addFriend) {
-        	Intent intent = new Intent(this, AddFriendActivity.class);
-        	startActivity(intent);
+        	//Intent intent = new Intent(this, AddFriendActivity.class);
+        	//startActivity(intent);
         	return true;
         }
         return super.onOptionsItemSelected(item);

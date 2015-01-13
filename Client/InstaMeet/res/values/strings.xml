@@ -19,5 +19,7 @@
     <string name="login_register">Register</string>
     <string name="addfriend_username">User name to add</string>
     <string name="addfriend_button_add">Add</string>
+    <string name="title_activity_create_appointment">CreateAppointment</string>
+    <string name="title_activity_edit_appointment">EditAppointmentActivity</string>
 
 </resources>

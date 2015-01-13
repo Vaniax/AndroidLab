@@ -1,6 +1,7 @@
 package de.tubs.androidlab.instameet.ui.main;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,14 +9,18 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.ui.appointment.ViewAppointmentActivity;
+import de.tubs.androidlab.instameet.ui.login.LoginActivity;
 
-public class OverviewMapFragment extends Fragment {
+public class OverviewMapFragment extends Fragment implements OnInfoWindowClickListener {
 
     private GoogleMap mMap;
 
@@ -65,10 +70,18 @@ public class OverviewMapFragment extends Fragment {
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(52.273821, 10.531404)).title("Feuerzangenbowle"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(52.266993, 10.553677)).title("Öffentl. Grillen"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(52.263499, 10.527799)).title("Demo gegen alles"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(52.263499, 10.527799)).title("Demo gegen alles")).showInfoWindow();
         mMap.setMyLocationEnabled(true);
         mMap.moveCamera(
         		CameraUpdateFactory.newLatLngZoom(new LatLng(52.262948, 10.521834), 13f)
         	);
+        mMap.setOnInfoWindowClickListener(this);
     }
+
+	@Override
+	public void onInfoWindowClick(Marker marker) {
+        Intent intent = new Intent(getActivity(), ViewAppointmentActivity.class);
+        intent.putExtra(ViewAppointmentActivity.EXTRA_APPOINTMENT_NAME, marker.getTitle());
+        startActivity(intent);
+	}
 }
