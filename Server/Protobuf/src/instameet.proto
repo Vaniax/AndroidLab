@@ -54,6 +54,7 @@ message ClientResponse {
 		BOOL = 4;
 		SECURITY_TOKEN = 5;
 		CHAT_MESSAGE = 6;
+		OWN_DATA=7;
 		NO_MESSAGE = 20;
 	};
 	
@@ -65,8 +66,9 @@ message ClientResponse {
 	optional BoolReply boolReply = 5;	
 	optional SecurityToken token = 6;
 	optional ChatMessage message = 7;
+	optional OwnData userData = 8;
 	optional NoMessage noMessage = 10;
-	
+		
 	optional string messageID = 15;
 }
 
@@ -155,6 +157,10 @@ message ListChatMessages {
 
 message BoolReply {
 	required bool isTrue = 1;
+}
+
+message OwnData {
+	required SimpleUser userData = 1;
 }
 
 
