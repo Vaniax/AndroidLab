@@ -289,7 +289,7 @@ public class InstaMeetService implements ServiceInterface {
 					usr.getUnconfirmedFriendShips().add(request);
 					em.persist(request);
 				} else {
-					System.out.println("Friend already sent.");
+					System.out.println("Friend request already sent.");
 				}
 								
 				em.getTransaction().commit();
