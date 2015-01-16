@@ -8,9 +8,39 @@ import org.jasypt.digest.StandardStringDigester;
 import org.jasypt.salt.RandomSaltGenerator;
 import org.jasypt.salt.SaltGenerator;
 
+import simpleEntities.SensitiveData;
+
 
 public class CryptoTestApplication {
 
+	public SensitiveData generatePassword(String password) {
+		//generate salt
+		SaltGenerator saltGen = new RandomSaltGenerator();
+		byte [] salt = saltGen.generateSalt(8);
+
+		//concat password+salt
+		String saltString = null;
+		String saltedPw = null;		
+		ByteArrayOutputStream concatStream = new ByteArrayOutputStream();
+		try {
+			concatStream.write(password.getBytes());
+			concatStream.write(salt);
+			saltedPw = new String(concatStream.toByteArray(), "UTF-8");
+			saltString = new String(salt, "UTF-8");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		//Encrypt password
+		StandardStringDigester digester = new StandardStringDigester();
+		digester.setAlgorithm("SHA-1");   // optionally set the algorithm
+		digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
+		String encryptedPassword = digester.digest(saltedPw);
+
+		
+		return new SensitiveData(saltString, encryptedPassword);
+		
+	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

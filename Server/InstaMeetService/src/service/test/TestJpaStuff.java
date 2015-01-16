@@ -51,12 +51,13 @@ public class TestJpaStuff {
 	
 	public static void main(String[] args) {
 		String [] userData = { "Hans Peter", "123", "Angelo Merte", "123", "Klaus Günther", "123",  "Hans Wurst", "123" };
+//		String [] userData = { "Guido", "testpasswort", "Olaf" , "testpasswort"};
 		
 		LoginData loginData;
 		
 		TestJpaStuff jpaTest = new TestJpaStuff();
 		
-		//jpaTest.createUser(userData);
+		jpaTest.createUser(userData);
 		
 		
 		loginData = jpaTest.getInstaService().login("Hans Peter", "123");
@@ -65,25 +66,24 @@ public class TestJpaStuff {
 		} else {
 			System.err.println("Login failed");
 		}
-		
 
 		SimpleUser myAcc = jpaTest.getInstaService().getOwnData(loginData.getToken(), loginData.getUserId());
-		jpaTest.getInstaService().addFriendRequest(loginData.getToken(), myAcc.getId(), 5);
-		jpaTest.getInstaService().addFriendRequest(loginData.getToken(), myAcc.getId(), 6);
-		jpaTest.getInstaService().addFriendRequest(loginData.getToken(), myAcc.getId(), 7);
+		jpaTest.getInstaService().addFriendRequest(loginData.getToken(), myAcc.getId(), 13);
+		jpaTest.getInstaService().addFriendRequest(loginData.getToken(), myAcc.getId(), 14);
+		jpaTest.getInstaService().addFriendRequest(loginData.getToken(), myAcc.getId(), 15);
 		
 		
 		loginData = jpaTest.getInstaService().login("Angelo Merte", "123");
 		myAcc = jpaTest.getInstaService().getOwnData(loginData.getToken(), loginData.getUserId());
-		jpaTest.getInstaService().addFriendReply(loginData.getToken(), myAcc.getId(), 4, true);
+		jpaTest.getInstaService().addFriendReply(loginData.getToken(), myAcc.getId(), 12, true);
 
 		loginData = jpaTest.getInstaService().login("Klaus Günther", "123");
 		myAcc = jpaTest.getInstaService().getOwnData(loginData.getToken(), loginData.getUserId());
-		jpaTest.getInstaService().addFriendReply(loginData.getToken(), myAcc.getId(), 4, true);
+		jpaTest.getInstaService().addFriendReply(loginData.getToken(), myAcc.getId(), 12, true);
 
 		loginData = jpaTest.getInstaService().login("Hans Wurst", "123");
 		myAcc = jpaTest.getInstaService().getOwnData(loginData.getToken(), loginData.getUserId());
-		jpaTest.getInstaService().addFriendReply(loginData.getToken(), myAcc.getId(), 4, true);
+		jpaTest.getInstaService().addFriendReply(loginData.getToken(), myAcc.getId(), 12, true);
 		
 		
 //		SimpleAppointment appoint = jpaTest.createAppointment("TU-BS Sit in", "Pizza und Bier", 52.27303f, 10.52514f);

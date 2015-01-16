@@ -15,6 +15,7 @@ import javax.persistence.TypedQuery;
 
 import simpleEntities.Location;
 import simpleEntities.LoginData;
+import simpleEntities.SensitiveData;
 import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
 import entities.Appointment;
@@ -44,15 +45,21 @@ public class InstaMeetService implements ServiceInterface {
 	}
 
 	public LoginData login(String name, String passwort) {
-		TypedQuery<User> results = em.createNamedQuery("User.login", User.class)
-			    .setParameter("name", name)
-			    .setParameter("password", passwort);
+		TypedQuery<User> results = em.createNamedQuery("User.findName", User.class)
+			    .setParameter("name", name);
 		try {
 			User correctUser = results.getSingleResult();	
-			String token = name + passwort;
-			sessions.put(token, correctUser);
-
-			return new LoginData(token, correctUser.getId());
+			CryptoService cryptoService = new CryptoService();
+			if(cryptoService.verifyLogin(correctUser.getPassword(), correctUser.getSalt(), passwort))  {
+				String token = name + correctUser.getPassword();
+				sessions.put(token, correctUser);
+				return new LoginData(token, correctUser.getId());				
+			} else {
+				System.out.println("Wrong password!");
+				return null;
+			}
+			
+			
 		} catch(NonUniqueResultException e) {
 			System.out.println("non unique login!");
 			return null;
@@ -195,10 +202,12 @@ public class InstaMeetService implements ServiceInterface {
 			return null;
 
 		} catch(NoResultException e) {
+			CryptoService cryptoService = new CryptoService();
+			SensitiveData sensitiveData = cryptoService.generatePassword(password);
 			User newUser = new User();
 			newUser.setUsername(name);
-			//TODO: generate salt stuff
-			newUser.setPassword(password);
+			newUser.setSalt(sensitiveData.getSalt());
+			newUser.setPassword(sensitiveData.getEncryptedPassword());
 			em.getTransaction().begin();
 			em.persist(newUser);
 			em.getTransaction().commit();	
