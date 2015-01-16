@@ -24,6 +24,7 @@ message ServerRequest{
 		GET_NEAR_APPOINTMENTS = 10;
 		GET_MY_VISITING_APPOINTMENTS = 11;
 		UPDATE_LOCATION = 12;
+		GET_FRIENDS = 13;
 		NO_MESSAGE = 20;
 	};
 	
@@ -41,6 +42,7 @@ message ServerRequest{
 	optional GetNearAppointments getNearAppointments = 11;
 	optional GetMyVisitingAppointments getMyVisitingAppointments = 12;
 	optional UpdateLocation updateLocation = 13;
+	optional GetFriends getFriendList = 14;
 	optional NoMessage noMessage = 15;
 	
 	optional string messageID = 20;
@@ -124,6 +126,7 @@ message GetOwnData { // What is exactly returned here?
 
 message GetFriends {
 	required string securityToken = 1;
+	repeated int32 friendIDs = 2;
 };
 
 message GetFriendLocation {
