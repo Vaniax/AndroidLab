@@ -15,7 +15,7 @@ version="2.1">
 		<class>entities.UnconfirmedFriend</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://134.169.47.94:3306/InstaMeet" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://54.93.64.1:3306/InstaMeet" />
 			<property name="javax.persistence.jdbc.user" value="admin" />
 			<property name="javax.persistence.jdbc.password" value="7kZZ3ap6kueswlgAANCy5alv6dhwHgNc/EGhx9+B8Z8=" />
        </properties>
