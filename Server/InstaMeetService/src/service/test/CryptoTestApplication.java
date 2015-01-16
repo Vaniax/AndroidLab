@@ -2,6 +2,7 @@ package service.test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import org.jasypt.digest.StandardStringDigester;
 import org.jasypt.salt.RandomSaltGenerator;
@@ -16,7 +17,7 @@ public class CryptoTestApplication {
 
 		
 	//First Time generation	
-	String userPassword = "test"; //unencrypted
+	String userPassword = "tes3tp"; //unencrypted
 
 	SaltGenerator saltGen = new RandomSaltGenerator();
 	byte [] salt = saltGen.generateSalt(8);
@@ -35,12 +36,19 @@ public class CryptoTestApplication {
 	StandardStringDigester digester = new StandardStringDigester();
 	digester.setAlgorithm("SHA-1");   // optionally set the algorithm
 	digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
-	String encryptedPassword = digester.digest(outputStream.toByteArray().toString());
+	String saltedPw = null;
+	try {
+		 saltedPw = new String(outputStream.toByteArray(), "UTF-8");
+	} catch (UnsupportedEncodingException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+	String encryptedPassword = digester.digest(saltedPw);
 	
 	
 	
 	//User input
-	String inputPassword = "test";
+	String inputPassword = "tes3tp";
 	
 	ByteArrayOutputStream inputEncryptStream = new ByteArrayOutputStream();
 	try {
@@ -51,17 +59,25 @@ public class CryptoTestApplication {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}	
-
+	
+	String inputSaltedPw = null;
+	try {
+		inputSaltedPw = new String(inputEncryptStream.toByteArray(), "UTF-8");
+	} catch (UnsupportedEncodingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
 	
 	
 	System.out.println("Encrypted password: " + encryptedPassword);
-	System.out.println("User password salted: " + outputStream.toByteArray().toString());
-	System.out.println("User input salted: " + inputEncryptStream.toByteArray().toString());
+	System.out.println("User password salted: " + saltedPw);
+	System.out.println("User input salted: " + inputSaltedPw);
 
 	digester = new StandardStringDigester();
 	digester.setAlgorithm("SHA-1");   // optionally set the algorithm
 	digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
-	if (digester.matches(inputEncryptStream.toByteArray().toString(), encryptedPassword)) {
+	if (digester.matches(inputSaltedPw, encryptedPassword)) {
 	  // correct!
 		System.out.println("Login sucessful!");
 	} else {
