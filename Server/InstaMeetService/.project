@@ -32,12 +32,22 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>libs/jasypt-1.9.2</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>libs/mysql-connector-java.jar</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libraries/mysql-connector-java.jar</locationURI>
 		</link>
 		<link>
 			<name>libs/EclipseLink 2.5.2/eclipselink</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/jasypt-1.9.2/lib</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
@@ -80,6 +90,11 @@
 			<name>libs/EclipseLink 2.5.2/eclipselink/utils</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>libs/jasypt-1.9.2/lib/jasypt-1.9.2.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/jasypt-1.9.2/lib/jasypt-1.9.2.jar</locationURI>
 		</link>
 		<link>
 			<name>libs/EclipseLink 2.5.2/eclipselink/bin/jaxb-compiler.cmd</name>
