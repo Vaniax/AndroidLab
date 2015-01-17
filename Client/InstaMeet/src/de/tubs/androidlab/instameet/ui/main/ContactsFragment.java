@@ -1,6 +1,7 @@
 package de.tubs.androidlab.instameet.ui.main;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import simpleEntities.SimpleUser;
 import android.app.Activity;
@@ -102,6 +103,16 @@ public class ContactsFragment extends ListFragment {
 			super.ownData();
 			service.fetchFriends();
 		}
+		@Override
+		public void listFriends() {
+			super.listFriends();
+			List<SimpleUser> users = service.getFriends();
+			ArrayList<String> userNames = new ArrayList<String>();
+			for (int i = 0; i < users.size(); i++) {
+				userNames.add(users.get(i).getUsername());
+			}
+			adapter.setContacts(userNames);
+		}
 	}
 	
     /** Defines callbacks for service binding, passed to bindService() */
@@ -186,12 +197,15 @@ public class ContactsFragment extends ListFragment {
 			return rowView;
 		}
 
-		public void setContacts(ArrayList<SimpleUser> newContacts) {
-			for(SimpleUser i : newContacts) {
-				if (!contacts.contains(i)) {
-					contacts.add(i);
-				}
-			}
+		public void setContacts(ArrayList<String> newContacts) {
+//			for(String i : newContacts) {
+//				if (!contacts.contains(i)) {
+//					contacts.add(i);
+//				}
+//			}
+			contacts.clear();
+			contacts.addAll(newContacts);
+			adapter.notifyDataSetChanged();
 		}
 	}
 }

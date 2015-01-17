@@ -275,6 +275,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 					users.put(it.getUserID(), user);
 				}
 			}
+			listener.notifyListFriends();
 		}
 
 		@Override

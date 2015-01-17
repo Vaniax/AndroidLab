@@ -33,7 +33,7 @@ public class CryptoTestApplication {
 		}		
 		//Encrypt password
 		StandardStringDigester digester = new StandardStringDigester();
-		digester.setAlgorithm("SHA-1");   // optionally set the algorithm
+		digester.setAlgorithm("SHA-256");   // optionally set the algorithm
 		digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
 		String encryptedPassword = digester.digest(saltedPw);
 
@@ -64,7 +64,7 @@ public class CryptoTestApplication {
 	}
 	//Encrypt password
 	StandardStringDigester digester = new StandardStringDigester();
-	digester.setAlgorithm("SHA-1");   // optionally set the algorithm
+	digester.setAlgorithm("SHA-256");   // optionally set the algorithm
 	digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
 	String saltedPw = null;
 	try {
@@ -105,7 +105,7 @@ public class CryptoTestApplication {
 	System.out.println("User input salted: " + inputSaltedPw);
 
 	digester = new StandardStringDigester();
-	digester.setAlgorithm("SHA-1");   // optionally set the algorithm
+	digester.setAlgorithm("SHA-256");   // optionally set the algorithm
 	digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
 	if (digester.matches(inputSaltedPw, encryptedPassword)) {
 	  // correct!
