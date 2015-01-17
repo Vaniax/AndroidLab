@@ -73,7 +73,7 @@ public class ContactsFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
     	Intent intent = new Intent(getActivity(), ChatActivity.class);
-    	intent.putExtra(ChatActivity.EXTRA_NAME, (String) adapter.getItem(position));
+    	intent.putExtra(ChatActivity.EXTRA_NAME, adapter.getItem(position).getId());
     	startActivity(intent);
     }
 	
@@ -128,7 +128,7 @@ public class ContactsFragment extends ListFragment {
      */
 	private class ContactsListAdapter extends BaseAdapter
 	{
-		private ArrayList<String> contacts = new ArrayList<String>();
+		private ArrayList<SimpleUser> contacts = new ArrayList<SimpleUser>();
 
 		/**
 		 * Additional data assigned to each entry which holds
@@ -146,7 +146,11 @@ public class ContactsFragment extends ListFragment {
 		public ContactsListAdapter(Context c) {
 			context = c;
 			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			contacts.add("Hans Wurst"); // Only for testing phase when there is no running server
+			SimpleUser testUser = new SimpleUser();
+			testUser.setId(1);
+			testUser.setUsername("Hans TestUser Wurst");
+			contacts.add(testUser); // Only for testing phase when there is no running server
+
 		}
 		
 		@Override
@@ -155,13 +159,13 @@ public class ContactsFragment extends ListFragment {
 		}
 
 		@Override
-		public Object getItem(int position) {
+		public SimpleUser getItem(int position) {
 			return contacts.get(position);
 		}
 
 		@Override
 		public long getItemId(int position) {
-			return position;
+			return contacts.get(position).getId();
 		}
 		
 		@Override
@@ -178,12 +182,12 @@ public class ContactsFragment extends ListFragment {
 				holder.picture = (ImageView) rowView.findViewById(R.id.picture);
 				rowView.setTag(holder);
 			}
-			holder.name.setText(contacts.get(position));
+			holder.name.setText(contacts.get(position).getUsername());
 			return rowView;
 		}
 
-		public void setContacts(ArrayList<String> newContacts) {
-			for(String i : newContacts) {
+		public void setContacts(ArrayList<SimpleUser> newContacts) {
+			for(SimpleUser i : newContacts) {
 				if (!contacts.contains(i)) {
 					contacts.add(i);
 				}

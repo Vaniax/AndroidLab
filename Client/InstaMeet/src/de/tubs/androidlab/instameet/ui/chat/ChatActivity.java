@@ -50,7 +50,9 @@ public class ChatActivity extends Activity {
             }
         });
 		Intent intent = getIntent();
-		getActionBar().setTitle(intent.getStringExtra(EXTRA_NAME));
+		int userId = intent.getIntExtra(EXTRA_NAME,100);
+		String userName = Integer.toString(userId);
+		getActionBar().setTitle(userName);
 		
 	}
 
