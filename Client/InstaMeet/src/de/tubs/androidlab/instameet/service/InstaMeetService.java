@@ -95,7 +95,12 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	public List<SimpleUser> getFriends() {
 		List<SimpleUser> friends = new ArrayList<SimpleUser>();
 		for(int friendId : ownData.getFriends()) {
-			friends.add(users.get(friendId));
+			if(users.containsKey(friendId)) {
+				friends.add(users.get(friendId));
+			} else {
+				//TODO: request frienddata here
+			}
+			
 		}
 		return friends;
 	}
