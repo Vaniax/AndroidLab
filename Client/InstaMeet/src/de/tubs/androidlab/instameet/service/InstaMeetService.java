@@ -226,6 +226,10 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		Log.d(TAG,"Insert send request to queue with content:\n" + addFriend.toString());
 	}
 	
+	public Map<Integer, SimpleUser> getUsers() {
+		return users;
+	}
+	
 	public class IncomingMessageProcessor implements ReceivedMessageCallbacks {
 
 		private final static String TAG = "InstaMeetService MessageProcessor";
@@ -329,6 +333,8 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			listener.notifyOwnData();
 		}
 		
+		
+
 	}
 
 }
