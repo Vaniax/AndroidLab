@@ -82,8 +82,9 @@ public class LoginFragment extends Fragment {
 	}
 	
     private void toMainActivity() {
-        Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
+    	Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
         startActivity(intent);
+        getActivity().finish();
     }
 
 	private class TokenListener extends AbstractInboundMessageListener {
