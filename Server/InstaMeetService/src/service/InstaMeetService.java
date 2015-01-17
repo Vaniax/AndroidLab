@@ -38,10 +38,8 @@ public class InstaMeetService implements ServiceInterface {
 
 	
 	public InstaMeetService() {
-		// TODO Auto-generated constructor stub
 		factory = Persistence.createEntityManagerFactory("InstaMeetJPA");
 		em = factory.createEntityManager();
-		
 	}
 
 	public LoginData login(String name, String passwort) {
@@ -51,7 +49,7 @@ public class InstaMeetService implements ServiceInterface {
 			User correctUser = results.getSingleResult();	
 			CryptoService cryptoService = new CryptoService();
 			if(cryptoService.verifyLogin(correctUser.getPassword(), correctUser.getSalt(), passwort))  {
-				String token = name + correctUser.getPassword();
+				String token = cryptoService.generateToken(correctUser.getId());
 				sessions.put(token, correctUser);
 				return new LoginData(token, correctUser.getId());				
 			} else {
@@ -67,9 +65,6 @@ public class InstaMeetService implements ServiceInterface {
 			System.out.println("Login Data not found!");
 			return null;
 		}
-		
-
-		
 	}
 
 	public List<SimpleUser> GetFriends(String SecurityToken, int userId) {

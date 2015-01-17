@@ -2,6 +2,10 @@ package service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.regex.Pattern;
 
 import org.jasypt.digest.StandardStringDigester;
 import org.jasypt.salt.RandomSaltGenerator;
@@ -56,7 +60,7 @@ public class CryptoService {
 		}	
 		
 		StandardStringDigester digester = new StandardStringDigester();
-		digester.setAlgorithm("SHA-1");   // optionally set the algorithm
+		digester.setAlgorithm("SHA-256");   // optionally set the algorithm
 		digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
 		if (digester.matches(inputSaltedPw, encryptedPassword)) {
 		  // correct!
@@ -66,5 +70,33 @@ public class CryptoService {
 			return false;
 		}
 		
+	}
+	
+	public String generateToken(int userID) {
+		SaltGenerator saltGen = new RandomSaltGenerator();
+		String uuid = new String();
+		try {
+			uuid = new String(saltGen.generateSalt(8),"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new AssertionError("UTF-8 is unknown"); // Should be impossible
+		}
+	
+		String id = String.valueOf(userID);
+		// One week token
+		String expiringDate = LocalDateTime.now().plusDays(7).toString(); 
+		String token = String.join("|", uuid,id,expiringDate);
+			
+		return token;
+	}
+	
+	public boolean isTokenExpired(String token) {
+		Pattern pattern = Pattern.compile(Pattern.quote("|"));
+		String[] tokenParts = pattern.split(token);
+		
+		LocalDateTime dateFromToken = LocalDateTime.parse(tokenParts[2]);
+		if (LocalDateTime.now().isAfter(dateFromToken)) {
+			return true;
+		}
+		return false;
 	}
 }

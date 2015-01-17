@@ -92,6 +92,11 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>libs/jasypt-1.9.2/lib/jasypt-1.9.2-sources.jar</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Libraries/jasypt-1.9.2/lib/jasypt-1.9.2-sources.jar</locationURI>
+		</link>
+		<link>
 			<name>libs/jasypt-1.9.2/lib/jasypt-1.9.2.jar</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/Libraries/jasypt-1.9.2/lib/jasypt-1.9.2.jar</locationURI>
