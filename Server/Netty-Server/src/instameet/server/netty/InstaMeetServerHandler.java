@@ -38,8 +38,9 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		case LOGIN:
 			// TODO: Call Service
 			Login login = msg.getLogin();
-			LoginData data = service.login(login.getPassword(), login.getName());
-
+			LoginData data = service.login(login.getName(), login.getPassword());
+			if(data == null)
+				return;
 			int userID = data.getUserId();
 			if (!channels.containsKey(userID)) { // TODO: also test for successful login
 				channels.put(userID, ctx.channel());

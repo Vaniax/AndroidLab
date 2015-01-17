@@ -11,7 +11,7 @@ import simpleEntities.SimpleUser;
 public interface ServiceInterface {
 	
 	//Account functions
-	LoginData login(String passwort, String name);
+	LoginData login(String name, String passwort);
 	SimpleUser createUser(String name, String password);
 	
 	//User actions functions
