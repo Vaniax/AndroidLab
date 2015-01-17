@@ -30,8 +30,7 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
-        setUpMapIfAvailable();
-        setHasOptionsMenu(true);
+        
         return rootView;
     }
 	
@@ -56,6 +55,8 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
 	public void onResume() {
         super.onResume();
         setUpMapIfAvailable();
+        setHasOptionsMenu(true);
+        
     }
 
     /**
