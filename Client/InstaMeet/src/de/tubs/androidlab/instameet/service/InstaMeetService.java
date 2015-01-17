@@ -19,6 +19,7 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages.AddFriend;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.BoolReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateUser;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.GetFriends;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.GetOwnData;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListFriends;
@@ -30,6 +31,7 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest.Type;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -60,7 +62,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	// Contains all friends of the user
 	List<SimpleUser> friends = new ArrayList<SimpleUser>();
 	// SecurityToken
-	String securityToken = new String();
+//	String securityToken = new String();
 	
 	@Override
 	public void onCreate() {
@@ -97,22 +99,39 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		return friends;
 	}
 	
-	public List<SimpleUser> fetchFriends() {
-		if(ownData == null)
-			return null;
-		
-		List<SimpleUser> friends = new ArrayList<SimpleUser>(ownData.getFriends().size());
+	public void fetchFriends() {
+//		if(ownData == null)
+//			return null;
+//		
+//		List<SimpleUser> friends = new ArrayList<SimpleUser>(ownData.getFriends().size());
+//		
+//		for(int i : ownData.getFriends()) {
+//			if(!users.containsKey(i)) {
+//				
+//			}
+//			friends.add(users.get(i));
+//		}
+//		return friends;
+		GetFriends.Builder friendRequest = GetFriends.newBuilder();
 		for(int i : ownData.getFriends()) {
 			if(!users.containsKey(i)) {
-				//Add new getUser Request and maybe placeholder in application
+				friendRequest.addFriendIDs(i);
 			}
-			friends.add(users.get(i));
 		}
-		return friends;
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		friendRequest.setSecurityToken(token);
+		ServerRequest request = ServerRequest
+				.newBuilder()
+				.setType(Type.GET_FRIENDS)
+				.setGetFriendList(friendRequest.build())
+				.build();
+		Log.d(TAG,token);
+		client.insertToQueue(request);
 	}
 	
 	public void fetchOwnData() {
-		GetOwnData t = GetOwnData.newBuilder().setSecurityToken(securityToken).build();
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		GetOwnData t = GetOwnData.newBuilder().setSecurityToken(token).build();
 		ServerRequest request = ServerRequest
 				.newBuilder()
 				.setType(Type.GET_OWN_DATA)

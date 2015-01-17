@@ -37,16 +37,15 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		
 		case LOGIN:
 			// TODO: Call Service
-//			Login login = msg.getLogin();
-//			LoginData data = service.login(login.getPassword(), login.getName());
-//
-//			int userID = data.getUserId();
-//			if (!channels.containsKey(userID)) { // TODO: also test for successful login
-//				channels.put(userID, ctx.channel());
-//				System.out.println("Add new channel for user id: " + userID);
-//			}
-//			SecurityToken token = SecurityToken.newBuilder().setToken(data.getToken()).build();
-			SecurityToken token = SecurityToken.newBuilder().setToken("TestResponseToken").build();
+			Login login = msg.getLogin();
+			LoginData data = service.login(login.getPassword(), login.getName());
+
+			int userID = data.getUserId();
+			if (!channels.containsKey(userID)) { // TODO: also test for successful login
+				channels.put(userID, ctx.channel());
+				System.out.println("Add new channel for user id: " + userID);
+			}
+			SecurityToken token = SecurityToken.newBuilder().setToken(data.getToken()).build();
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.SECURITY_TOKEN).setToken(token).build());
 			break;
 		
@@ -61,9 +60,13 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			CreateUser user = msg.getCreateUser();
 			SimpleUser createdUser  = service.createUser(user.getName(), user.getPassword());
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.BOOL).setBoolReply(bool).build());
+		case GET_OWN_DATA:
+//			SimpleUser user = SimpleUser.newBuilder.
+//			ctx.writeAndFlush();
+			break;
 		default:
 			break;
 		}
 	}
-
+	
 }

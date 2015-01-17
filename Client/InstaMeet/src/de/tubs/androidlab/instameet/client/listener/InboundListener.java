@@ -36,9 +36,15 @@ public class InboundListener {
 		}
 	}
 
-	public void notifyOwnData() {
+	public synchronized void notifyOwnData() {
 		for (AbstractInboundMessageListener l : listeners) {
 			l.ownData();
+		}
+	}
+	
+	public synchronized void notifyListFriends() {
+		for (AbstractInboundMessageListener l : listeners) {
+			l.listFriends();
 		}
 	}
 }

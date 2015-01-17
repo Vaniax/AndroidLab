@@ -7,9 +7,15 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.regex.Pattern;
 
+import org.jasypt.digest.ByteDigester;
+import org.jasypt.digest.StandardByteDigester;
 import org.jasypt.digest.StandardStringDigester;
+import org.jasypt.encryption.StringEncryptor;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.salt.RandomSaltGenerator;
 import org.jasypt.salt.SaltGenerator;
+
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import simpleEntities.SensitiveData;
 
@@ -37,7 +43,7 @@ public class CryptoService {
 		}		
 		//Encrypt password
 		StandardStringDigester digester = new StandardStringDigester();
-		digester.setAlgorithm("SHA-1");   // optionally set the algorithm
+		digester.setAlgorithm("SHA-256");   // optionally set the algorithm
 		digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
 		String encryptedPassword = digester.digest(saltedPw);
 
@@ -84,8 +90,16 @@ public class CryptoService {
 		String id = String.valueOf(userID);
 		// One week token
 		String expiringDate = LocalDateTime.now().plusDays(7).toString(); 
-		String token = String.join("|", uuid,id,expiringDate);
-			
+		
+		StandardByteDigester digester = new StandardByteDigester();
+		digester.setAlgorithm("SHA-256");   // optionally set the algorithm
+		digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
+		
+		// Prevent usage of saving immutable string object with unencrypted content
+		byte[] byteToken = digester.digest(String.join("|", uuid,id,expiringDate).getBytes());
+		String token = Base64.encode(byteToken);
+		
+					
 		return token;
 	}
 	
@@ -98,5 +112,13 @@ public class CryptoService {
 			return true;
 		}
 		return false;
+	}
+	
+	public String decryptToken(String token) {
+		StandardByteDigester digester = new StandardByteDigester();
+		digester.setAlgorithm("SHA-256");   // optionally set the algorithm
+		digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
+		StandardPBEStringEncryptor enc = new StandardPBEStringEncryptor();
+		return enc.decrypt(token);
 	}
 }
