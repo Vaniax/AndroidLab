@@ -33,7 +33,6 @@ public class LoginFragment extends Fragment {
 	private InstaMeetService service = null;
 	private final TokenListener tokenListener = new TokenListener();
 
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -74,10 +73,19 @@ public class LoginFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-//		service = ((LoginActivity) activity).getService();
     	Intent intent = new Intent(activity, InstaMeetService.class);
     	if(!getActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
     		Log.e(TAG, "Service not available");
+    	}
+	}
+	
+	@Override
+	public void onDetach() {
+		super.onDetach();
+    	if(service != null) {
+    		getActivity().unbindService(serviceConnection);
+    		service.processor.listener.removeListener(tokenListener);
+    		service = null;
     	}
 	}
 	
@@ -97,16 +105,6 @@ public class LoginFragment extends Fragment {
 			edit.commit();
 			toMainActivity();
 		}
-	}
-	
-    @Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		service.processor.listener.removeListener(tokenListener);
-    	if(service != null) {
-    		getActivity().unbindService(serviceConnection);
-    		service = null;
-    	}
 	}
 
 	/** Defines callbacks for service binding, passed to bindService() */
