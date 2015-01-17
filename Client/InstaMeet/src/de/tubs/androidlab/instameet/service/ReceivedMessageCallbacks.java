@@ -9,4 +9,5 @@ public interface ReceivedMessageCallbacks {
 	public void listChatMessages(ListChatMessages msg);
 	public void securityToken(SecurityToken token);
 	public void bool(BoolReply bool);
+	public void ownData(OwnData ownData);
 }

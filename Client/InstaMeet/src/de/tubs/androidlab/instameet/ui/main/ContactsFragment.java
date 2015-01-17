@@ -2,10 +2,18 @@ package de.tubs.androidlab.instameet.ui.main;
 
 import java.util.ArrayList;
 
+import simpleEntities.SimpleUser;
+import android.app.Activity;
 import android.app.ListFragment;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.provider.ContactsContract.Contacts;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +25,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.client.listener.AbstractInboundMessageListener;
+import de.tubs.androidlab.instameet.service.InstaMeetService;
+import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import de.tubs.androidlab.instameet.ui.chat.ChatActivity;
 
 /**
@@ -24,7 +35,10 @@ import de.tubs.androidlab.instameet.ui.chat.ChatActivity;
  * @author Bjoern
  */
 public class ContactsFragment extends ListFragment {
+	private final static String TAG = ContactsFragment.class.getSimpleName();
 	private ContactsListAdapter adapter;
+    private InstaMeetService service = null;
+    private ServiceListener listener = new ServiceListener();
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +76,51 @@ public class ContactsFragment extends ListFragment {
     	intent.putExtra(ChatActivity.EXTRA_NAME, (String) adapter.getItem(position));
     	startActivity(intent);
     }
+	
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+    	Intent intent = new Intent(activity, InstaMeetService.class);
+    	if(!getActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
+    		Log.e(TAG, "Service not available");
+    	}   	
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+    	if(service != null) {
+    		getActivity().unbindService(serviceConnection);
+        	service.processor.listener.removeListener(listener);
+    		service = null;
+    	}
+	}
+
+	private class ServiceListener extends AbstractInboundMessageListener {
+		@Override
+		public void ownData() {
+			super.ownData();
+			service.fetchFriends();
+		}
+	}
+	
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+        	service = ( (InstaMeetServiceBinder) binder).getService();
+        	service.processor.listener.addListener(listener);
+        	service.fetchOwnData();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+        	Log.e(TAG, "Connection lost");
+            service = null;
+        }
+    };
+    
 
     /**
      * An adapter connects data with a list.
@@ -69,26 +128,8 @@ public class ContactsFragment extends ListFragment {
      */
 	private class ContactsListAdapter extends BaseAdapter
 	{
-		ArrayList<String> contacts = new ArrayList<String>();
-	    String[] values = new String[] { "Hans Wurst", 
-                "Peter Schmidt",
-                "Angela Merkel",
-                "Ann Droid", 
-                "42",
-                "Edmund Stoiber",
-                "Helge Schneider",
-                "Peter Pan",
-                "Ende",
-                "Peter Schmidt",
-                "Angela Merkel",
-                "Ann Droid", 
-                "42",
-                "Edmund Stoiber",
-                "Helge Schneider",
-                "Peter Pan",
-                "Ende"
-              };
-		
+		private ArrayList<String> contacts = new ArrayList<String>();
+
 		/**
 		 * Additional data assigned to each entry which holds
 		 * references to all widgets (to avoid findViewById()-calls)
@@ -105,23 +146,24 @@ public class ContactsFragment extends ListFragment {
 		public ContactsListAdapter(Context c) {
 			context = c;
 			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			contacts.add("Hans Wurst"); // Only for testing phase when there is no running server
 		}
 		
 		@Override
 		public int getCount() {
-			return values.length;
+			return contacts.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			return values[position];
+			return contacts.get(position);
 		}
 
 		@Override
 		public long getItemId(int position) {
 			return position;
 		}
-
+		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View rowView;
@@ -136,9 +178,16 @@ public class ContactsFragment extends ListFragment {
 				holder.picture = (ImageView) rowView.findViewById(R.id.picture);
 				rowView.setTag(holder);
 			}
-			holder.name.setText(values[position]);
+			holder.name.setText(contacts.get(position));
 			return rowView;
 		}
 
+		public void setContacts(ArrayList<String> newContacts) {
+			for(String i : newContacts) {
+				if (!contacts.contains(i)) {
+					contacts.add(i);
+				}
+			}
+		}
 	}
 }

@@ -35,4 +35,10 @@ public class InboundListener {
 			l.chatMessage(message);
 		}
 	}
+
+	public void notifyOwnData() {
+		for (AbstractInboundMessageListener l : listeners) {
+			l.ownData();
+		}
+	}
 }

@@ -1,10 +1,14 @@
 package de.tubs.androidlab.instameet.service;
 
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
@@ -19,6 +23,7 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages.GetOwnData;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListFriends;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.OwnData;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.SecurityToken;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest.Type;
@@ -39,7 +44,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	private final InstaMeetServiceBinder binder = new InstaMeetServiceBinder(this);
 	private Thread clientThread = null;
 	private InstaMeetClient client = null;
-	final public IncomingMessageProcessor processor = new IncomingMessageProcessor();
+	final public IncomingMessageProcessor processor = new IncomingMessageProcessor(this);
 	
 	//Blackboard Data
 	//Contains all data over the logged in user
@@ -106,7 +111,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		return friends;
 	}
 	
-	private void fetchOwnData() {
+	public void fetchOwnData() {
 		GetOwnData t = GetOwnData.newBuilder().setSecurityToken(securityToken).build();
 		ServerRequest request = ServerRequest
 				.newBuilder()
@@ -115,7 +120,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				.build();
 		client.insertToQueue(request);
 	}
-		
+
 	public List<SimpleAppointment> getVisitingAppointments() {
 		if(ownData == null)
 			return null;
@@ -206,7 +211,12 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 
 		private final static String TAG = "InstaMeetService MessageProcessor";
 		public final InboundListener listener = new InboundListener();
+		private InstaMeetService service = null;
 		
+		
+		public IncomingMessageProcessor(InstaMeetService instaMeetService) {
+			service = instaMeetService;
+		}
 
 		@Override
 		public void chatMessage(ChatMessage msg) {
@@ -273,6 +283,31 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		public void bool(BoolReply bool) {
 			Log.d(TAG,"Incoming bool");
 			listener.notifyBool(bool.getIsTrue());
+		}
+
+		@Override
+		public void ownData(OwnData ownData) {
+			Log.d(TAG,"Incoming ownData");
+			Messages.SimpleUser data = ownData.getUserData();
+			SimpleUser user = new SimpleUser();
+			user.setId(data.getUserID());
+			user.setUsername(data.getUserName());
+			user.setLattitude(data.getLocation().getLattitude());
+			user.setLongitude(data.getLocation().getLongitude());
+			
+			Set<Integer> hostedAppointments = new HashSet<Integer>(data.getHostedAppointmentIDsList());
+			user.setHostedAppointments(hostedAppointments);
+			
+			Set<Integer> visitingAppointments = new HashSet<Integer>(data.getVisitingAppointmentIDsList());
+			user.setVisitingAppointments(visitingAppointments);
+			
+			Timestamp timestamp = Timestamp.valueOf(data.getLatestLocationUpdate().getTime());
+			user.setLatestLocationUpdate(timestamp);
+			
+			Set<Integer> friends = new HashSet<Integer>(data.getFriendIDsList());
+			user.setFriends(friends);
+			
+			listener.notifyOwnData();
 		}
 		
 	}

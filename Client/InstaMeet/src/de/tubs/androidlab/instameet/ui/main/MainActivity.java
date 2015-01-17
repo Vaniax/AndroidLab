@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.client.listener.AbstractInboundMessageListener;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import de.tubs.androidlab.instameet.ui.addfriend.AddFriendActivity;
@@ -31,8 +33,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
     private ViewPager viewPager = null;
     private final static String TAG = MainActivity.class.getSimpleName();
-    private InstaMeetService service = null;
-    
     private SharedPreferences pref = null;
     
     @Override
@@ -60,35 +60,14 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     @Override
     protected void onStart() {
     	super.onStart();
-    	Intent intent = new Intent(this, InstaMeetService.class);
-    	if(!bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
-    		Log.e(TAG, "Service not available");
-    	}   	
+
     }
     
     @Override
     protected void onStop() {
     	super.onStop();
-    	if(service != null) {
-    		unbindService(serviceConnection);
-    		service = null;
-    	}
     }
     
-    /** Defines callbacks for service binding, passed to bindService() */
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder binder) {
-        	service = ( (InstaMeetServiceBinder) binder).getService();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-        	Log.e(TAG, "Connection lost");
-            service = null;
-        }
-    };
     
     @SuppressWarnings("deprecation")
 	private void addTabs() {
@@ -161,5 +140,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
+    
 
 }

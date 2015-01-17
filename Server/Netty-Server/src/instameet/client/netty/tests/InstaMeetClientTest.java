@@ -25,8 +25,8 @@ public class InstaMeetClientTest {
 				.handler(new LoggingHandler())
 				.handler(new InstaMeetClientInitializerTest());
 			
-			ChannelFuture future = bootstrap.connect(InetAddress.getLocalHost(),8080).sync();
-//			ChannelFuture future = bootstrap.connect("134.169.47.94",8081).sync();
+//			ChannelFuture future = bootstrap.connect(InetAddress.getLocalHost(),8080).sync();
+			ChannelFuture future = bootstrap.connect("54.93.64.1",8080).sync();
 			
 		    future.addListener(new FutureListener<Void>() {
 

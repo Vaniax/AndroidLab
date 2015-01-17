@@ -49,6 +49,10 @@ public class ClientHandler extends SimpleChannelInboundHandler<ClientResponse> {
 		case NO_MESSAGE:
 			Log.i(TAG,"Message type" + type);
 			break;
+		case OWN_DATA:
+			Log.i(TAG,"Message type" + type);
+			cb.ownData(msg.getUserData());
+			break;
 		default:
 			break;
 		}
