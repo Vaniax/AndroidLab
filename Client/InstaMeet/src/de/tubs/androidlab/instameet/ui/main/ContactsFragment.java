@@ -37,7 +37,7 @@ import de.tubs.androidlab.instameet.ui.chat.ChatActivity;
  */
 public class ContactsFragment extends ListFragment {
 	private final static String TAG = ContactsFragment.class.getSimpleName();
-	private ContactsListAdapter adapter;
+	public ContactsListAdapter adapter;
     private InstaMeetService service = null;
     private ServiceListener listener = new ServiceListener();
 	
@@ -195,7 +195,11 @@ public class ContactsFragment extends ListFragment {
 		public void setContacts(List<SimpleUser> newContacts) {
 			contacts.clear();
 			contacts.addAll(newContacts);
-			adapter.notifyDataSetChanged();
+			if(adapter != null) {
+				adapter.notifyDataSetChanged();
+			}
+			
+//			adapter.notifyDataSetChanged();
 		}
 	}
 }

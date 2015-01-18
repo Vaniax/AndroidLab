@@ -272,13 +272,19 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			for (Messages.SimpleUser it : msg.getFriendsList()) {
 				SimpleUser user = new SimpleUser();
 				user.setId(it.getUserID());
-				user.setLatestLocationUpdate(Timestamp.valueOf(it.getLatestLocationUpdate().getTime()));
+//				user.setLatestLocationUpdate(Timestamp.valueOf(it.getLatestLocationUpdate().getTime()));
 				user.setLattitude(it.getLocation().getLattitude());
 				user.setLongitude(it.getLocation().getLongitude());
 				user.setUsername(it.getUserName());
-				user.getFriends().addAll(it.getFriendIDsList());
-				user.getHostedAppointments().addAll(it.getHostedAppointmentIDsList());
-				user.getVisitingAppointments().addAll(it.getHostedAppointmentIDsList());
+				
+				Set<Integer> hostedAppointments = new HashSet<Integer>(it.getHostedAppointmentIDsList());
+				user.setHostedAppointments(hostedAppointments);
+				
+				Set<Integer> visitingAppointments = new HashSet<Integer>(it.getVisitingAppointmentIDsList());
+				user.setVisitingAppointments(visitingAppointments);
+				
+				Set<Integer> friends = new HashSet<Integer>(it.getFriendIDsList());
+				user.setFriends(friends);
 				
 				synchronized (users) {
 					users.put(it.getUserID(), user);
