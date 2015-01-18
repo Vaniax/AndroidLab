@@ -128,7 +128,7 @@ message AddFriend {
 
 message GetOwnData { // What is exactly returned here?
 	required string securityToken = 1;
-	required int32 userID = 2;
+	optional int32 userID = 2;
 };
 
 message GetFriends {

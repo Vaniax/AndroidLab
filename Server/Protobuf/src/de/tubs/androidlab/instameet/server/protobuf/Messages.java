@@ -11852,11 +11852,11 @@ public final class Messages {
         getSecurityTokenBytes();
 
     /**
-     * <code>required int32 userID = 2;</code>
+     * <code>optional int32 userID = 2;</code>
      */
     boolean hasUserID();
     /**
-     * <code>required int32 userID = 2;</code>
+     * <code>optional int32 userID = 2;</code>
      */
     int getUserID();
   }
@@ -12012,13 +12012,13 @@ public final class Messages {
     public static final int USERID_FIELD_NUMBER = 2;
     private int userID_;
     /**
-     * <code>required int32 userID = 2;</code>
+     * <code>optional int32 userID = 2;</code>
      */
     public boolean hasUserID() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required int32 userID = 2;</code>
+     * <code>optional int32 userID = 2;</code>
      */
     public int getUserID() {
       return userID_;
@@ -12035,10 +12035,6 @@ public final class Messages {
       if (isInitialized == 0) return false;
 
       if (!hasSecurityToken()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasUserID()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -12266,10 +12262,6 @@ public final class Messages {
           
           return false;
         }
-        if (!hasUserID()) {
-          
-          return false;
-        }
         return true;
       }
 
@@ -12370,19 +12362,19 @@ public final class Messages {
 
       private int userID_ ;
       /**
-       * <code>required int32 userID = 2;</code>
+       * <code>optional int32 userID = 2;</code>
        */
       public boolean hasUserID() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required int32 userID = 2;</code>
+       * <code>optional int32 userID = 2;</code>
        */
       public int getUserID() {
         return userID_;
       }
       /**
-       * <code>required int32 userID = 2;</code>
+       * <code>optional int32 userID = 2;</code>
        */
       public Builder setUserID(int value) {
         bitField0_ |= 0x00000002;
@@ -12391,7 +12383,7 @@ public final class Messages {
         return this;
       }
       /**
-       * <code>required int32 userID = 2;</code>
+       * <code>optional int32 userID = 2;</code>
        */
       public Builder clearUserID() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -28301,7 +28293,7 @@ public final class Messages {
       "dFriend\022\025\n\rsecurityToken\030\001 \002(\t\022\020\n\010friend" +
       "ID\030\002 \001(\005\022\022\n\nfriendName\030\003 \001(\t\022\016\n\006userID\030\004" +
       " \002(\005\"3\n\nGetOwnData\022\025\n\rsecurityToken\030\001 \002(" +
-      "\t\022\016\n\006userID\030\002 \002(\005\"F\n\nGetFriends\022\025\n\rsecur" +
+      "\t\022\016\n\006userID\030\002 \001(\005\"F\n\nGetFriends\022\025\n\rsecur" +
       "ityToken\030\001 \002(\t\022\021\n\tfriendIDs\030\002 \003(\005\022\016\n\006use" +
       "rID\030\003 \002(\005\"D\n\010GetUsers\022\025\n\rsecurityToken\030\001" +
       " \002(\t\022\021\n\tfriendIDs\030\002 \003(\005\022\016\n\006userID\030\003 \002(\005\"" +
