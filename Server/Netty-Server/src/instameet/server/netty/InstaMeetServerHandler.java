@@ -1,5 +1,6 @@
 package instameet.server.netty;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -62,7 +63,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			CreateUser user = msg.getCreateUser();
 			SimpleUser createdUser  = service.createUser(user.getName(), user.getPassword());
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.BOOL).setBoolReply(bool).build());
-		case GET_OWN_DATA:
+		case GET_OWN_DATA: {
 			SimpleUser own = service.getOwnData(msg.getGetOwnData().getSecurityToken(), 1);
 			Messages.SimpleUser.Builder ownUser = Messages.SimpleUser.newBuilder()
 					.setUserID(own.getId())
@@ -76,13 +77,39 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 					.build();
 			ownUser.setLocation(ownLocation);
 			
-					
+			System.out.println(ownUser.toString());
+			
 			ClientResponse response = ClientResponse.newBuilder()
 					.setType(Type.OWN_DATA)
 					.setUserData(Messages.OwnData.newBuilder().setUserData(ownUser).build()).build();
 			
 			ctx.writeAndFlush(response);
-			break;
+		}break;
+		case GET_FRIENDS: {
+			List<SimpleUser> friends = service.GetFriends(msg.getGetFriendList().getSecurityToken(), msg.getGetFriendList().getUserID());
+			Messages.ListFriends.Builder getFriends =  Messages.ListFriends.newBuilder();
+			
+			for(SimpleUser friend : friends) {
+				Messages.SimpleUser.Builder protoFriend = Messages.SimpleUser.newBuilder()
+						.setUserID(friend.getId())
+						.setUserName(friend.getUsername());
+				protoFriend.addAllFriendIDs(friend.getFriends());
+				protoFriend.addAllVisitingAppointmentIDs(friend.getVisitingAppointments());
+				protoFriend.addAllHostedAppointmentIDs(friend.getHostedAppointments());
+				Messages.Location friendLocation = Messages.Location.newBuilder()
+						.setLattitude(friend.getLattitude())
+						.setLongitude(friend.getLongitude())
+						.build();
+				protoFriend.setLocation(friendLocation);
+				
+				getFriends =  Messages.ListFriends.newBuilder().addFriends(protoFriend);
+			}
+			ClientResponse response = ClientResponse.newBuilder()
+					.setType(Type.LIST_FRIENDS)
+					.setListFriends(getFriends.build()).build();
+			ctx.writeAndFlush(response);
+
+		}break;
 		default:
 			break;
 		}
