@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentMap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import de.tubs.androidlab.instameet.server.protobuf.Messages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.BoolReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateUser;
@@ -62,8 +63,25 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			SimpleUser createdUser  = service.createUser(user.getName(), user.getPassword());
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.BOOL).setBoolReply(bool).build());
 		case GET_OWN_DATA:
-//			SimpleUser user = SimpleUser.newBuilder.
-//			ctx.writeAndFlush();
+			SimpleUser own = service.getOwnData(msg.getGetOwnData().getSecurityToken(), 1);
+			Messages.SimpleUser.Builder ownUser = Messages.SimpleUser.newBuilder()
+					.setUserID(own.getId())
+					.setUserName(own.getUsername());
+			ownUser.addAllFriendIDs(own.getFriends());
+			ownUser.addAllVisitingAppointmentIDs(own.getVisitingAppointments());
+			ownUser.addAllHostedAppointmentIDs(own.getHostedAppointments());
+			Messages.Location ownLocation = Messages.Location.newBuilder()
+					.setLattitude(own.getLattitude())
+					.setLongitude(own.getLongitude())
+					.build();
+			ownUser.setLocation(ownLocation);
+			
+					
+			ClientResponse response = ClientResponse.newBuilder()
+					.setType(Type.OWN_DATA)
+					.setUserData(Messages.OwnData.newBuilder().setUserData(ownUser).build()).build();
+			
+			ctx.writeAndFlush(response);
 			break;
 		default:
 			break;
