@@ -102,11 +102,15 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 						.build();
 				protoFriend.setLocation(friendLocation);
 				
-				getFriends =  Messages.ListFriends.newBuilder().addFriends(protoFriend);
+				getFriends.addFriends(protoFriend);
 			}
 			ClientResponse response = ClientResponse.newBuilder()
 					.setType(Type.LIST_FRIENDS)
 					.setListFriends(getFriends.build()).build();
+			
+			
+			System.out.println(getFriends.toString());
+
 			ctx.writeAndFlush(response);
 
 		}break;

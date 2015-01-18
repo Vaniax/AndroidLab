@@ -68,6 +68,7 @@ public class ContactsFragment extends ListFragment {
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    	container.invalidate();
     	return inflater.inflate(R.layout.fragment_contacts, container, false);
     }
     
@@ -152,11 +153,6 @@ public class ContactsFragment extends ListFragment {
 		public ContactsListAdapter(Context c) {
 			context = c;
 			inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			SimpleUser testUser = new SimpleUser();
-			testUser.setId(1);
-			testUser.setUsername("Hans TestUser Wurst");
-			contacts.add(testUser); // Only for testing phase when there is no running server
-
 		}
 		
 		@Override
@@ -199,7 +195,6 @@ public class ContactsFragment extends ListFragment {
 				adapter.notifyDataSetChanged();
 			}
 			
-//			adapter.notifyDataSetChanged();
 		}
 	}
 }
