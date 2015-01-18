@@ -91,56 +91,73 @@ message ChatMessage {
 	optional string securityToken = 1; // Clients should not get tokens from other users
 	required string message = 2;
 	required int32 friendID = 3;
+	required int32 userID = 4;
 };
 
 message GetMessages { // If some sort of message history needs to be pulled from server
 	required string securityToken = 1;
 	repeated int32 friendIDs = 2;
+	required int32 userID = 3;
 };
 
 
 message CreateAppointment {
 	required string securityToken = 1;
 	required SimpleAppointment appointment = 2;
+	required int32 userID = 3;
 };
 
 message VisitAppointment {
 	required string securityToken = 1;
 	required int32 appointmentID = 2;
+	required int32 userID = 3;
 };
 
 message GetNearAppointments {
 	required string securityToken = 1;
 	optional Location location = 2; // (Automatic) regular location update is planned
+	required int32 userID = 3;
 };
 
 message AddFriend {
 	required string securityToken = 1;
 	optional int32 friendID = 2;
 	optional string friendName = 3;
+	required int32 userID = 4;
 };
 
 message GetOwnData { // What is exactly returned here?
 	required string securityToken = 1;
+	required int32 userID = 2;
 };
 
 message GetFriends {
 	required string securityToken = 1;
 	repeated int32 friendIDs = 2;
+	required int32 userID = 3;
 };
+
+message GetUsers {
+	required string securityToken = 1;
+	repeated int32 friendIDs = 2;
+	required int32 userID = 3;
+}
 
 message GetFriendLocation {
 	required string securityToken = 1;
 	required int32 friendID = 2;
+	required int32 userID = 3;
 };
 
 message GetMyVisitingAppointments {
 	required string securityToken = 1;
+	required int32 userID = 2;
 };
 
 message UpdateLocation {
 	required string securityToken = 1;
 	required Location location = 2;
+	required int32 userID = 3;
 };
 
 

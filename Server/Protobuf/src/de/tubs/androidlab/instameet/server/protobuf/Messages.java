@@ -7224,6 +7224,15 @@ public final class Messages {
      * <code>required int32 friendID = 3;</code>
      */
     int getFriendID();
+
+    /**
+     * <code>required int32 userID = 4;</code>
+     */
+    boolean hasUserID();
+    /**
+     * <code>required int32 userID = 4;</code>
+     */
+    int getUserID();
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.ChatMessage}
@@ -7292,6 +7301,11 @@ public final class Messages {
             case 24: {
               bitField0_ |= 0x00000004;
               friendID_ = input.readInt32();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              userID_ = input.readInt32();
               break;
             }
           }
@@ -7445,10 +7459,26 @@ public final class Messages {
       return friendID_;
     }
 
+    public static final int USERID_FIELD_NUMBER = 4;
+    private int userID_;
+    /**
+     * <code>required int32 userID = 4;</code>
+     */
+    public boolean hasUserID() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required int32 userID = 4;</code>
+     */
+    public int getUserID() {
+      return userID_;
+    }
+
     private void initFields() {
       securityToken_ = "";
       message_ = "";
       friendID_ = 0;
+      userID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -7461,6 +7491,10 @@ public final class Messages {
         return false;
       }
       if (!hasFriendID()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUserID()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -7479,6 +7513,9 @@ public final class Messages {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeInt32(3, friendID_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, userID_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -7500,6 +7537,10 @@ public final class Messages {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(3, friendID_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, userID_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -7624,6 +7665,8 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000002);
         friendID_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
+        userID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -7664,6 +7707,10 @@ public final class Messages {
           to_bitField0_ |= 0x00000004;
         }
         result.friendID_ = friendID_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.userID_ = userID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -7693,6 +7740,9 @@ public final class Messages {
         if (other.hasFriendID()) {
           setFriendID(other.getFriendID());
         }
+        if (other.hasUserID()) {
+          setUserID(other.getUserID());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -7703,6 +7753,10 @@ public final class Messages {
           return false;
         }
         if (!hasFriendID()) {
+          
+          return false;
+        }
+        if (!hasUserID()) {
           
           return false;
         }
@@ -7936,6 +7990,38 @@ public final class Messages {
         return this;
       }
 
+      private int userID_ ;
+      /**
+       * <code>required int32 userID = 4;</code>
+       */
+      public boolean hasUserID() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required int32 userID = 4;</code>
+       */
+      public int getUserID() {
+        return userID_;
+      }
+      /**
+       * <code>required int32 userID = 4;</code>
+       */
+      public Builder setUserID(int value) {
+        bitField0_ |= 0x00000008;
+        userID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userID = 4;</code>
+       */
+      public Builder clearUserID() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        userID_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.ChatMessage)
     }
 
@@ -7977,6 +8063,15 @@ public final class Messages {
      * <code>repeated int32 friendIDs = 2;</code>
      */
     int getFriendIDs(int index);
+
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    boolean hasUserID();
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    int getUserID();
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.GetMessages}
@@ -8059,6 +8154,11 @@ public final class Messages {
                 friendIDs_.add(input.readInt32());
               }
               input.popLimit(limit);
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000002;
+              userID_ = input.readInt32();
               break;
             }
           }
@@ -8168,9 +8268,25 @@ public final class Messages {
       return friendIDs_.get(index);
     }
 
+    public static final int USERID_FIELD_NUMBER = 3;
+    private int userID_;
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public boolean hasUserID() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public int getUserID() {
+      return userID_;
+    }
+
     private void initFields() {
       securityToken_ = "";
       friendIDs_ = java.util.Collections.emptyList();
+      userID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -8179,6 +8295,10 @@ public final class Messages {
       if (isInitialized == 0) return false;
 
       if (!hasSecurityToken()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUserID()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -8194,6 +8314,9 @@ public final class Messages {
       }
       for (int i = 0; i < friendIDs_.size(); i++) {
         output.writeInt32(2, friendIDs_.get(i));
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(3, userID_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -8216,6 +8339,10 @@ public final class Messages {
         }
         size += dataSize;
         size += 1 * getFriendIDsList().size();
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, userID_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -8342,6 +8469,8 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000001);
         friendIDs_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
+        userID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -8379,6 +8508,10 @@ public final class Messages {
           bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.friendIDs_ = friendIDs_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.userID_ = userID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -8410,12 +8543,19 @@ public final class Messages {
           }
           onChanged();
         }
+        if (other.hasUserID()) {
+          setUserID(other.getUserID());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasSecurityToken()) {
+          
+          return false;
+        }
+        if (!hasUserID()) {
           
           return false;
         }
@@ -8583,6 +8723,38 @@ public final class Messages {
         return this;
       }
 
+      private int userID_ ;
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public boolean hasUserID() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public int getUserID() {
+        return userID_;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder setUserID(int value) {
+        bitField0_ |= 0x00000004;
+        userID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder clearUserID() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        userID_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.GetMessages)
     }
 
@@ -8624,6 +8796,15 @@ public final class Messages {
      * <code>required .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointment = 2;</code>
      */
     de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointmentOrBuilder getAppointmentOrBuilder();
+
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    boolean hasUserID();
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    int getUserID();
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.CreateAppointment}
@@ -8694,6 +8875,11 @@ public final class Messages {
                 appointment_ = subBuilder.buildPartial();
               }
               bitField0_ |= 0x00000002;
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              userID_ = input.readInt32();
               break;
             }
           }
@@ -8799,9 +8985,25 @@ public final class Messages {
       return appointment_;
     }
 
+    public static final int USERID_FIELD_NUMBER = 3;
+    private int userID_;
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public boolean hasUserID() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public int getUserID() {
+      return userID_;
+    }
+
     private void initFields() {
       securityToken_ = "";
       appointment_ = de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.getDefaultInstance();
+      userID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -8814,6 +9016,10 @@ public final class Messages {
         return false;
       }
       if (!hasAppointment()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUserID()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -8834,6 +9040,9 @@ public final class Messages {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeMessage(2, appointment_);
       }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt32(3, userID_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -8850,6 +9059,10 @@ public final class Messages {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, appointment_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, userID_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -8977,6 +9190,8 @@ public final class Messages {
           appointmentBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000002);
+        userID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -9017,6 +9232,10 @@ public final class Messages {
         } else {
           result.appointment_ = appointmentBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.userID_ = userID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -9041,6 +9260,9 @@ public final class Messages {
         if (other.hasAppointment()) {
           mergeAppointment(other.getAppointment());
         }
+        if (other.hasUserID()) {
+          setUserID(other.getUserID());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -9051,6 +9273,10 @@ public final class Messages {
           return false;
         }
         if (!hasAppointment()) {
+          
+          return false;
+        }
+        if (!hasUserID()) {
           
           return false;
         }
@@ -9272,6 +9498,38 @@ public final class Messages {
         return appointmentBuilder_;
       }
 
+      private int userID_ ;
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public boolean hasUserID() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public int getUserID() {
+        return userID_;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder setUserID(int value) {
+        bitField0_ |= 0x00000004;
+        userID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder clearUserID() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        userID_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.CreateAppointment)
     }
 
@@ -9309,6 +9567,15 @@ public final class Messages {
      * <code>required int32 appointmentID = 2;</code>
      */
     int getAppointmentID();
+
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    boolean hasUserID();
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    int getUserID();
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.VisitAppointment}
@@ -9371,6 +9638,11 @@ public final class Messages {
             case 16: {
               bitField0_ |= 0x00000002;
               appointmentID_ = input.readInt32();
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              userID_ = input.readInt32();
               break;
             }
           }
@@ -9470,9 +9742,25 @@ public final class Messages {
       return appointmentID_;
     }
 
+    public static final int USERID_FIELD_NUMBER = 3;
+    private int userID_;
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public boolean hasUserID() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public int getUserID() {
+      return userID_;
+    }
+
     private void initFields() {
       securityToken_ = "";
       appointmentID_ = 0;
+      userID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -9488,6 +9776,10 @@ public final class Messages {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasUserID()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -9500,6 +9792,9 @@ public final class Messages {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeInt32(2, appointmentID_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt32(3, userID_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -9517,6 +9812,10 @@ public final class Messages {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, appointmentID_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, userID_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -9639,6 +9938,8 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000001);
         appointmentID_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
+        userID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -9675,6 +9976,10 @@ public final class Messages {
           to_bitField0_ |= 0x00000002;
         }
         result.appointmentID_ = appointmentID_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.userID_ = userID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -9699,6 +10004,9 @@ public final class Messages {
         if (other.hasAppointmentID()) {
           setAppointmentID(other.getAppointmentID());
         }
+        if (other.hasUserID()) {
+          setUserID(other.getUserID());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -9709,6 +10017,10 @@ public final class Messages {
           return false;
         }
         if (!hasAppointmentID()) {
+          
+          return false;
+        }
+        if (!hasUserID()) {
           
           return false;
         }
@@ -9842,6 +10154,38 @@ public final class Messages {
         return this;
       }
 
+      private int userID_ ;
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public boolean hasUserID() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public int getUserID() {
+        return userID_;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder setUserID(int value) {
+        bitField0_ |= 0x00000004;
+        userID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder clearUserID() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        userID_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.VisitAppointment)
     }
 
@@ -9895,6 +10239,15 @@ public final class Messages {
      * </pre>
      */
     de.tubs.androidlab.instameet.server.protobuf.Messages.LocationOrBuilder getLocationOrBuilder();
+
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    boolean hasUserID();
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    int getUserID();
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.GetNearAppointments}
@@ -9965,6 +10318,11 @@ public final class Messages {
                 location_ = subBuilder.buildPartial();
               }
               bitField0_ |= 0x00000002;
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              userID_ = input.readInt32();
               break;
             }
           }
@@ -10082,9 +10440,25 @@ public final class Messages {
       return location_;
     }
 
+    public static final int USERID_FIELD_NUMBER = 3;
+    private int userID_;
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public boolean hasUserID() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public int getUserID() {
+      return userID_;
+    }
+
     private void initFields() {
       securityToken_ = "";
       location_ = de.tubs.androidlab.instameet.server.protobuf.Messages.Location.getDefaultInstance();
+      userID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -10093,6 +10467,10 @@ public final class Messages {
       if (isInitialized == 0) return false;
 
       if (!hasSecurityToken()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUserID()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -10115,6 +10493,9 @@ public final class Messages {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeMessage(2, location_);
       }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt32(3, userID_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -10131,6 +10512,10 @@ public final class Messages {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, location_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, userID_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -10258,6 +10643,8 @@ public final class Messages {
           locationBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000002);
+        userID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -10298,6 +10685,10 @@ public final class Messages {
         } else {
           result.location_ = locationBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.userID_ = userID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -10322,12 +10713,19 @@ public final class Messages {
         if (other.hasLocation()) {
           mergeLocation(other.getLocation());
         }
+        if (other.hasUserID()) {
+          setUserID(other.getUserID());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasSecurityToken()) {
+          
+          return false;
+        }
+        if (!hasUserID()) {
           
           return false;
         }
@@ -10587,6 +10985,38 @@ public final class Messages {
         return locationBuilder_;
       }
 
+      private int userID_ ;
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public boolean hasUserID() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public int getUserID() {
+        return userID_;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder setUserID(int value) {
+        bitField0_ |= 0x00000004;
+        userID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder clearUserID() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        userID_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.GetNearAppointments)
     }
 
@@ -10638,6 +11068,15 @@ public final class Messages {
      */
     com.google.protobuf.ByteString
         getFriendNameBytes();
+
+    /**
+     * <code>required int32 userID = 4;</code>
+     */
+    boolean hasUserID();
+    /**
+     * <code>required int32 userID = 4;</code>
+     */
+    int getUserID();
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.AddFriend}
@@ -10706,6 +11145,11 @@ public final class Messages {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
               friendName_ = bs;
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              userID_ = input.readInt32();
               break;
             }
           }
@@ -10847,10 +11291,26 @@ public final class Messages {
       }
     }
 
+    public static final int USERID_FIELD_NUMBER = 4;
+    private int userID_;
+    /**
+     * <code>required int32 userID = 4;</code>
+     */
+    public boolean hasUserID() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required int32 userID = 4;</code>
+     */
+    public int getUserID() {
+      return userID_;
+    }
+
     private void initFields() {
       securityToken_ = "";
       friendID_ = 0;
       friendName_ = "";
+      userID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -10859,6 +11319,10 @@ public final class Messages {
       if (isInitialized == 0) return false;
 
       if (!hasSecurityToken()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUserID()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -10877,6 +11341,9 @@ public final class Messages {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeBytes(3, getFriendNameBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, userID_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -10898,6 +11365,10 @@ public final class Messages {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(3, getFriendNameBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, userID_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -11022,6 +11493,8 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000002);
         friendName_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
+        userID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -11062,6 +11535,10 @@ public final class Messages {
           to_bitField0_ |= 0x00000004;
         }
         result.friendName_ = friendName_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.userID_ = userID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -11091,12 +11568,19 @@ public final class Messages {
           friendName_ = other.friendName_;
           onChanged();
         }
+        if (other.hasUserID()) {
+          setUserID(other.getUserID());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasSecurityToken()) {
+          
+          return false;
+        }
+        if (!hasUserID()) {
           
           return false;
         }
@@ -11306,6 +11790,38 @@ public final class Messages {
         return this;
       }
 
+      private int userID_ ;
+      /**
+       * <code>required int32 userID = 4;</code>
+       */
+      public boolean hasUserID() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required int32 userID = 4;</code>
+       */
+      public int getUserID() {
+        return userID_;
+      }
+      /**
+       * <code>required int32 userID = 4;</code>
+       */
+      public Builder setUserID(int value) {
+        bitField0_ |= 0x00000008;
+        userID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userID = 4;</code>
+       */
+      public Builder clearUserID() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        userID_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.AddFriend)
     }
 
@@ -11334,6 +11850,15 @@ public final class Messages {
      */
     com.google.protobuf.ByteString
         getSecurityTokenBytes();
+
+    /**
+     * <code>required int32 userID = 2;</code>
+     */
+    boolean hasUserID();
+    /**
+     * <code>required int32 userID = 2;</code>
+     */
+    int getUserID();
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.GetOwnData}
@@ -11395,6 +11920,11 @@ public final class Messages {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
               securityToken_ = bs;
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              userID_ = input.readInt32();
               break;
             }
           }
@@ -11479,8 +12009,24 @@ public final class Messages {
       }
     }
 
+    public static final int USERID_FIELD_NUMBER = 2;
+    private int userID_;
+    /**
+     * <code>required int32 userID = 2;</code>
+     */
+    public boolean hasUserID() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required int32 userID = 2;</code>
+     */
+    public int getUserID() {
+      return userID_;
+    }
+
     private void initFields() {
       securityToken_ = "";
+      userID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -11489,6 +12035,10 @@ public final class Messages {
       if (isInitialized == 0) return false;
 
       if (!hasSecurityToken()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUserID()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -11502,6 +12052,9 @@ public final class Messages {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeBytes(1, getSecurityTokenBytes());
       }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(2, userID_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -11514,6 +12067,10 @@ public final class Messages {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(1, getSecurityTokenBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, userID_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -11638,6 +12195,8 @@ public final class Messages {
         super.clear();
         securityToken_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
+        userID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -11670,6 +12229,10 @@ public final class Messages {
           to_bitField0_ |= 0x00000001;
         }
         result.securityToken_ = securityToken_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.userID_ = userID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -11691,12 +12254,19 @@ public final class Messages {
           securityToken_ = other.securityToken_;
           onChanged();
         }
+        if (other.hasUserID()) {
+          setUserID(other.getUserID());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasSecurityToken()) {
+          
+          return false;
+        }
+        if (!hasUserID()) {
           
           return false;
         }
@@ -11798,6 +12368,38 @@ public final class Messages {
         return this;
       }
 
+      private int userID_ ;
+      /**
+       * <code>required int32 userID = 2;</code>
+       */
+      public boolean hasUserID() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required int32 userID = 2;</code>
+       */
+      public int getUserID() {
+        return userID_;
+      }
+      /**
+       * <code>required int32 userID = 2;</code>
+       */
+      public Builder setUserID(int value) {
+        bitField0_ |= 0x00000002;
+        userID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userID = 2;</code>
+       */
+      public Builder clearUserID() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        userID_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.GetOwnData)
     }
 
@@ -11839,6 +12441,15 @@ public final class Messages {
      * <code>repeated int32 friendIDs = 2;</code>
      */
     int getFriendIDs(int index);
+
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    boolean hasUserID();
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    int getUserID();
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.GetFriends}
@@ -11917,6 +12528,11 @@ public final class Messages {
                 friendIDs_.add(input.readInt32());
               }
               input.popLimit(limit);
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000002;
+              userID_ = input.readInt32();
               break;
             }
           }
@@ -12026,9 +12642,25 @@ public final class Messages {
       return friendIDs_.get(index);
     }
 
+    public static final int USERID_FIELD_NUMBER = 3;
+    private int userID_;
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public boolean hasUserID() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public int getUserID() {
+      return userID_;
+    }
+
     private void initFields() {
       securityToken_ = "";
       friendIDs_ = java.util.Collections.emptyList();
+      userID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -12037,6 +12669,10 @@ public final class Messages {
       if (isInitialized == 0) return false;
 
       if (!hasSecurityToken()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUserID()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -12052,6 +12688,9 @@ public final class Messages {
       }
       for (int i = 0; i < friendIDs_.size(); i++) {
         output.writeInt32(2, friendIDs_.get(i));
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(3, userID_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -12074,6 +12713,10 @@ public final class Messages {
         }
         size += dataSize;
         size += 1 * getFriendIDsList().size();
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, userID_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -12196,6 +12839,8 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000001);
         friendIDs_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
+        userID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -12233,6 +12878,10 @@ public final class Messages {
           bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.friendIDs_ = friendIDs_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.userID_ = userID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -12264,12 +12913,19 @@ public final class Messages {
           }
           onChanged();
         }
+        if (other.hasUserID()) {
+          setUserID(other.getUserID());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasSecurityToken()) {
+          
+          return false;
+        }
+        if (!hasUserID()) {
           
           return false;
         }
@@ -12437,6 +13093,38 @@ public final class Messages {
         return this;
       }
 
+      private int userID_ ;
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public boolean hasUserID() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public int getUserID() {
+        return userID_;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder setUserID(int value) {
+        bitField0_ |= 0x00000004;
+        userID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder clearUserID() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        userID_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.GetFriends)
     }
 
@@ -12446,6 +13134,731 @@ public final class Messages {
     }
 
     // @@protoc_insertion_point(class_scope:de.tubs.androidlab.instameet.server.protobuf.GetFriends)
+  }
+
+  public interface GetUsersOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.tubs.androidlab.instameet.server.protobuf.GetUsers)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required string securityToken = 1;</code>
+     */
+    boolean hasSecurityToken();
+    /**
+     * <code>required string securityToken = 1;</code>
+     */
+    java.lang.String getSecurityToken();
+    /**
+     * <code>required string securityToken = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getSecurityTokenBytes();
+
+    /**
+     * <code>repeated int32 friendIDs = 2;</code>
+     */
+    java.util.List<java.lang.Integer> getFriendIDsList();
+    /**
+     * <code>repeated int32 friendIDs = 2;</code>
+     */
+    int getFriendIDsCount();
+    /**
+     * <code>repeated int32 friendIDs = 2;</code>
+     */
+    int getFriendIDs(int index);
+
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    boolean hasUserID();
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    int getUserID();
+  }
+  /**
+   * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.GetUsers}
+   */
+  public static final class GetUsers extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.tubs.androidlab.instameet.server.protobuf.GetUsers)
+      GetUsersOrBuilder {
+    // Use GetUsers.newBuilder() to construct.
+    private GetUsers(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private GetUsers(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetUsers defaultInstance;
+    public static GetUsers getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public GetUsers getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private GetUsers(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              securityToken_ = bs;
+              break;
+            }
+            case 16: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                friendIDs_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              friendIDs_.add(input.readInt32());
+              break;
+            }
+            case 18: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
+                friendIDs_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                friendIDs_.add(input.readInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000002;
+              userID_ = input.readInt32();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          friendIDs_ = java.util.Collections.unmodifiableList(friendIDs_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return de.tubs.androidlab.instameet.server.protobuf.Messages.internal_static_de_tubs_androidlab_instameet_server_protobuf_GetUsers_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return de.tubs.androidlab.instameet.server.protobuf.Messages.internal_static_de_tubs_androidlab_instameet_server_protobuf_GetUsers_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers.class, de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<GetUsers> PARSER =
+        new com.google.protobuf.AbstractParser<GetUsers>() {
+      public GetUsers parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetUsers(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetUsers> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int SECURITYTOKEN_FIELD_NUMBER = 1;
+    private java.lang.Object securityToken_;
+    /**
+     * <code>required string securityToken = 1;</code>
+     */
+    public boolean hasSecurityToken() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required string securityToken = 1;</code>
+     */
+    public java.lang.String getSecurityToken() {
+      java.lang.Object ref = securityToken_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          securityToken_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string securityToken = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getSecurityTokenBytes() {
+      java.lang.Object ref = securityToken_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        securityToken_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int FRIENDIDS_FIELD_NUMBER = 2;
+    private java.util.List<java.lang.Integer> friendIDs_;
+    /**
+     * <code>repeated int32 friendIDs = 2;</code>
+     */
+    public java.util.List<java.lang.Integer>
+        getFriendIDsList() {
+      return friendIDs_;
+    }
+    /**
+     * <code>repeated int32 friendIDs = 2;</code>
+     */
+    public int getFriendIDsCount() {
+      return friendIDs_.size();
+    }
+    /**
+     * <code>repeated int32 friendIDs = 2;</code>
+     */
+    public int getFriendIDs(int index) {
+      return friendIDs_.get(index);
+    }
+
+    public static final int USERID_FIELD_NUMBER = 3;
+    private int userID_;
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public boolean hasUserID() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public int getUserID() {
+      return userID_;
+    }
+
+    private void initFields() {
+      securityToken_ = "";
+      friendIDs_ = java.util.Collections.emptyList();
+      userID_ = 0;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasSecurityToken()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUserID()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getSecurityTokenBytes());
+      }
+      for (int i = 0; i < friendIDs_.size(); i++) {
+        output.writeInt32(2, friendIDs_.get(i));
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(3, userID_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getSecurityTokenBytes());
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < friendIDs_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeInt32SizeNoTag(friendIDs_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getFriendIDsList().size();
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, userID_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.GetUsers}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.tubs.androidlab.instameet.server.protobuf.GetUsers)
+        de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsersOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.tubs.androidlab.instameet.server.protobuf.Messages.internal_static_de_tubs_androidlab_instameet_server_protobuf_GetUsers_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.tubs.androidlab.instameet.server.protobuf.Messages.internal_static_de_tubs_androidlab_instameet_server_protobuf_GetUsers_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers.class, de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers.Builder.class);
+      }
+
+      // Construct using de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        securityToken_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        friendIDs_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        userID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return de.tubs.androidlab.instameet.server.protobuf.Messages.internal_static_de_tubs_androidlab_instameet_server_protobuf_GetUsers_descriptor;
+      }
+
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers getDefaultInstanceForType() {
+        return de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers.getDefaultInstance();
+      }
+
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers build() {
+        de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers buildPartial() {
+        de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers result = new de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.securityToken_ = securityToken_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          friendIDs_ = java.util.Collections.unmodifiableList(friendIDs_);
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.friendIDs_ = friendIDs_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.userID_ = userID_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers) {
+          return mergeFrom((de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers other) {
+        if (other == de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers.getDefaultInstance()) return this;
+        if (other.hasSecurityToken()) {
+          bitField0_ |= 0x00000001;
+          securityToken_ = other.securityToken_;
+          onChanged();
+        }
+        if (!other.friendIDs_.isEmpty()) {
+          if (friendIDs_.isEmpty()) {
+            friendIDs_ = other.friendIDs_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureFriendIDsIsMutable();
+            friendIDs_.addAll(other.friendIDs_);
+          }
+          onChanged();
+        }
+        if (other.hasUserID()) {
+          setUserID(other.getUserID());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasSecurityToken()) {
+          
+          return false;
+        }
+        if (!hasUserID()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsers) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object securityToken_ = "";
+      /**
+       * <code>required string securityToken = 1;</code>
+       */
+      public boolean hasSecurityToken() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required string securityToken = 1;</code>
+       */
+      public java.lang.String getSecurityToken() {
+        java.lang.Object ref = securityToken_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            securityToken_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string securityToken = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getSecurityTokenBytes() {
+        java.lang.Object ref = securityToken_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          securityToken_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string securityToken = 1;</code>
+       */
+      public Builder setSecurityToken(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        securityToken_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string securityToken = 1;</code>
+       */
+      public Builder clearSecurityToken() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        securityToken_ = getDefaultInstance().getSecurityToken();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string securityToken = 1;</code>
+       */
+      public Builder setSecurityTokenBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        securityToken_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<java.lang.Integer> friendIDs_ = java.util.Collections.emptyList();
+      private void ensureFriendIDsIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          friendIDs_ = new java.util.ArrayList<java.lang.Integer>(friendIDs_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public java.util.List<java.lang.Integer>
+          getFriendIDsList() {
+        return java.util.Collections.unmodifiableList(friendIDs_);
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public int getFriendIDsCount() {
+        return friendIDs_.size();
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public int getFriendIDs(int index) {
+        return friendIDs_.get(index);
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public Builder setFriendIDs(
+          int index, int value) {
+        ensureFriendIDsIsMutable();
+        friendIDs_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public Builder addFriendIDs(int value) {
+        ensureFriendIDsIsMutable();
+        friendIDs_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public Builder addAllFriendIDs(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureFriendIDsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, friendIDs_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated int32 friendIDs = 2;</code>
+       */
+      public Builder clearFriendIDs() {
+        friendIDs_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+
+      private int userID_ ;
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public boolean hasUserID() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public int getUserID() {
+        return userID_;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder setUserID(int value) {
+        bitField0_ |= 0x00000004;
+        userID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder clearUserID() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        userID_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.GetUsers)
+    }
+
+    static {
+      defaultInstance = new GetUsers(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:de.tubs.androidlab.instameet.server.protobuf.GetUsers)
   }
 
   public interface GetFriendLocationOrBuilder extends
@@ -12474,6 +13887,15 @@ public final class Messages {
      * <code>required int32 friendID = 2;</code>
      */
     int getFriendID();
+
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    boolean hasUserID();
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    int getUserID();
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.GetFriendLocation}
@@ -12536,6 +13958,11 @@ public final class Messages {
             case 16: {
               bitField0_ |= 0x00000002;
               friendID_ = input.readInt32();
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              userID_ = input.readInt32();
               break;
             }
           }
@@ -12635,9 +14062,25 @@ public final class Messages {
       return friendID_;
     }
 
+    public static final int USERID_FIELD_NUMBER = 3;
+    private int userID_;
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public boolean hasUserID() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public int getUserID() {
+      return userID_;
+    }
+
     private void initFields() {
       securityToken_ = "";
       friendID_ = 0;
+      userID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -12653,6 +14096,10 @@ public final class Messages {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasUserID()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -12665,6 +14112,9 @@ public final class Messages {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeInt32(2, friendID_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt32(3, userID_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -12682,6 +14132,10 @@ public final class Messages {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(2, friendID_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, userID_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -12804,6 +14258,8 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000001);
         friendID_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
+        userID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -12840,6 +14296,10 @@ public final class Messages {
           to_bitField0_ |= 0x00000002;
         }
         result.friendID_ = friendID_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.userID_ = userID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -12864,6 +14324,9 @@ public final class Messages {
         if (other.hasFriendID()) {
           setFriendID(other.getFriendID());
         }
+        if (other.hasUserID()) {
+          setUserID(other.getUserID());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -12874,6 +14337,10 @@ public final class Messages {
           return false;
         }
         if (!hasFriendID()) {
+          
+          return false;
+        }
+        if (!hasUserID()) {
           
           return false;
         }
@@ -13007,6 +14474,38 @@ public final class Messages {
         return this;
       }
 
+      private int userID_ ;
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public boolean hasUserID() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public int getUserID() {
+        return userID_;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder setUserID(int value) {
+        bitField0_ |= 0x00000004;
+        userID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder clearUserID() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        userID_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.GetFriendLocation)
     }
 
@@ -13035,6 +14534,15 @@ public final class Messages {
      */
     com.google.protobuf.ByteString
         getSecurityTokenBytes();
+
+    /**
+     * <code>required int32 userID = 2;</code>
+     */
+    boolean hasUserID();
+    /**
+     * <code>required int32 userID = 2;</code>
+     */
+    int getUserID();
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.GetMyVisitingAppointments}
@@ -13092,6 +14600,11 @@ public final class Messages {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
               securityToken_ = bs;
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              userID_ = input.readInt32();
               break;
             }
           }
@@ -13176,8 +14689,24 @@ public final class Messages {
       }
     }
 
+    public static final int USERID_FIELD_NUMBER = 2;
+    private int userID_;
+    /**
+     * <code>required int32 userID = 2;</code>
+     */
+    public boolean hasUserID() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required int32 userID = 2;</code>
+     */
+    public int getUserID() {
+      return userID_;
+    }
+
     private void initFields() {
       securityToken_ = "";
+      userID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -13186,6 +14715,10 @@ public final class Messages {
       if (isInitialized == 0) return false;
 
       if (!hasSecurityToken()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUserID()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -13199,6 +14732,9 @@ public final class Messages {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeBytes(1, getSecurityTokenBytes());
       }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(2, userID_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -13211,6 +14747,10 @@ public final class Messages {
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(1, getSecurityTokenBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, userID_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -13331,6 +14871,8 @@ public final class Messages {
         super.clear();
         securityToken_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
+        userID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -13363,6 +14905,10 @@ public final class Messages {
           to_bitField0_ |= 0x00000001;
         }
         result.securityToken_ = securityToken_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.userID_ = userID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -13384,12 +14930,19 @@ public final class Messages {
           securityToken_ = other.securityToken_;
           onChanged();
         }
+        if (other.hasUserID()) {
+          setUserID(other.getUserID());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
         if (!hasSecurityToken()) {
+          
+          return false;
+        }
+        if (!hasUserID()) {
           
           return false;
         }
@@ -13491,6 +15044,38 @@ public final class Messages {
         return this;
       }
 
+      private int userID_ ;
+      /**
+       * <code>required int32 userID = 2;</code>
+       */
+      public boolean hasUserID() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required int32 userID = 2;</code>
+       */
+      public int getUserID() {
+        return userID_;
+      }
+      /**
+       * <code>required int32 userID = 2;</code>
+       */
+      public Builder setUserID(int value) {
+        bitField0_ |= 0x00000002;
+        userID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userID = 2;</code>
+       */
+      public Builder clearUserID() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        userID_ = 0;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.GetMyVisitingAppointments)
     }
 
@@ -13532,6 +15117,15 @@ public final class Messages {
      * <code>required .de.tubs.androidlab.instameet.server.protobuf.Location location = 2;</code>
      */
     de.tubs.androidlab.instameet.server.protobuf.Messages.LocationOrBuilder getLocationOrBuilder();
+
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    boolean hasUserID();
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    int getUserID();
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.UpdateLocation}
@@ -13602,6 +15196,11 @@ public final class Messages {
                 location_ = subBuilder.buildPartial();
               }
               bitField0_ |= 0x00000002;
+              break;
+            }
+            case 24: {
+              bitField0_ |= 0x00000004;
+              userID_ = input.readInt32();
               break;
             }
           }
@@ -13707,9 +15306,25 @@ public final class Messages {
       return location_;
     }
 
+    public static final int USERID_FIELD_NUMBER = 3;
+    private int userID_;
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public boolean hasUserID() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>required int32 userID = 3;</code>
+     */
+    public int getUserID() {
+      return userID_;
+    }
+
     private void initFields() {
       securityToken_ = "";
       location_ = de.tubs.androidlab.instameet.server.protobuf.Messages.Location.getDefaultInstance();
+      userID_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -13722,6 +15337,10 @@ public final class Messages {
         return false;
       }
       if (!hasLocation()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasUserID()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -13742,6 +15361,9 @@ public final class Messages {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeMessage(2, location_);
       }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeInt32(3, userID_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -13758,6 +15380,10 @@ public final class Messages {
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, location_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(3, userID_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -13885,6 +15511,8 @@ public final class Messages {
           locationBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000002);
+        userID_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -13925,6 +15553,10 @@ public final class Messages {
         } else {
           result.location_ = locationBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.userID_ = userID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -13949,6 +15581,9 @@ public final class Messages {
         if (other.hasLocation()) {
           mergeLocation(other.getLocation());
         }
+        if (other.hasUserID()) {
+          setUserID(other.getUserID());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -13959,6 +15594,10 @@ public final class Messages {
           return false;
         }
         if (!hasLocation()) {
+          
+          return false;
+        }
+        if (!hasUserID()) {
           
           return false;
         }
@@ -14178,6 +15817,38 @@ public final class Messages {
           location_ = null;
         }
         return locationBuilder_;
+      }
+
+      private int userID_ ;
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public boolean hasUserID() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public int getUserID() {
+        return userID_;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder setUserID(int value) {
+        bitField0_ |= 0x00000004;
+        userID_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 userID = 3;</code>
+       */
+      public Builder clearUserID() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        userID_ = 0;
+        onChanged();
+        return this;
       }
 
       // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.UpdateLocation)
@@ -26429,6 +28100,11 @@ public final class Messages {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_tubs_androidlab_instameet_server_protobuf_GetFriends_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_de_tubs_androidlab_instameet_server_protobuf_GetUsers_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_de_tubs_androidlab_instameet_server_protobuf_GetUsers_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetFriendLocation_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -26608,77 +28284,83 @@ public final class Messages {
       "ITY_TOKEN\020\005\022\020\n\014CHAT_MESSAGE\020\006\022\014\n\010OWN_DAT" +
       "A\020\007\022\016\n\nNO_MESSAGE\020\024\"\'\n\005Login\022\014\n\004name\030\001 \002" +
       "(\t\022\020\n\010password\030\002 \002(\t\",\n\nCreateUser\022\014\n\004na" +
-      "me\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\"G\n\013ChatMessag" +
+      "me\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\"W\n\013ChatMessag" +
       "e\022\025\n\rsecurityToken\030\001 \001(\t\022\017\n\007message\030\002 \002(" +
-      "\t\022\020\n\010friendID\030\003 \002(\005\"7\n\013GetMessages\022\025\n\rse" +
-      "curityToken\030\001 \002(\t\022\021\n\tfriendIDs\030\002 \003(\005\"\200\001\n",
-      "\021CreateAppointment\022\025\n\rsecurityToken\030\001 \002(" +
-      "\t\022T\n\013appointment\030\002 \002(\0132?.de.tubs.android" +
-      "lab.instameet.server.protobuf.SimpleAppo" +
-      "intment\"@\n\020VisitAppointment\022\025\n\rsecurityT" +
-      "oken\030\001 \002(\t\022\025\n\rappointmentID\030\002 \002(\005\"v\n\023Get" +
-      "NearAppointments\022\025\n\rsecurityToken\030\001 \002(\t\022" +
-      "H\n\010location\030\002 \001(\01326.de.tubs.androidlab.i" +
-      "nstameet.server.protobuf.Location\"H\n\tAdd" +
-      "Friend\022\025\n\rsecurityToken\030\001 \002(\t\022\020\n\010friendI" +
-      "D\030\002 \001(\005\022\022\n\nfriendName\030\003 \001(\t\"#\n\nGetOwnDat",
-      "a\022\025\n\rsecurityToken\030\001 \002(\t\"6\n\nGetFriends\022\025" +
-      "\n\rsecurityToken\030\001 \002(\t\022\021\n\tfriendIDs\030\002 \003(\005" +
-      "\"<\n\021GetFriendLocation\022\025\n\rsecurityToken\030\001" +
-      " \002(\t\022\020\n\010friendID\030\002 \002(\005\"2\n\031GetMyVisitingA" +
-      "ppointments\022\025\n\rsecurityToken\030\001 \002(\t\"q\n\016Up" +
-      "dateLocation\022\025\n\rsecurityToken\030\001 \002(\t\022H\n\010l" +
-      "ocation\030\002 \002(\01326.de.tubs.androidlab.insta" +
-      "meet.server.protobuf.Location\"X\n\013ListFri" +
-      "ends\022I\n\007friends\030\001 \003(\01328.de.tubs.androidl" +
-      "ab.instameet.server.protobuf.SimpleUser\"",
-      "Y\n\rListLocations\022H\n\010location\030\001 \003(\01326.de." +
-      "tubs.androidlab.instameet.server.protobu" +
-      "f.Location\"_\n\020ListChatMessages\022K\n\010messag" +
-      "es\030\001 \003(\01329.de.tubs.androidlab.instameet." +
-      "server.protobuf.ChatMessage\"\033\n\tBoolReply" +
-      "\022\016\n\006isTrue\030\001 \002(\010\"U\n\007OwnData\022J\n\010userData\030" +
-      "\001 \002(\01328.de.tubs.androidlab.instameet.ser" +
-      "ver.protobuf.SimpleUser\"\324\002\n\021SimpleAppoin" +
-      "tment\022\n\n\002id\030\001 \002(\005\022\r\n\005title\030\002 \002(\t\022H\n\010loca" +
-      "tion\030\003 \002(\01326.de.tubs.androidlab.instamee",
-      "t.server.protobuf.Location\022@\n\004time\030\004 \002(\013" +
-      "22.de.tubs.androidlab.instameet.server.p" +
-      "rotobuf.Time\022H\n\006hoster\030\005 \002(\01328.de.tubs.a" +
-      "ndroidlab.instameet.server.protobuf.Simp" +
-      "leUser\022N\n\014participants\030\006 \003(\01328.de.tubs.a" +
-      "ndroidlab.instameet.server.protobuf.Simp" +
-      "leUser\"\233\002\n\nSimpleUser\022\020\n\010userName\030\001 \002(\t\022" +
-      "\016\n\006userID\030\002 \002(\005\022P\n\024latestLocationUpdate\030" +
-      "\003 \001(\01322.de.tubs.androidlab.instameet.ser" +
-      "ver.protobuf.Time\022H\n\010location\030\004 \001(\01326.de",
-      ".tubs.androidlab.instameet.server.protob" +
-      "uf.Location\022\021\n\tfriendIDs\030\005 \003(\005\022\034\n\024hosted" +
-      "AppointmentIDs\030\006 \003(\005\022\036\n\026visitingAppointm" +
-      "entIDs\030\007 \003(\005\"0\n\010Location\022\021\n\tlongitude\030\001 " +
-      "\002(\001\022\021\n\tlattitude\030\002 \002(\001\"\024\n\004Time\022\014\n\004time\030\001" +
-      " \002(\t\"\036\n\rSecurityToken\022\r\n\005token\030\001 \002(\t\"\013\n\t" +
-      "NoMessage\"f\n\nMapFriends\022X\n\003map\030\001 \002(\0132K.d" +
+      "\t\022\020\n\010friendID\030\003 \002(\005\022\016\n\006userID\030\004 \002(\005\"G\n\013G" +
+      "etMessages\022\025\n\rsecurityToken\030\001 \002(\t\022\021\n\tfri",
+      "endIDs\030\002 \003(\005\022\016\n\006userID\030\003 \002(\005\"\220\001\n\021CreateA" +
+      "ppointment\022\025\n\rsecurityToken\030\001 \002(\t\022T\n\013app" +
+      "ointment\030\002 \002(\0132?.de.tubs.androidlab.inst" +
+      "ameet.server.protobuf.SimpleAppointment\022" +
+      "\016\n\006userID\030\003 \002(\005\"P\n\020VisitAppointment\022\025\n\rs" +
+      "ecurityToken\030\001 \002(\t\022\025\n\rappointmentID\030\002 \002(" +
+      "\005\022\016\n\006userID\030\003 \002(\005\"\206\001\n\023GetNearAppointment" +
+      "s\022\025\n\rsecurityToken\030\001 \002(\t\022H\n\010location\030\002 \001" +
+      "(\01326.de.tubs.androidlab.instameet.server" +
+      ".protobuf.Location\022\016\n\006userID\030\003 \002(\005\"X\n\tAd",
+      "dFriend\022\025\n\rsecurityToken\030\001 \002(\t\022\020\n\010friend" +
+      "ID\030\002 \001(\005\022\022\n\nfriendName\030\003 \001(\t\022\016\n\006userID\030\004" +
+      " \002(\005\"3\n\nGetOwnData\022\025\n\rsecurityToken\030\001 \002(" +
+      "\t\022\016\n\006userID\030\002 \002(\005\"F\n\nGetFriends\022\025\n\rsecur" +
+      "ityToken\030\001 \002(\t\022\021\n\tfriendIDs\030\002 \003(\005\022\016\n\006use" +
+      "rID\030\003 \002(\005\"D\n\010GetUsers\022\025\n\rsecurityToken\030\001" +
+      " \002(\t\022\021\n\tfriendIDs\030\002 \003(\005\022\016\n\006userID\030\003 \002(\005\"" +
+      "L\n\021GetFriendLocation\022\025\n\rsecurityToken\030\001 " +
+      "\002(\t\022\020\n\010friendID\030\002 \002(\005\022\016\n\006userID\030\003 \002(\005\"B\n" +
+      "\031GetMyVisitingAppointments\022\025\n\rsecurityTo",
+      "ken\030\001 \002(\t\022\016\n\006userID\030\002 \002(\005\"\201\001\n\016UpdateLoca" +
+      "tion\022\025\n\rsecurityToken\030\001 \002(\t\022H\n\010location\030" +
+      "\002 \002(\01326.de.tubs.androidlab.instameet.ser" +
+      "ver.protobuf.Location\022\016\n\006userID\030\003 \002(\005\"X\n" +
+      "\013ListFriends\022I\n\007friends\030\001 \003(\01328.de.tubs." +
+      "androidlab.instameet.server.protobuf.Sim" +
+      "pleUser\"Y\n\rListLocations\022H\n\010location\030\001 \003" +
+      "(\01326.de.tubs.androidlab.instameet.server" +
+      ".protobuf.Location\"_\n\020ListChatMessages\022K" +
+      "\n\010messages\030\001 \003(\01329.de.tubs.androidlab.in",
+      "stameet.server.protobuf.ChatMessage\"\033\n\tB" +
+      "oolReply\022\016\n\006isTrue\030\001 \002(\010\"U\n\007OwnData\022J\n\010u" +
+      "serData\030\001 \002(\01328.de.tubs.androidlab.insta" +
+      "meet.server.protobuf.SimpleUser\"\324\002\n\021Simp" +
+      "leAppointment\022\n\n\002id\030\001 \002(\005\022\r\n\005title\030\002 \002(\t" +
+      "\022H\n\010location\030\003 \002(\01326.de.tubs.androidlab." +
+      "instameet.server.protobuf.Location\022@\n\004ti" +
+      "me\030\004 \002(\01322.de.tubs.androidlab.instameet." +
+      "server.protobuf.Time\022H\n\006hoster\030\005 \002(\01328.d" +
+      "e.tubs.androidlab.instameet.server.proto",
+      "buf.SimpleUser\022N\n\014participants\030\006 \003(\01328.d" +
       "e.tubs.androidlab.instameet.server.proto" +
-      "buf.Pair_Double_SimpleAppointment\"r\n\026Map" +
-      "AppointmentDistance\022X\n\003map\030\001 \003(\0132K.de.tu",
-      "bs.androidlab.instameet.server.protobuf." +
-      "Pair_Double_SimpleAppointment\"k\n\020MapAppo" +
-      "intmentID\022W\n\003map\030\001 \003(\0132J.de.tubs.android" +
-      "lab.instameet.server.protobuf.Pair_Int32" +
-      "_SimpleAppointment\"]\n\tMapUserID\022P\n\003map\030\001" +
-      " \003(\0132C.de.tubs.androidlab.instameet.serv" +
-      "er.protobuf.Pair_Int32_SimpleUser\"m\n\025Pai" +
-      "r_Int32_SimpleUser\022\013\n\003key\030\001 \002(\005\022G\n\005value" +
-      "\030\002 \002(\01328.de.tubs.androidlab.instameet.se" +
-      "rver.protobuf.SimpleUser\"{\n\034Pair_Int32_S",
-      "impleAppointment\022\013\n\003key\030\001 \002(\005\022N\n\005value\030\002" +
-      " \002(\0132?.de.tubs.androidlab.instameet.serv" +
-      "er.protobuf.SimpleAppointment\"|\n\035Pair_Do" +
-      "uble_SimpleAppointment\022\013\n\003key\030\001 \002(\001\022N\n\005v" +
-      "alue\030\002 \002(\0132?.de.tubs.androidlab.instamee" +
-      "t.server.protobuf.SimpleAppointmentB\nB\010M" +
-      "essages"
+      "buf.SimpleUser\"\233\002\n\nSimpleUser\022\020\n\010userNam" +
+      "e\030\001 \002(\t\022\016\n\006userID\030\002 \002(\005\022P\n\024latestLocatio" +
+      "nUpdate\030\003 \001(\01322.de.tubs.androidlab.insta" +
+      "meet.server.protobuf.Time\022H\n\010location\030\004 " +
+      "\001(\01326.de.tubs.androidlab.instameet.serve" +
+      "r.protobuf.Location\022\021\n\tfriendIDs\030\005 \003(\005\022\034" +
+      "\n\024hostedAppointmentIDs\030\006 \003(\005\022\036\n\026visiting" +
+      "AppointmentIDs\030\007 \003(\005\"0\n\010Location\022\021\n\tlong",
+      "itude\030\001 \002(\001\022\021\n\tlattitude\030\002 \002(\001\"\024\n\004Time\022\014" +
+      "\n\004time\030\001 \002(\t\"\036\n\rSecurityToken\022\r\n\005token\030\001" +
+      " \002(\t\"\013\n\tNoMessage\"f\n\nMapFriends\022X\n\003map\030\001" +
+      " \002(\0132K.de.tubs.androidlab.instameet.serv" +
+      "er.protobuf.Pair_Double_SimpleAppointmen" +
+      "t\"r\n\026MapAppointmentDistance\022X\n\003map\030\001 \003(\013" +
+      "2K.de.tubs.androidlab.instameet.server.p" +
+      "rotobuf.Pair_Double_SimpleAppointment\"k\n" +
+      "\020MapAppointmentID\022W\n\003map\030\001 \003(\0132J.de.tubs" +
+      ".androidlab.instameet.server.protobuf.Pa",
+      "ir_Int32_SimpleAppointment\"]\n\tMapUserID\022" +
+      "P\n\003map\030\001 \003(\0132C.de.tubs.androidlab.instam" +
+      "eet.server.protobuf.Pair_Int32_SimpleUse" +
+      "r\"m\n\025Pair_Int32_SimpleUser\022\013\n\003key\030\001 \002(\005\022" +
+      "G\n\005value\030\002 \002(\01328.de.tubs.androidlab.inst" +
+      "ameet.server.protobuf.SimpleUser\"{\n\034Pair" +
+      "_Int32_SimpleAppointment\022\013\n\003key\030\001 \002(\005\022N\n" +
+      "\005value\030\002 \002(\0132?.de.tubs.androidlab.instam" +
+      "eet.server.protobuf.SimpleAppointment\"|\n" +
+      "\035Pair_Double_SimpleAppointment\022\013\n\003key\030\001 ",
+      "\002(\001\022N\n\005value\030\002 \002(\0132?.de.tubs.androidlab." +
+      "instameet.server.protobuf.SimpleAppointm" +
+      "entB\nB\010Messages"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -26721,171 +28403,177 @@ public final class Messages {
     internal_static_de_tubs_androidlab_instameet_server_protobuf_ChatMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_ChatMessage_descriptor,
-        new java.lang.String[] { "SecurityToken", "Message", "FriendID", });
+        new java.lang.String[] { "SecurityToken", "Message", "FriendID", "UserID", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetMessages_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetMessages_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_GetMessages_descriptor,
-        new java.lang.String[] { "SecurityToken", "FriendIDs", });
+        new java.lang.String[] { "SecurityToken", "FriendIDs", "UserID", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_CreateAppointment_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_CreateAppointment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_CreateAppointment_descriptor,
-        new java.lang.String[] { "SecurityToken", "Appointment", });
+        new java.lang.String[] { "SecurityToken", "Appointment", "UserID", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_VisitAppointment_descriptor =
       getDescriptor().getMessageTypes().get(7);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_VisitAppointment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_VisitAppointment_descriptor,
-        new java.lang.String[] { "SecurityToken", "AppointmentID", });
+        new java.lang.String[] { "SecurityToken", "AppointmentID", "UserID", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetNearAppointments_descriptor =
       getDescriptor().getMessageTypes().get(8);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetNearAppointments_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_GetNearAppointments_descriptor,
-        new java.lang.String[] { "SecurityToken", "Location", });
+        new java.lang.String[] { "SecurityToken", "Location", "UserID", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_AddFriend_descriptor =
       getDescriptor().getMessageTypes().get(9);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_AddFriend_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_AddFriend_descriptor,
-        new java.lang.String[] { "SecurityToken", "FriendID", "FriendName", });
+        new java.lang.String[] { "SecurityToken", "FriendID", "FriendName", "UserID", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetOwnData_descriptor =
       getDescriptor().getMessageTypes().get(10);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetOwnData_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_GetOwnData_descriptor,
-        new java.lang.String[] { "SecurityToken", });
+        new java.lang.String[] { "SecurityToken", "UserID", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetFriends_descriptor =
       getDescriptor().getMessageTypes().get(11);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetFriends_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_GetFriends_descriptor,
-        new java.lang.String[] { "SecurityToken", "FriendIDs", });
-    internal_static_de_tubs_androidlab_instameet_server_protobuf_GetFriendLocation_descriptor =
+        new java.lang.String[] { "SecurityToken", "FriendIDs", "UserID", });
+    internal_static_de_tubs_androidlab_instameet_server_protobuf_GetUsers_descriptor =
       getDescriptor().getMessageTypes().get(12);
+    internal_static_de_tubs_androidlab_instameet_server_protobuf_GetUsers_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_tubs_androidlab_instameet_server_protobuf_GetUsers_descriptor,
+        new java.lang.String[] { "SecurityToken", "FriendIDs", "UserID", });
+    internal_static_de_tubs_androidlab_instameet_server_protobuf_GetFriendLocation_descriptor =
+      getDescriptor().getMessageTypes().get(13);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetFriendLocation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_GetFriendLocation_descriptor,
-        new java.lang.String[] { "SecurityToken", "FriendID", });
+        new java.lang.String[] { "SecurityToken", "FriendID", "UserID", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetMyVisitingAppointments_descriptor =
-      getDescriptor().getMessageTypes().get(13);
+      getDescriptor().getMessageTypes().get(14);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetMyVisitingAppointments_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_GetMyVisitingAppointments_descriptor,
-        new java.lang.String[] { "SecurityToken", });
+        new java.lang.String[] { "SecurityToken", "UserID", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_UpdateLocation_descriptor =
-      getDescriptor().getMessageTypes().get(14);
+      getDescriptor().getMessageTypes().get(15);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_UpdateLocation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_UpdateLocation_descriptor,
-        new java.lang.String[] { "SecurityToken", "Location", });
+        new java.lang.String[] { "SecurityToken", "Location", "UserID", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_ListFriends_descriptor =
-      getDescriptor().getMessageTypes().get(15);
+      getDescriptor().getMessageTypes().get(16);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_ListFriends_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_ListFriends_descriptor,
         new java.lang.String[] { "Friends", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_ListLocations_descriptor =
-      getDescriptor().getMessageTypes().get(16);
+      getDescriptor().getMessageTypes().get(17);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_ListLocations_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_ListLocations_descriptor,
         new java.lang.String[] { "Location", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_ListChatMessages_descriptor =
-      getDescriptor().getMessageTypes().get(17);
+      getDescriptor().getMessageTypes().get(18);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_ListChatMessages_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_ListChatMessages_descriptor,
         new java.lang.String[] { "Messages", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_BoolReply_descriptor =
-      getDescriptor().getMessageTypes().get(18);
+      getDescriptor().getMessageTypes().get(19);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_BoolReply_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_BoolReply_descriptor,
         new java.lang.String[] { "IsTrue", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_OwnData_descriptor =
-      getDescriptor().getMessageTypes().get(19);
+      getDescriptor().getMessageTypes().get(20);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_OwnData_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_OwnData_descriptor,
         new java.lang.String[] { "UserData", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleAppointment_descriptor =
-      getDescriptor().getMessageTypes().get(20);
+      getDescriptor().getMessageTypes().get(21);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleAppointment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleAppointment_descriptor,
         new java.lang.String[] { "Id", "Title", "Location", "Time", "Hoster", "Participants", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleUser_descriptor =
-      getDescriptor().getMessageTypes().get(21);
+      getDescriptor().getMessageTypes().get(22);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleUser_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleUser_descriptor,
         new java.lang.String[] { "UserName", "UserID", "LatestLocationUpdate", "Location", "FriendIDs", "HostedAppointmentIDs", "VisitingAppointmentIDs", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Location_descriptor =
-      getDescriptor().getMessageTypes().get(22);
+      getDescriptor().getMessageTypes().get(23);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Location_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_Location_descriptor,
         new java.lang.String[] { "Longitude", "Lattitude", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Time_descriptor =
-      getDescriptor().getMessageTypes().get(23);
+      getDescriptor().getMessageTypes().get(24);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Time_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_Time_descriptor,
         new java.lang.String[] { "Time", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SecurityToken_descriptor =
-      getDescriptor().getMessageTypes().get(24);
+      getDescriptor().getMessageTypes().get(25);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SecurityToken_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_SecurityToken_descriptor,
         new java.lang.String[] { "Token", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_NoMessage_descriptor =
-      getDescriptor().getMessageTypes().get(25);
+      getDescriptor().getMessageTypes().get(26);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_NoMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_NoMessage_descriptor,
         new java.lang.String[] { });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapFriends_descriptor =
-      getDescriptor().getMessageTypes().get(26);
+      getDescriptor().getMessageTypes().get(27);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapFriends_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_MapFriends_descriptor,
         new java.lang.String[] { "Map", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapAppointmentDistance_descriptor =
-      getDescriptor().getMessageTypes().get(27);
+      getDescriptor().getMessageTypes().get(28);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapAppointmentDistance_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_MapAppointmentDistance_descriptor,
         new java.lang.String[] { "Map", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapAppointmentID_descriptor =
-      getDescriptor().getMessageTypes().get(28);
+      getDescriptor().getMessageTypes().get(29);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapAppointmentID_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_MapAppointmentID_descriptor,
         new java.lang.String[] { "Map", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapUserID_descriptor =
-      getDescriptor().getMessageTypes().get(29);
+      getDescriptor().getMessageTypes().get(30);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapUserID_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_MapUserID_descriptor,
         new java.lang.String[] { "Map", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Int32_SimpleUser_descriptor =
-      getDescriptor().getMessageTypes().get(30);
+      getDescriptor().getMessageTypes().get(31);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Int32_SimpleUser_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Int32_SimpleUser_descriptor,
         new java.lang.String[] { "Key", "Value", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Int32_SimpleAppointment_descriptor =
-      getDescriptor().getMessageTypes().get(31);
+      getDescriptor().getMessageTypes().get(32);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Int32_SimpleAppointment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Int32_SimpleAppointment_descriptor,
         new java.lang.String[] { "Key", "Value", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Double_SimpleAppointment_descriptor =
-      getDescriptor().getMessageTypes().get(32);
+      getDescriptor().getMessageTypes().get(33);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Double_SimpleAppointment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Double_SimpleAppointment_descriptor,
