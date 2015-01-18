@@ -124,7 +124,9 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				friendRequest.addFriendIDs(i);
 			}
 		}
+		
 		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		friendRequest.setUserID(ownData.getId());
 		friendRequest.setSecurityToken(token);
 		ServerRequest request = ServerRequest
 				.newBuilder()
@@ -165,7 +167,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	public void sendDummyMessage(String msg) {
 		Log.i(TAG,"call sendDummyMessage");
 		
-		ChatMessage t = ChatMessage.newBuilder().setMessage("testSend").setFriendID(2).setSecurityToken("test").build();
+		ChatMessage t = ChatMessage.newBuilder().setMessage("testSend").setFriendID(2).setSecurityToken("test").setUserID(ownData.getId()).build();
 		client.insertToQueue(ServerRequest.newBuilder().setType(Type.SEND_CHAT_MESSAGE).setMessage(t).build());
 
 		ServerRequest request = ServerRequest
@@ -206,6 +208,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				.newBuilder()
 				.setFriendID(userId)
 				.setMessage(message)
+				.setUserID(ownData.getId())
 				.setSecurityToken(securityToken).build();
 		ServerRequest request = ServerRequest
 				.newBuilder()
@@ -331,17 +334,16 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			Set<Integer> visitingAppointments = new HashSet<Integer>(data.getVisitingAppointmentIDsList());
 			user.setVisitingAppointments(visitingAppointments);
 			
-			Timestamp timestamp = Timestamp.valueOf(data.getLatestLocationUpdate().getTime());
-			user.setLatestLocationUpdate(timestamp);
+//			Timestamp timestamp = Timestamp.valueOf(data.getLatestLocationUpdate().getTime());
+//			user.setLatestLocationUpdate(timestamp);
 			
 			Set<Integer> friends = new HashSet<Integer>(data.getFriendIDsList());
 			user.setFriends(friends);
 			
+			service.ownData = user;
+			
 			listener.notifyOwnData();
 		}
-		
-		
-
 	}
 
 }
