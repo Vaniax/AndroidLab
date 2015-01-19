@@ -193,6 +193,7 @@ message SimpleAppointment {
 	required Time time = 4;
 	required SimpleUser hoster = 5;
 	repeated SimpleUser participants = 6;
+	required string description = 7;
 };
 
 message SimpleUser {
