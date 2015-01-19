@@ -192,7 +192,13 @@ public class ContactsFragment extends ListFragment {
 			contacts.clear();
 			contacts.addAll(newContacts);
 			if(adapter != null) {
-				adapter.notifyDataSetChanged();
+				getActivity().runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						adapter.notifyDataSetChanged();
+					}
+				});
 			}
 			
 		}
