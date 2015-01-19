@@ -191,8 +191,8 @@ message SimpleAppointment {
 	required string title = 2;
 	required Location location = 3;
 	required Time time = 4;
-	required SimpleUser hoster = 5;
-	repeated SimpleUser participants = 6;
+	required int32 hoster = 5;
+	repeated int32 participants = 6;
 	required string description = 7;
 };
 
