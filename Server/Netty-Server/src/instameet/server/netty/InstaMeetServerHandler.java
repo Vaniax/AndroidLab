@@ -18,6 +18,7 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse.Type;
 import service.ServiceInterface;
 import simpleEntities.LoginData;
+import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
 
 public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRequest> {
@@ -93,9 +94,52 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			ctx.writeAndFlush(response);
 
 		}break;
+		case CREATE_APPOINTMENT: {
+			SimpleAppointment app = createAppFromAppMessage(msg.getCreateAppointment().getAppointment());
+			app = service.createAppointment(msg.getCreateAppointment().getSecurityToken(), msg.getCreateAppointment().getUserID(), app);
+			Messages.SimpleAppointment msgAppointment = createAppMessageFromApp(app);
+
+			ClientResponse response = ClientResponse.newBuilder()
+					.setType(Type.SIMPLE_APPOINTMENT)
+					.setAppointment(msgAppointment)
+					.build();
+			ctx.writeAndFlush(response);
+		}break;
 		default:
 			break;
 		}
+	}
+	private SimpleAppointment createAppFromAppMessage(Messages.SimpleAppointment msgApp) {
+		SimpleAppointment app = new SimpleAppointment();
+		app.setId(msgApp.getId());
+		app.setTitle(msgApp.getTitle());
+		app.setHoster(msgApp.getHoster());
+		app.setLattitude(msgApp.getLocation().getLattitude());
+		app.setLongitude(msgApp.getLocation().getLongitude());
+		//app.setStartingTime(msgApp.getTime());
+		app.setDescription(null);
+		for(int msgUser : msgApp.getParticipantsList()) {
+			app.getVisitingUsers().add(msgUser);
+		}
+		return app;
+	}
+	
+	private Messages.SimpleAppointment createAppMessageFromApp(SimpleAppointment app) {
+		Messages.SimpleAppointment.Builder msgApp = Messages.SimpleAppointment.newBuilder();
+		msgApp.setId(app.getId());
+		msgApp.setTitle(app.getTitle());
+		msgApp.setHoster(app.getHoster());
+		Messages.Location loc = Messages.Location.newBuilder()
+				.setLattitude(app.getLattitude())
+				.setLongitude(app.getLongitude()).build();
+		msgApp.setLocation(loc);
+		//app.setStartingTime(msgApp.getTime());
+		msgApp.setDescription(null);
+		for(int userId : app.getVisitingUsers()) {
+			msgApp.addParticipants(userId);
+			
+		}
+		return msgApp.build();
 	}
 	
 	private Messages.SimpleUser.Builder createSimpleUserBuilder(SimpleUser user) {
