@@ -1,5 +1,7 @@
 package de.tubs.androidlab.instameet.ui.chat;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,7 @@ import de.tubs.androidlab.instameet.R;
  */
 class ChatListAdapter extends BaseAdapter
 {
-	
+	ArrayList<String> messages = new ArrayList<String>();
     String[] values = new String[] { "H",
     		"a", "l", "l", "o", "W", "elt", "!",
             "Ende"
@@ -40,12 +42,12 @@ class ChatListAdapter extends BaseAdapter
 	
 	@Override
 	public int getCount() {
-		return values.length;
+		return messages.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return values[position];
+		return messages.get(position);
 	}
 
 	@Override
@@ -67,8 +69,12 @@ class ChatListAdapter extends BaseAdapter
 			holder.timeStamp = (TextView) rowView.findViewById(R.id.time_stamp);
 			rowView.setTag(holder);
 		}
-		holder.message.setText(values[position]);
+		holder.message.setText(messages.get(position));
 		holder.timeStamp.setText("13:37");
 		return rowView;
+	}
+	
+	public void addMessage(String message) {
+		messages.add(message);
 	}
 }

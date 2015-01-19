@@ -20,6 +20,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<ClientResponse> {
 	protected void channelRead0(ChannelHandlerContext ctx, ClientResponse msg)
 			throws Exception {
 		Log.i("ClientHandler","Message incomming");
+		Log.i("ClientHandler",msg.getType().toString());
 		
 		ClientResponse.Type type = msg.getType();
 		switch (type) {

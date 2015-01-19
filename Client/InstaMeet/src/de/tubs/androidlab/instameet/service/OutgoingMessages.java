@@ -10,7 +10,7 @@ public interface OutgoingMessages {
 
 	public void createUser(String name, String password);
 
-	public void sendMessage(String securityToken, int userId, String message);
+	public void sendMessage(String message, int friendID);
 
 //	public void createAppointment(String SecurityToken, int userId,SimpleAppointment appointment);
 //

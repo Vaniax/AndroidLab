@@ -203,13 +203,16 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	}
 
 	@Override
-	public void sendMessage(String securityToken, int userId, String message) {
+	public void sendMessage(String message, int friendID) {
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		
 		ChatMessage chatMessage = ChatMessage
 				.newBuilder()
-				.setFriendID(userId)
+				.setSecurityToken(token)
+				.setFriendID(friendID)
 				.setMessage(message)
 				.setUserID(ownData.getId())
-				.setSecurityToken(securityToken).build();
+				.setSecurityToken(token).build();
 		ServerRequest request = ServerRequest
 				.newBuilder()
 				.setType(Type.SEND_CHAT_MESSAGE)
@@ -239,6 +242,10 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		return users;
 	}
 	
+	public SimpleUser getUser(int userID) {
+		return users.get(userID);
+	}
+	
 	public class IncomingMessageProcessor implements ReceivedMessageCallbacks {
 
 		private final static String TAG = "InstaMeetService MessageProcessor";
@@ -262,6 +269,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			synchronized (chatMessages) {
 				chatMessages.put(msg.getFriendID(), message);
 			}
+			listener.notifyChatMessage(msg.getMessage());
 			
 		}
 
