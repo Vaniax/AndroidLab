@@ -57,6 +57,7 @@ message ClientResponse {
 		SECURITY_TOKEN = 5;
 		CHAT_MESSAGE = 6;
 		OWN_DATA=7;
+		SIMPLE_APPOINTMENT=8;
 		NO_MESSAGE = 20;
 	};
 	
@@ -70,6 +71,7 @@ message ClientResponse {
 	optional ChatMessage message = 7;
 	optional OwnData userData = 8;
 	optional NoMessage noMessage = 10;
+	optional SimpleAppointment appointment = 11;
 		
 	optional string messageID = 15;
 }
