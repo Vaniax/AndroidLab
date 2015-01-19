@@ -65,17 +65,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.BOOL).setBoolReply(bool).build());
 		case GET_OWN_DATA: {
 			SimpleUser own = service.getOwnData(msg.getGetOwnData().getSecurityToken(), 1);
-			Messages.SimpleUser.Builder ownUser = Messages.SimpleUser.newBuilder()
-					.setUserID(own.getId())
-					.setUserName(own.getUsername());
-			ownUser.addAllFriendIDs(own.getFriends());
-			ownUser.addAllVisitingAppointmentIDs(own.getVisitingAppointments());
-			ownUser.addAllHostedAppointmentIDs(own.getHostedAppointments());
-			Messages.Location ownLocation = Messages.Location.newBuilder()
-					.setLattitude(own.getLattitude())
-					.setLongitude(own.getLongitude())
-					.build();
-			ownUser.setLocation(ownLocation);
+			Messages.SimpleUser.Builder ownUser = createSimpleUserBuilder(own);
 			
 			System.out.println(ownUser.toString());
 			
@@ -90,18 +80,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			Messages.ListFriends.Builder getFriends =  Messages.ListFriends.newBuilder();
 			
 			for(SimpleUser friend : friends) {
-				Messages.SimpleUser.Builder protoFriend = Messages.SimpleUser.newBuilder()
-						.setUserID(friend.getId())
-						.setUserName(friend.getUsername());
-				protoFriend.addAllFriendIDs(friend.getFriends());
-				protoFriend.addAllVisitingAppointmentIDs(friend.getVisitingAppointments());
-				protoFriend.addAllHostedAppointmentIDs(friend.getHostedAppointments());
-				Messages.Location friendLocation = Messages.Location.newBuilder()
-						.setLattitude(friend.getLattitude())
-						.setLongitude(friend.getLongitude())
-						.build();
-				protoFriend.setLocation(friendLocation);
-				
+				Messages.SimpleUser.Builder protoFriend = createSimpleUserBuilder(friend);				
 				getFriends.addFriends(protoFriend);
 			}
 			ClientResponse response = ClientResponse.newBuilder()
@@ -117,6 +96,23 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		default:
 			break;
 		}
+	}
+	
+	private Messages.SimpleUser.Builder createSimpleUserBuilder(SimpleUser user) {
+		Messages.SimpleUser.Builder userBuild = Messages.SimpleUser.newBuilder()
+				.setUserID(user.getId())
+				.setUserName(user.getUsername());
+		userBuild.addAllFriendIDs(user.getFriends());
+		userBuild.addAllVisitingAppointmentIDs(user.getVisitingAppointments());
+		userBuild.addAllHostedAppointmentIDs(user.getHostedAppointments());
+		Messages.Location location = Messages.Location.newBuilder()
+				.setLattitude(user.getLattitude())
+				.setLongitude(user.getLongitude())
+				.build();
+		userBuild.setLocation(location);		
+		
+		return userBuild;
+		
 	}
 	
 }
