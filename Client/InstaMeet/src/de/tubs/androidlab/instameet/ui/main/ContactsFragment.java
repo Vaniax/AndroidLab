@@ -68,7 +68,6 @@ public class ContactsFragment extends ListFragment {
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	container.invalidate();
     	return inflater.inflate(R.layout.fragment_contacts, container, false);
     }
     
