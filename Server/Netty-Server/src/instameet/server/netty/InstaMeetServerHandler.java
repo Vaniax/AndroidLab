@@ -66,13 +66,13 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.BOOL).setBoolReply(bool).build());
 		case GET_OWN_DATA: {
 			SimpleUser own = service.getOwnData(msg.getGetOwnData().getSecurityToken(), 1);
-			Messages.SimpleUser.Builder ownUser = createSimpleUserBuilder(own);
+			Messages.SimpleUser ownUser = createSimpleUserBuilder(own);
 			
 			System.out.println(ownUser.toString());
 			
 			ClientResponse response = ClientResponse.newBuilder()
 					.setType(Type.OWN_DATA)
-					.setUserData(Messages.OwnData.newBuilder().setUserData(ownUser).build()).build();
+					.setUserData(Messages.OwnData.newBuilder().setUserData(ownUser)).build();
 			
 			ctx.writeAndFlush(response);
 		}break;
@@ -81,7 +81,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			Messages.ListFriends.Builder getFriends =  Messages.ListFriends.newBuilder();
 			
 			for(SimpleUser friend : friends) {
-				Messages.SimpleUser.Builder protoFriend = createSimpleUserBuilder(friend);				
+				Messages.SimpleUser protoFriend = createSimpleUserBuilder(friend);				
 				getFriends.addFriends(protoFriend);
 			}
 			ClientResponse response = ClientResponse.newBuilder()
@@ -142,7 +142,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		return msgApp.build();
 	}
 	
-	private Messages.SimpleUser.Builder createSimpleUserBuilder(SimpleUser user) {
+	private Messages.SimpleUser createSimpleUserBuilder(SimpleUser user) {
 		Messages.SimpleUser.Builder userBuild = Messages.SimpleUser.newBuilder()
 				.setUserID(user.getId())
 				.setUserName(user.getUsername());
@@ -155,7 +155,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 				.build();
 		userBuild.setLocation(location);		
 		
-		return userBuild;
+		return userBuild.build();
 		
 	}
 	
