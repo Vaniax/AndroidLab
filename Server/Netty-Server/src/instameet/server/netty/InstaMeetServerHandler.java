@@ -105,6 +105,18 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 					.build();
 			ctx.writeAndFlush(response);
 		}break;
+		case VISIT_APPOINTMENT: {
+			boolean sucessful = service.visitAppointment(
+					msg.getVisitAppointment().getSecurityToken(), 
+					msg.getVisitAppointment().getUserID(), 
+					msg.getVisitAppointment().getAppointmentID());
+			BoolReply msgSucessful = BoolReply.newBuilder().setIsTrue(true).build();
+			ClientResponse response = ClientResponse.newBuilder()
+					.setType(Type.BOOL)
+					.setBoolReply(msgSucessful)
+					.build();
+			ctx.writeAndFlush(response);			
+		}
 		default:
 			break;
 		}
