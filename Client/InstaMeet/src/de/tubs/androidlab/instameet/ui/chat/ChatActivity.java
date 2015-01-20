@@ -19,6 +19,7 @@ import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.client.listener.AbstractInboundMessageListener;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
+import de.tubs.androidlab.instameet.ui.chat.ChatMessage.DIRECTION;
 import de.tubs.androidlab.instameet.ui.main.MainActivity;
 
 public class ChatActivity extends Activity {
@@ -53,7 +54,9 @@ public class ChatActivity extends Activity {
             @Override
             public void onClick(View v) {
 //            	service.sendDummyMessage(editText.getText().toString());
-            	service.sendMessage(editText.getText().toString(), user.getId());
+            	String message = editText.getText().toString();
+            	service.sendMessage(message, user.getId());
+            	adapter.addMessage(new ChatMessage(message, DIRECTION.OUTGOING));
                 editText.setText(null);
             }
         });
@@ -122,17 +125,8 @@ public class ChatActivity extends Activity {
 		public void chatMessage(String message) {
 			super.chatMessage(message);
 			if(adapter != null) {
-				adapter.addMessage(message);
-
-				runOnUiThread(new Runnable() {
-					
-					@Override
-					public void run() {
-						adapter.notifyDataSetChanged();
-					}
-				});
+				adapter.addMessage(new ChatMessage(message,DIRECTION.INCOMING));		
 			}
-			
-		}
+		}	
 	}
 }

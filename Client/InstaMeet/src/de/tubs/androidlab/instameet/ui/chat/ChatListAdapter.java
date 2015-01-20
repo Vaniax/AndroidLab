@@ -2,13 +2,16 @@ package de.tubs.androidlab.instameet.ui.chat;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.ui.chat.ChatMessage.DIRECTION;
 
 /**
  * An adapter connects data with a list.
@@ -16,11 +19,7 @@ import de.tubs.androidlab.instameet.R;
  */
 class ChatListAdapter extends BaseAdapter
 {
-	ArrayList<String> messages = new ArrayList<String>();
-    String[] values = new String[] { "H",
-    		"a", "l", "l", "o", "W", "elt", "!",
-            "Ende"
-          };
+	ArrayList<ChatMessage> messages = new ArrayList<ChatMessage>();
 	
 	/**
 	 * Additional data assigned to each entry which holds
@@ -33,6 +32,7 @@ class ChatListAdapter extends BaseAdapter
 	}
 	
 	private Context context;
+	private Activity activity;
 	private LayoutInflater inflater;
 	
 	public ChatListAdapter(Context c) {
@@ -69,12 +69,25 @@ class ChatListAdapter extends BaseAdapter
 			holder.timeStamp = (TextView) rowView.findViewById(R.id.time_stamp);
 			rowView.setTag(holder);
 		}
-		holder.message.setText(messages.get(position));
+		ChatMessage message = messages.get(position);
+		holder.message.setText(message.getMessage());
 		holder.timeStamp.setText("13:37");
+
+		if (message.getDirection().equals(DIRECTION.OUTGOING)){
+			rowView.setBackgroundColor(Color.LTGRAY);
+		}
+		
 		return rowView;
 	}
 	
-	public void addMessage(String message) {
+	public void addMessage(ChatMessage message) {
 		messages.add(message);
+		
+		((ChatActivity)context).runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				notifyDataSetChanged();
+			}
+		});
 	}
 }
