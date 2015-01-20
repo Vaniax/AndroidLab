@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory 
-        android:title="@string/app_name"
-        android:key="pref_key_storage_settings">
-        
-        <CheckBoxPreference
-    	    android:key="pref_sync"
-	        android:title="@string/app_name"
-    	    android:summary="@string/app_name"
-        	android:defaultValue="true" />
-        <Preference android:title="Logout" android:key="logout"/>    
-	</PreferenceCategory>
+	<CheckBoxPreference 
+	    android:key="enable_location_tracking" 
+	    android:summary="Your friends can see your location" 
+	    android:title="Show Location" />
+	<Preference android:title="Logout" android:key="logout"/>
+	    
 </PreferenceScreen>

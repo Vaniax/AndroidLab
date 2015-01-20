@@ -1,7 +1,6 @@
 package de.tubs.androidlab.instameet.service;
 
 import java.util.Set;
-
 import simpleEntities.Location;
 import simpleEntities.SimpleAppointment;
 

@@ -1,7 +1,6 @@
 package de.tubs.androidlab.instameet.client.listener;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 
 public class InboundListener {

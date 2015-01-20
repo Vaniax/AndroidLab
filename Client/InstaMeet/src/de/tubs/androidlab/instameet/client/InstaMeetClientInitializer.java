@@ -9,7 +9,6 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse;
-import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
 
 public class InstaMeetClientInitializer extends ChannelInitializer<SocketChannel> {
 	private ReceivedMessageCallbacks cb = null;

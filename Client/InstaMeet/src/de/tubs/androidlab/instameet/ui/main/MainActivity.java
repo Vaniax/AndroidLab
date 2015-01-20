@@ -46,9 +46,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     	pref = PreferenceManager.getDefaultSharedPreferences(this);
 
     	if (!pref.contains("securityToken")) {
-    		finish();
-    		startLoginActivity();
-    		return;
+//    		finish();
+//    		startLoginActivity();
+//    		return;
     	}
     	
         setContentView(R.layout.activity_main);

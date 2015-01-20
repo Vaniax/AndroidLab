@@ -11,6 +11,8 @@ import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.ui.login.LoginActivity;
 
 public class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener {
+	
+	private static final String KEY_ENABLE_LOCATION_TRACKING = "enable_location_tracking";
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -20,8 +22,7 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 
         // this may be used by every activity to obtain settings
         final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String syncConnPref = sharedPref.getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");
-        
+     
         Preference button = (Preference) getPreferenceManager().findPreference("logout");      
         if (button != null) {
             button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -49,20 +50,18 @@ public class SettingsFragment extends PreferenceFragment implements OnSharedPref
 	            .unregisterOnSharedPreferenceChangeListener(this);
 	}
 	
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,String key) {
-       if (key.equals(SettingsActivity.KEY_PREF_SYNC_CONN)) {
-            Preference connectionPref = findPreference(key);
-            // Set summary to be the user-description for the selected value
-            connectionPref.setSummary(sharedPreferences.getString(key, ""));
-        }
-	}
-	
     private void startLoginActivity() {
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         getActivity().finish();
     }
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPref, String key) {
+		if(key.equals(KEY_ENABLE_LOCATION_TRACKING)) {
+			//TODO: enable / disable location tracking
+		}
+	}
 
 }
