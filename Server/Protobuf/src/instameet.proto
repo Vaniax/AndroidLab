@@ -58,6 +58,8 @@ message ClientResponse {
 		CHAT_MESSAGE = 6;
 		OWN_DATA=7;
 		SIMPLE_APPOINTMENT=8;
+		LIST_NEAREST_APPOINTMENTS=9;
+		LIST_VISITING_APPOINTMENTS=10;
 		NO_MESSAGE = 20;
 	};
 	
@@ -72,6 +74,8 @@ message ClientResponse {
 	optional OwnData userData = 8;
 	optional NoMessage noMessage = 10;
 	optional SimpleAppointment appointment = 11;
+	optional ListNearestAppointments listNearestAppointments = 12;
+	optional ListVisitingAppointments listVisitingAppointment = 13;
 		
 	optional string messageID = 15;
 }
@@ -185,6 +189,13 @@ message OwnData {
 	required SimpleUser userData = 1;
 }
 
+message ListNearestAppointments {
+	repeated SimpleAppointment appointments = 1;
+}
+
+message ListVisitingAppointments {
+	repeated SimpleAppointment appointments = 1;
+}
 
 /// Message types for both directions
 
