@@ -58,12 +58,13 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			ChatMessage message = msg.getMessage();
 			
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.CHAT_MESSAGE).setMessage(message).build());
-			break;
-		case CREATE_USER:
+		break;
+		case CREATE_USER: {
 			BoolReply bool = BoolReply.newBuilder().setIsTrue(true).build();
 			CreateUser user = msg.getCreateUser();
 			SimpleUser createdUser  = service.createUser(user.getName(), user.getPassword());
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.BOOL).setBoolReply(bool).build());
+		} break;
 		case GET_OWN_DATA: {
 			SimpleUser own = service.getOwnData(msg.getGetOwnData().getSecurityToken(), 1);
 			Messages.SimpleUser ownUser = createSimpleUserBuilder(own);
@@ -155,9 +156,9 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 	}
 	
 	private Messages.SimpleUser createSimpleUserBuilder(SimpleUser user) {
-		Messages.SimpleUser.Builder userBuild = Messages.SimpleUser.newBuilder()
-				.setUserID(user.getId())
-				.setUserName(user.getUsername());
+		Messages.SimpleUser.Builder userBuild = Messages.SimpleUser.newBuilder();
+		userBuild.setUserID(user.getId());
+		userBuild.setUserName(user.getUsername());
 		userBuild.addAllFriendIDs(user.getFriends());
 		userBuild.addAllVisitingAppointmentIDs(user.getVisitingAppointments());
 		userBuild.addAllHostedAppointmentIDs(user.getHostedAppointments());
