@@ -1,21 +1,34 @@
 package de.tubs.androidlab.instameet.ui.appointment;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TimePicker;
 import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.ui.ContactsListAdapter;
 
@@ -34,15 +47,16 @@ import de.tubs.androidlab.instameet.ui.ContactsListAdapter;
 public class EditAppointmentActivity extends Activity implements TextWatcher {
 	
 	public static final String EXTRA_APPOINTMENT_ID = "de.tubs.androidlab.instameet.APPOINTMENT_ID";
-	
 	private ContactsListAdapter adapter;
 	
 	private boolean isNewAppointment;
-	private int appointmentId;
+	private SimpleAppointment appointment;
 	
 	private boolean isModified = false;
 	private EditText editTitle;
 	private EditText editDescription;
+	private Button buttonDate;
+	private Button buttonTime;
 	
 	private AlertDialog dialogSaveAppointment;
 
@@ -52,30 +66,40 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		setContentView(R.layout.activity_edit_appointment);
 		editTitle = (EditText) findViewById(R.id.edit_title);
 		editDescription = (EditText) findViewById(R.id.edit_description);
-		editTitle.addTextChangedListener(this);
-		editDescription.addTextChangedListener(this);
+		buttonDate = (Button) findViewById(R.id.button_date);
+		buttonTime = (Button) findViewById(R.id.button_time);
 		
 		Bundle extras = getIntent().getExtras();
 		if(extras != null && extras.containsKey(EXTRA_APPOINTMENT_ID)) {
 			isNewAppointment = false;
-			appointmentId = extras.getInt(EXTRA_APPOINTMENT_ID);
-			//TODO: fill form widgets with information
-			editTitle.setText("Known title");
-			editDescription.setText("This appointment already exists.");
+			//TODO: fetch appointment from service, like
+			//service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID));
+			appointment = new SimpleAppointment(); //TODO: remove this
+			editTitle.setText(appointment.getTitle());
+			editDescription.setText(appointment.getDescription());
 		} else {
 			isNewAppointment = true;
+			appointment = new SimpleAppointment();
+			appointment.setStartingTime(new Timestamp(System.currentTimeMillis()));
 		}
+		refreshDateButton();
+		refreshTimeButton();
+		
+		
+		editTitle.addTextChangedListener(this);
+		editDescription.addTextChangedListener(this);
 		
 		createDialog();
 		
 		adapter = new ContactsListAdapter((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+		ListView participantsList = (ListView) findViewById(R.id.list_participants);
+		participantsList.setAdapter(adapter);
+		//TODO: fetch these from the appointment
 			List<SimpleUser> l = new ArrayList<SimpleUser>();
 			SimpleUser s = new SimpleUser();
 			s.setUsername("Peter");
 			l.add(s); l.add(s); l.add(s);l.add(s); l.add(s); l.add(s);l.add(s); l.add(s); l.add(s);
 			adapter.setContacts(l);
-		ListView participantsList = (ListView) findViewById(R.id.list_participants);
-		participantsList.setAdapter(adapter);
 	}
 
 	@Override
@@ -135,6 +159,20 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		;
 	}
 	
+	private void refreshDateButton() {
+		java.text.DateFormat formatter = SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT);
+		buttonDate.setText(
+				formatter.format(appointment.getStartingTime())
+					);
+	}
+	
+	private void refreshTimeButton() {
+		java.text.DateFormat formatter = SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT);
+		buttonTime.setText(
+				formatter.format(appointment.getStartingTime())
+				);
+	}
+	
 	private void createDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(R.string.dialog_save_appointment);
@@ -151,4 +189,67 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 	       });
 		dialogSaveAppointment = builder.create();
 	}
+	
+	public void showTimePicker(View view) {
+	    DialogFragment newFragment = new TimePickerFragment();
+	    newFragment.show(getFragmentManager(), "timePicker");
+	}
+	
+	public void showDatePicker(View view) {
+	    DialogFragment newFragment = new DatePickerFragment();
+	    newFragment.show(getFragmentManager(), "datePicker");
+	}
+	
+	/**
+	 * A dialog allowing the user to pick a specific time (hour and minute)
+	 * After picking a specific time, it is stored in the appointment
+	 * and the time button is refreshed accordingly.
+	 * @author Bjoern
+	 */
+	private class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			int hour = appointment.getStartingTime().getHours();
+			int minute = appointment.getStartingTime().getMinutes();
+
+			// Create a new instance of TimePickerDialog and return it
+			return new TimePickerDialog(getActivity(), this, hour, minute,
+					DateFormat.is24HourFormat(getActivity()));
+		}
+
+		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+			appointment.getStartingTime().setHours(hourOfDay);
+			appointment.getStartingTime().setMinutes(minute);
+			isModified = true;
+			refreshTimeButton();
+		}
+	}
+	
+	/**
+	 * A dialog allowing the user to pick a specific date (year, month and day)
+	 * After picking a specific date, it is stored in the appointment
+	 * and the date button is refreshed accordingly.
+	 * @author Bjoern
+	 */
+	private class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+	    @Override
+	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        int year = appointment.getStartingTime().getYear();
+	        int month = appointment.getStartingTime().getMonth();
+	        int day = appointment.getStartingTime().getDate();
+	        // Create a new instance of DatePickerDialog and return it
+	        return new DatePickerDialog(getActivity(), this, year, month, day);
+	    }
+
+	    public void onDateSet(DatePicker view, int year, int month, int day) {
+	        appointment.getStartingTime().setYear(year);
+	        appointment.getStartingTime().setMonth(month);
+	        appointment.getStartingTime().setDate(day);
+	        isModified = true;
+	        refreshDateButton();
+	    }
+	}
+	
 }

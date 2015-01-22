@@ -29,5 +29,7 @@
     <string name="title_activity_edit_appointment">Edit Appointment</string>
     <string name="appointment_edit_title">Title</string>
     <string name="appointment_edit_description">Description</string>
+    <string name="appointment_edit_date">Date</string>
+    <string name="appointment_edit_time">Time</string>
 
 </resources>

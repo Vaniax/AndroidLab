@@ -40,9 +40,32 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/edit_description"
-        android:layout_marginTop="46dp" >
+        android:layout_below="@+id/linearLayout1" >
 
     </ListView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/edit_description" >
+
+        <Button
+            android:id="@+id/button_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="showDatePicker"
+            android:text="@string/appointment_edit_date" />
+
+        <Button
+            android:id="@+id/button_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="showTimePicker"
+            android:text="@string/appointment_edit_time" />
+
+    </LinearLayout>
 
 </RelativeLayout>
