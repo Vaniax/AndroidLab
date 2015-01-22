@@ -40,18 +40,6 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
     }
     
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here.
-        int id = item.getItemId();
-        if (id == R.id.action_create_appointment) {
-        	Intent intent = new Intent(getActivity(), EditAppointmentActivity.class);
-        	startActivity(intent);
-        	return true;
-        }
-        return false;
-    }
-    
-    @Override
 	public void onResume() {
         super.onResume();
         setUpMapIfAvailable();

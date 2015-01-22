@@ -3,25 +3,18 @@ package de.tubs.androidlab.instameet.ui.main;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import de.tubs.androidlab.instameet.R;
-import de.tubs.androidlab.instameet.client.listener.AbstractInboundMessageListener;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
-import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import de.tubs.androidlab.instameet.ui.addfriend.AddFriendActivity;
+import de.tubs.androidlab.instameet.ui.appointment.EditAppointmentActivity;
 import de.tubs.androidlab.instameet.ui.login.LoginActivity;
 import de.tubs.androidlab.instameet.ui.settings.SettingsActivity;
 
@@ -46,9 +39,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     	pref = PreferenceManager.getDefaultSharedPreferences(this);
 
     	if (!pref.contains("securityToken")) {
-//    		finish();
-//    		startLoginActivity();
-//    		return;
+    		finish();
+    		startLoginActivity();
+    		return;
     	}
     	
         setContentView(R.layout.activity_main);
@@ -106,14 +99,18 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-        	Intent intent = new Intent(this, SettingsActivity.class);
+    	Intent intent;
+	    switch(item.getItemId()) {
+        case R.id.action_settings:
+        	intent = new Intent(this, SettingsActivity.class);
         	startActivity(intent);
             return true;
-        } else if (id == R.id.action_addFriend) {
-        	Intent intent = new Intent(this, AddFriendActivity.class);
+        case R.id.action_addFriend:
+        	intent = new Intent(this, AddFriendActivity.class);
+        	startActivity(intent);
+        	return true;
+        case R.id.action_create_appointment:
+        	intent = new Intent(this, EditAppointmentActivity.class);
         	startActivity(intent);
         	return true;
         }
