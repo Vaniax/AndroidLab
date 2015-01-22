@@ -3,7 +3,6 @@ package de.tubs.androidlab.instameet.ui;
 import java.util.List;
 
 import simpleEntities.SimpleUser;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +29,10 @@ public class ContactsListAdapter extends BaseAdapter
 		public ImageView picture;
 	}
 	
-	private Context context;
 	private LayoutInflater inflater;
 	
-	public ContactsListAdapter(Context c) {
-		context = c;
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	public ContactsListAdapter(LayoutInflater inflater) {
+		this.inflater = inflater; 
 	}
 	
 	@Override
