@@ -1,15 +1,23 @@
 package de.tubs.androidlab.instameet.ui.appointment;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import simpleEntities.SimpleUser;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ListView;
 import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.ui.ContactsListAdapter;
 
 /**
  * This activity displays a form to create a new appointment
@@ -26,6 +34,8 @@ import de.tubs.androidlab.instameet.R;
 public class EditAppointmentActivity extends Activity implements TextWatcher {
 	
 	public static final String EXTRA_APPOINTMENT_ID = "de.tubs.androidlab.instameet.APPOINTMENT_ID";
+	
+	private ContactsListAdapter adapter;
 	
 	private boolean isNewAppointment;
 	private int appointmentId;
@@ -57,6 +67,15 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		}
 		
 		createDialog();
+		
+		adapter = new ContactsListAdapter((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+			List<SimpleUser> l = new ArrayList<SimpleUser>();
+			SimpleUser s = new SimpleUser();
+			s.setUsername("Peter");
+			l.add(s); l.add(s); l.add(s);l.add(s); l.add(s); l.add(s);l.add(s); l.add(s); l.add(s);
+			adapter.setContacts(l);
+		ListView participantsList = (ListView) findViewById(R.id.list_participants);
+		participantsList.setAdapter(adapter);
 	}
 
 	@Override
