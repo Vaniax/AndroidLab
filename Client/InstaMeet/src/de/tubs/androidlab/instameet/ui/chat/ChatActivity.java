@@ -21,7 +21,7 @@ import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.client.listener.AbstractInboundMessageListener;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
-import de.tubs.androidlab.instameet.ui.chat.ChatMessage.DIRECTION;
+import de.tubs.androidlab.instameet.ui.chat.ChatMessageProxy.DIRECTION;
 import de.tubs.androidlab.instameet.ui.main.MainActivity;
 
 public class ChatActivity extends Activity {
@@ -58,7 +58,7 @@ public class ChatActivity extends Activity {
 //            	service.sendDummyMessage(editText.getText().toString());
             	String message = editText.getText().toString();
             	service.sendMessage(message, user.getId());
-            	adapter.addMessage(new ChatMessage(message, DIRECTION.OUTGOING));
+            	adapter.addMessage(new ChatMessageProxy(message, DIRECTION.OUTGOING));
                 editText.setText(null);
             }
         });
@@ -127,9 +127,9 @@ public class ChatActivity extends Activity {
 		public void chatMessage() {
 			super.chatMessage();
 			if(adapter != null) {
-				List<ChatMessage> message = service.getNewMessages(friendID);
+				List<ChatMessageProxy> message = service.getNewMessages(friendID);
 				
-				for (ChatMessage chatMessage : message) {
+				for (ChatMessageProxy chatMessage : message) {
 					adapter.addMessage(chatMessage);		
 				}
 			}
