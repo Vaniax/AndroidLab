@@ -91,7 +91,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		
 		createDialog();
 		
-		adapter = new ContactsListAdapter((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+		adapter = new ContactsListAdapter((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE),this);
 		ListView participantsList = (ListView) findViewById(R.id.list_participants);
 		participantsList.setAdapter(adapter);
 		//TODO: fetch these from the appointment
