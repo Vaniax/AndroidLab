@@ -74,7 +74,8 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 			isNewAppointment = false;
 			//TODO: fetch appointment from service, like
 			//service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID));
-			appointment = new SimpleAppointment(); //TODO: remove this
+			appointment = new SimpleAppointment(); //TODO: remove this and get it from service via its id
+			appointment.setStartingTime(new Timestamp(1422379242)); //TODO remove this
 			editTitle.setText(appointment.getTitle());
 			editDescription.setText(appointment.getDescription());
 		} else {
