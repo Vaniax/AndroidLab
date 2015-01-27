@@ -12,7 +12,7 @@ import simpleEntities.SimpleUser;
 import de.tubs.androidlab.instameet.client.InstaMeetClient;
 import de.tubs.androidlab.instameet.client.listener.InboundListener;
 import de.tubs.androidlab.instameet.server.protobuf.Messages;
-import de.tubs.androidlab.instameet.server.protobuf.Messages.AddFriend;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.AddFriendRequest;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.BoolReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateUser;
@@ -25,7 +25,8 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages.OwnData;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.SecurityToken;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest.Type;
-import de.tubs.androidlab.instameet.ui.chat.ChatMessage.DIRECTION;
+import de.tubs.androidlab.instameet.ui.chat.ChatMessageProxy;
+import de.tubs.androidlab.instameet.ui.chat.ChatMessageProxy.DIRECTION;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -54,12 +55,12 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	//Contains all fetched appointments
 	private Map<Integer, SimpleAppointment> appointments = new HashMap<Integer, SimpleAppointment>();	
 	// Contains all incoming chat messages
-	private Map<Integer, List<de.tubs.androidlab.instameet.ui.chat.ChatMessage>> chatMessagesNew = 
-			new HashMap<Integer, List<de.tubs.androidlab.instameet.ui.chat.ChatMessage>>(); 
+	private Map<Integer, List<ChatMessageProxy>> chatMessagesNew = 
+			new HashMap<Integer, List<ChatMessageProxy>>(); 
 	// Contains the history messages by users
-	private Map<Integer, List<de.tubs.androidlab.instameet.ui.chat.ChatMessage>> chatMessageHistory = 
+	private Map<Integer, List<ChatMessageProxy>> chatMessageHistory = 
 			new HashMap<Integer, 
-			List<de.tubs.androidlab.instameet.ui.chat.ChatMessage>>();
+			List<ChatMessageProxy>>();
 	// Contains all friends of the user
 	List<SimpleUser> friends = new ArrayList<SimpleUser>();
 	// SecurityToken
@@ -225,15 +226,15 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	
 	@Override
 	public void addFriendRequest(String securityToken, String friendName) {
-		AddFriend addFriend = AddFriend.newBuilder()
+		AddFriendRequest addFriend = AddFriendRequest.newBuilder()
 				.setSecurityToken(securityToken)
 				.setFriendName(friendName)
 				.build();
 		
 		ServerRequest request = ServerRequest
 				.newBuilder()
-				.setType(Type.ADD_FRIEND)
-				.setAddFriend(addFriend)
+				.setType(Type.ADD_FRIEND_REQUEST)
+				.setAddFriendRequest(addFriend)
 				.build();
 		this.client.insertToQueue(request);
 		Log.d(TAG,"Insert send request to queue with content:\n" + addFriend.toString());
@@ -247,7 +248,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		return users.get(userID);
 	}
 	
-	public List<de.tubs.androidlab.instameet.ui.chat.ChatMessage> getNewMessages(int friendID) {
+	public List<ChatMessageProxy> getNewMessages(int friendID) {
 		return chatMessagesNew.remove(friendID);
 	}
 	
@@ -266,25 +267,26 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		public void chatMessage(Messages.ChatMessage msg) {
 			Log.d(TAG,"Incoming Message:\n" + msg.toString());
 			
-			de.tubs.androidlab.instameet.ui.chat.ChatMessage message = 
-					 new de.tubs.androidlab.instameet.ui.chat.ChatMessage(msg.toString(),DIRECTION.INCOMING);
+			ChatMessageProxy message = 
+					 new ChatMessageProxy(msg.getMessage().toString(),DIRECTION.INCOMING);
 			
 			// To history
 			if (!chatMessageHistory.containsKey(msg.getFriendID())) {
-				List<de.tubs.androidlab.instameet.ui.chat.ChatMessage> list =
-							new ArrayList<de.tubs.androidlab.instameet.ui.chat.ChatMessage>();
+				List<ChatMessageProxy> list =
+							new ArrayList<ChatMessageProxy>();
 				list.add(message);
 				synchronized (chatMessageHistory) {
 					chatMessageHistory.put(msg.getFriendID(),list);
 				}
+			} else {
+				synchronized (chatMessageHistory) {
+					chatMessageHistory.get(msg.getFriendID()).add(message);
+				}
 			}
-			synchronized (chatMessageHistory) {
-				chatMessageHistory.get(msg.getFriendID()).add(message);
-			}
-			
+
 			// To new message
-			List<de.tubs.androidlab.instameet.ui.chat.ChatMessage> list =
-							new ArrayList<de.tubs.androidlab.instameet.ui.chat.ChatMessage>();
+			List<ChatMessageProxy> list =
+							new ArrayList<ChatMessageProxy>();
 			list.add(message);
 			synchronized (chatMessagesNew) {
 				chatMessagesNew.put(msg.getFriendID(),list);
