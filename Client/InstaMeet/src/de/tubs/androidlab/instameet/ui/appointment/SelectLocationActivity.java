@@ -1,9 +1,6 @@
 package de.tubs.androidlab.instameet.ui.appointment;
 
 import de.tubs.androidlab.instameet.R;
-import de.tubs.androidlab.instameet.R.id;
-import de.tubs.androidlab.instameet.R.layout;
-import de.tubs.androidlab.instameet.R.menu;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;

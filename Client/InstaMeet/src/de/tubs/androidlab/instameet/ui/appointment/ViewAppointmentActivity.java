@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.ui.ContactsListAdapter;
@@ -30,16 +31,20 @@ public class ViewAppointmentActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_view_appointment);
+		LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		getActionBar().setTitle(getIntent().getStringExtra(EXTRA_APPOINTMENT_NAME));
 		
-		adapter = new ContactsListAdapter((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE),this);
+		final ListView participantsList = new ListView(this);
+		final View header = layoutInflater.inflate(R.layout.activity_view_appointment, null);
+		participantsList.addHeaderView(header, null, false);
+		setContentView(participantsList);
+		
+		adapter = new ContactsListAdapter(layoutInflater,this);
 			List<SimpleUser> l = new ArrayList<SimpleUser>();
 			SimpleUser s = new SimpleUser();
 			s.setUsername("Peter");
 			l.add(s); l.add(s); l.add(s);l.add(s); l.add(s); l.add(s);l.add(s); l.add(s); l.add(s);
 			adapter.setContacts(l);
-		ListView participantsList = (ListView) findViewById(R.id.list_participants);
 		participantsList.setAdapter(adapter);
 	}
 

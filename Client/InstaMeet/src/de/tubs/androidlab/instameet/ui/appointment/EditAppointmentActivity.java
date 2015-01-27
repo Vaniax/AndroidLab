@@ -63,12 +63,22 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_edit_appointment);
+		LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+		// construct UI
+		final ListView participantsList = new ListView(this);
+		setContentView(participantsList);
+		final View header = layoutInflater.inflate(R.layout.activity_edit_appointment, null);
+		participantsList.addHeaderView(header, null, false);
+		setContentView(participantsList);
+		
+		// search widgets
 		editTitle = (EditText) findViewById(R.id.edit_title);
 		editDescription = (EditText) findViewById(R.id.edit_description);
 		buttonDate = (Button) findViewById(R.id.button_date);
 		buttonTime = (Button) findViewById(R.id.button_time);
 		
+		// fill form widgets with information
 		Bundle extras = getIntent().getExtras();
 		if(extras != null && extras.containsKey(EXTRA_APPOINTMENT_ID)) {
 			isNewAppointment = false;
@@ -85,15 +95,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		}
 		refreshDateButton();
 		refreshTimeButton();
-		
-		
-		editTitle.addTextChangedListener(this);
-		editDescription.addTextChangedListener(this);
-		
-		createDialog();
-		
-		adapter = new ContactsListAdapter((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE),this);
-		ListView participantsList = (ListView) findViewById(R.id.list_participants);
+		adapter = new ContactsListAdapter(layoutInflater,this);
 		participantsList.setAdapter(adapter);
 		//TODO: fetch these from the appointment
 			List<SimpleUser> l = new ArrayList<SimpleUser>();
@@ -101,6 +103,10 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 			s.setUsername("Peter");
 			l.add(s); l.add(s); l.add(s);l.add(s); l.add(s); l.add(s);l.add(s); l.add(s); l.add(s);
 			adapter.setContacts(l);
+
+		editTitle.addTextChangedListener(this);
+		editDescription.addTextChangedListener(this);
+		createDialog();
 	}
 
 	@Override
