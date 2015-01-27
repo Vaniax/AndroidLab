@@ -83,8 +83,8 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.i(TAG, "Service started by 'startService()'");
-		return super.onStartCommand(intent, flags, startId);
-//		return START_STICKY;
+//		return super.onStartCommand(intent, flags, startId);
+		return START_STICKY;
 	}
 
 	@Override
@@ -271,16 +271,16 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 					 new ChatMessageProxy(msg.getMessage().toString(),DIRECTION.INCOMING);
 			
 			// To history
-			if (!chatMessageHistory.containsKey(msg.getFriendID())) {
+			if (!chatMessageHistory.containsKey(msg.getUserID())) {
 				List<ChatMessageProxy> list =
 							new ArrayList<ChatMessageProxy>();
 				list.add(message);
 				synchronized (chatMessageHistory) {
-					chatMessageHistory.put(msg.getFriendID(),list);
+					chatMessageHistory.put(msg.getUserID(),list);
 				}
 			} else {
 				synchronized (chatMessageHistory) {
-					chatMessageHistory.get(msg.getFriendID()).add(message);
+					chatMessageHistory.get(msg.getUserID()).add(message);
 				}
 			}
 
@@ -289,7 +289,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 							new ArrayList<ChatMessageProxy>();
 			list.add(message);
 			synchronized (chatMessagesNew) {
-				chatMessagesNew.put(msg.getFriendID(),list);
+				chatMessagesNew.put(msg.getUserID(),list);
 			}
 
 			listener.notifyChatMessage();	
