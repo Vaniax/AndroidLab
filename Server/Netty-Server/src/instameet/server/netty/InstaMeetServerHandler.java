@@ -17,6 +17,7 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse.Type;
 import service.ServiceInterface;
+import simpleEntities.Location;
 import simpleEntities.LoginData;
 import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
@@ -117,7 +118,54 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 					.setBoolReply(msgSucessful)
 					.build();
 			ctx.writeAndFlush(response);			
-		}
+		} break;
+		case GET_NEAR_APPOINTMENTS: {
+			msg.getGetNearAppointments().getSecurityToken();
+			Location loc = new Location();
+			loc.setLattitude(msg.getGetNearAppointments().getLocation().getLattitude());
+			loc.setLongitude(msg.getGetNearAppointments().getLocation().getLongitude());
+			
+			List<SimpleAppointment> nearApps = service.GetNearAppointments(
+					msg.getGetNearAppointments().getSecurityToken(), 
+					msg.getGetNearAppointments().getUserID(), 
+					loc);
+			
+			Messages.ListNearestAppointments.Builder msgNearAppsBuilder = Messages.ListNearestAppointments.newBuilder();
+			
+			for(SimpleAppointment app : nearApps) {
+				Messages.SimpleAppointment  msgApp= createAppMessageFromApp(app);
+				msgNearAppsBuilder.addAppointments(msgApp);
+			}
+			
+			ClientResponse response = ClientResponse.newBuilder()
+					.setType(Type.LIST_NEAREST_APPOINTMENTS)
+					.setListNearestAppointments(msgNearAppsBuilder.build())
+					.build();
+			ctx.writeAndFlush(response);			
+
+			
+		} break;
+		case GET_MY_VISITING_APPOINTMENTS: {
+			msg.getGetMyVisitingAppointments().getSecurityToken();
+			
+			List<SimpleAppointment> myApps = service.GetMyVisitingAppointments(
+					msg.getGetMyVisitingAppointments().getSecurityToken(), 
+					msg.getGetMyVisitingAppointments().getUserID());	
+			
+			Messages.ListVisitingAppointments.Builder msgMyAppsBuilder = Messages.ListVisitingAppointments.newBuilder();
+			
+			for(SimpleAppointment app : myApps) {
+				Messages.SimpleAppointment  msgApp= createAppMessageFromApp(app);
+				msgMyAppsBuilder.addAppointments(msgApp);
+			}
+			
+			ClientResponse response = ClientResponse.newBuilder()
+					.setType(Type.LIST_VISITING_APPOINTMENTS)
+					.setListVisitingAppointment(msgMyAppsBuilder.build())
+					.build();
+			ctx.writeAndFlush(response);		
+			
+		} break;
 		default:
 			break;
 		}
