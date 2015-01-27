@@ -10,6 +10,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import de.tubs.androidlab.instameet.server.protobuf.Messages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.BoolReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateUser;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.SecurityToken;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
@@ -54,6 +55,12 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			break;
 		
 		// TODO: Change simple echo reply to correct one
+		case CREATE_USER: {
+			BoolReply bool = BoolReply.newBuilder().setIsTrue(true).build();
+			CreateUser user = msg.getCreateUser();
+			SimpleUser createdUser  = service.createUser(user.getName(), user.getPassword());
+			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.BOOL).setBoolReply(bool).build());
+		}			
 		case SEND_CHAT_MESSAGE: {
 		   ChatMessage message = msg.getMessage();
 		   int id = message.getFriendID();
@@ -161,8 +168,9 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 					.setListVisitingAppointment(msgMyAppsBuilder.build())
 					.build();
 			ctx.writeAndFlush(response);		
-			
+		
 		} break;
+		
 		default:
 			break;
 		}
