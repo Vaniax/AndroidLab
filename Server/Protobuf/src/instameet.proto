@@ -17,7 +17,7 @@ message ServerRequest{
 		SEND_CHAT_MESSAGE = 3;
 		CREATE_APPOINTMENT = 4;
 		VISIT_APPOINTMENT = 5;
-		ADD_FRIEND = 6;
+		ADD_FRIEND_REQUEST = 6;
 		GET_OWN_DATA = 7;
 		GET_FRIEND_LOCATION = 8;
 		GET_MESSAGES = 9;
@@ -25,6 +25,7 @@ message ServerRequest{
 		GET_MY_VISITING_APPOINTMENTS = 11;
 		UPDATE_LOCATION = 12;
 		GET_FRIENDS = 13;
+		ADD_FRIEND_REPLY = 14;
 		NO_MESSAGE = 20;
 	};
 	
@@ -35,7 +36,7 @@ message ServerRequest{
 	optional ChatMessage message = 4;
 	optional CreateAppointment createAppointment = 5;
 	optional VisitAppointment visitAppointment = 6;
-	optional AddFriend addFriend = 7;
+	optional AddFriendRequest addFriendRequest = 7;
 	optional GetOwnData getOwnData = 8;
 	optional GetFriendLocation getFriendLocation = 9;
 	optional GetMessages getMessages = 10;
@@ -44,6 +45,7 @@ message ServerRequest{
 	optional UpdateLocation updateLocation = 13;
 	optional GetFriends getFriendList = 14;
 	optional NoMessage noMessage = 15;
+	optional AddFriendReply addFriendReply = 16;
 	
 	optional string messageID = 20;
 };
@@ -125,11 +127,19 @@ message GetNearAppointments {
 	required int32 userID = 3;
 };
 
-message AddFriend {
+message AddFriendRequest {
 	required string securityToken = 1;
 	optional int32 friendID = 2;
 	optional string friendName = 3;
 	required int32 userID = 4;
+};
+
+message AddFriendReply {
+	required string securityToken = 1;
+	optional int32 friendID = 2;
+	optional string friendName = 3;
+	required int32 userID = 4;
+	required bool accepted = 5;
 };
 
 message GetOwnData { // What is exactly returned here?
