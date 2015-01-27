@@ -4,13 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.regex.Pattern;
 
-import org.jasypt.digest.ByteDigester;
 import org.jasypt.digest.StandardByteDigester;
 import org.jasypt.digest.StandardStringDigester;
-import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.salt.RandomSaltGenerator;
 import org.jasypt.salt.SaltGenerator;

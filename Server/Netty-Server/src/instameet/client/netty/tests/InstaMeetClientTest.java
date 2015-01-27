@@ -1,6 +1,5 @@
 package instameet.client.netty.tests;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import io.netty.bootstrap.Bootstrap;

@@ -1,21 +1,10 @@
 package de.tubs.androidlab.instameet.ui.login;
 
 import de.tubs.androidlab.instameet.R;
-import de.tubs.androidlab.instameet.service.InstaMeetService;
-import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 public class LoginActivity extends Activity {
 

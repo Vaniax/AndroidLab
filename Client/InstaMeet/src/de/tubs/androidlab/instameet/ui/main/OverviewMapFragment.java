@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,7 +19,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import de.tubs.androidlab.instameet.R;
-import de.tubs.androidlab.instameet.ui.appointment.EditAppointmentActivity;
 import de.tubs.androidlab.instameet.ui.appointment.ViewAppointmentActivity;
 
 public class OverviewMapFragment extends Fragment implements OnInfoWindowClickListener {

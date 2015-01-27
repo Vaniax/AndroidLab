@@ -2,7 +2,6 @@ package de.tubs.androidlab.instameet.ui.login;
 
 import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.client.listener.AbstractInboundMessageListener;
-import de.tubs.androidlab.instameet.client.listener.InboundListener;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import android.app.Activity;
@@ -12,7 +11,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;

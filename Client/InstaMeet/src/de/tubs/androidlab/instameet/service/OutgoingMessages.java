@@ -1,9 +1,5 @@
 package de.tubs.androidlab.instameet.service;
 
-import java.util.Set;
-import simpleEntities.Location;
-import simpleEntities.SimpleAppointment;
-
 public interface OutgoingMessages {
 	public void login(String name, String password);
 

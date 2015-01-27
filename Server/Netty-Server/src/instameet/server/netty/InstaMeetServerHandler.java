@@ -10,7 +10,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import de.tubs.androidlab.instameet.server.protobuf.Messages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.BoolReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse;
-import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateUser;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.SecurityToken;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
@@ -55,16 +54,14 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			break;
 		
 		// TODO: Change simple echo reply to correct one
-		case SEND_CHAT_MESSAGE:
-			ChatMessage message = msg.getMessage();
-			
-			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.CHAT_MESSAGE).setMessage(message).build());
-		break;
-		case CREATE_USER: {
-			BoolReply bool = BoolReply.newBuilder().setIsTrue(true).build();
-			CreateUser user = msg.getCreateUser();
-			SimpleUser createdUser  = service.createUser(user.getName(), user.getPassword());
-			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.BOOL).setBoolReply(bool).build());
+		case SEND_CHAT_MESSAGE: {
+		   ChatMessage message = msg.getMessage();
+		   int id = message.getFriendID();
+		   Channel ch = null;
+		   if (channels.containsKey(id)) {
+			   ch = channels.get(id);
+			   ch.writeAndFlush(ClientResponse.newBuilder().setType(Type.CHAT_MESSAGE).setMessage(message).build());
+		   }
 		} break;
 		case GET_OWN_DATA: {
 			SimpleUser own = service.getOwnData(msg.getGetOwnData().getSecurityToken(), 1);
