@@ -15,6 +15,7 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -190,14 +191,19 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		dialogSaveAppointment = builder.create();
 	}
 	
-	public void showTimePicker(View view) {
+	public void showTimePickerClicked(View view) {
 	    DialogFragment newFragment = new TimePickerFragment();
 	    newFragment.show(getFragmentManager(), "timePicker");
 	}
 	
-	public void showDatePicker(View view) {
+	public void showDatePickerClicked(View view) {
 	    DialogFragment newFragment = new DatePickerFragment();
 	    newFragment.show(getFragmentManager(), "datePicker");
+	}
+	
+	public void selectLocationClicked(View view) {
+		Intent intent = new Intent(this, SelectLocationActivity.class);
+		startActivity(intent);
 	}
 	
 	/**

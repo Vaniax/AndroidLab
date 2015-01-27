@@ -40,7 +40,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/linearLayout1" >
+        android:layout_below="@+id/button_select_location" >
 
     </ListView>
 
@@ -56,16 +56,26 @@
             android:id="@+id/button_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="showDatePicker"
+            android:onClick="showDatePickerClicked"
             android:text="@string/appointment_edit_date" />
 
         <Button
             android:id="@+id/button_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="showTimePicker"
+            android:onClick="showTimePickerClicked"
             android:text="@string/appointment_edit_time" />
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button_select_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/linearLayout1"
+        android:onClick="selectLocationClicked"
+        android:text="@string/appointment_select_location" />
 
 </RelativeLayout>

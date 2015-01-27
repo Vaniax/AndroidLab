@@ -31,5 +31,7 @@
     <string name="appointment_edit_description">Description</string>
     <string name="appointment_edit_date">Date</string>
     <string name="appointment_edit_time">Time</string>
+    <string name="appointment_select_location">Select Location</string>
+    <string name="title_activity_select_location">SelectLocationActivity</string>
 
 </resources>
