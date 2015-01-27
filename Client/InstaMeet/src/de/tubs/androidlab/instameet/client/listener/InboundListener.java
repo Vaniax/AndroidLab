@@ -29,9 +29,9 @@ public class InboundListener {
 		}
 	}
 	
-	public synchronized void notifyChatMessage(String message) {
+	public synchronized void notifyChatMessage() {
 		for (AbstractInboundMessageListener l : listeners) {
-			l.chatMessage(message);
+			l.chatMessage();
 		}
 	}
 

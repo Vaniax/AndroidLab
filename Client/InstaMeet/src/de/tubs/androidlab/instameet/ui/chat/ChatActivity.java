@@ -1,5 +1,7 @@
 package de.tubs.androidlab.instameet.ui.chat;
 
+import java.util.List;
+
 import simpleEntities.SimpleUser;
 import android.app.Activity;
 import android.content.ComponentName;
@@ -122,10 +124,14 @@ public class ChatActivity extends Activity {
 	
 	private class MessageListener extends AbstractInboundMessageListener {
 		@Override
-		public void chatMessage(String message) {
-			super.chatMessage(message);
+		public void chatMessage() {
+			super.chatMessage();
 			if(adapter != null) {
-				adapter.addMessage(new ChatMessage(message,DIRECTION.INCOMING));		
+				List<ChatMessage> message = service.getNewMessages(friendID);
+				
+				for (ChatMessage chatMessage : message) {
+					adapter.addMessage(chatMessage);		
+				}
 			}
 		}	
 	}

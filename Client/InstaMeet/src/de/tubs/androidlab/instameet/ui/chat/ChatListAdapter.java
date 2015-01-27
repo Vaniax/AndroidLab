@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import de.tubs.androidlab.instameet.R;
-import de.tubs.androidlab.instameet.ui.chat.ChatMessage.DIRECTION;
+import de.tubs.androidlab.instameet.ui.chat.ChatMessageProxy.DIRECTION;
 
 /**
  * An adapter connects data with a list.
@@ -19,7 +19,7 @@ import de.tubs.androidlab.instameet.ui.chat.ChatMessage.DIRECTION;
  */
 class ChatListAdapter extends BaseAdapter
 {
-	ArrayList<ChatMessage> messages = new ArrayList<ChatMessage>();
+	ArrayList<ChatMessageProxy> messages = new ArrayList<ChatMessageProxy>();
 	
 	/**
 	 * Additional data assigned to each entry which holds
@@ -69,7 +69,7 @@ class ChatListAdapter extends BaseAdapter
 			holder.timeStamp = (TextView) rowView.findViewById(R.id.time_stamp);
 			rowView.setTag(holder);
 		}
-		ChatMessage message = messages.get(position);
+		ChatMessageProxy message = messages.get(position);
 		holder.message.setText(message.getMessage());
 		holder.timeStamp.setText("13:37");
 
@@ -80,7 +80,7 @@ class ChatListAdapter extends BaseAdapter
 		return rowView;
 	}
 	
-	public void addMessage(ChatMessage message) {
+	public void addMessage(ChatMessageProxy message) {
 		messages.add(message);
 		
 		((ChatActivity)context).runOnUiThread(new Runnable() {

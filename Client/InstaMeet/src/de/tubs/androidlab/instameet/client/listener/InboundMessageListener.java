@@ -4,7 +4,7 @@ import java.util.EventListener;
 
 public interface InboundMessageListener extends EventListener {
 	void securityToken(String token);
-	void chatMessage(String message);
+	void chatMessage();
 	public void ownData();
 	public void listFriends();
 }

@@ -1,6 +1,6 @@
 package de.tubs.androidlab.instameet.ui.chat;
 
-public class ChatMessage {
+public class ChatMessageProxy {
 	
 	public enum DIRECTION {
 		INCOMING,
@@ -10,7 +10,7 @@ public class ChatMessage {
 	private String message = new String();
 	private DIRECTION direction; 
 	
-	public ChatMessage(String message, DIRECTION direction) {
+	public ChatMessageProxy(String message, DIRECTION direction) {
 		this.message = message;
 		this.direction = direction;
 	}

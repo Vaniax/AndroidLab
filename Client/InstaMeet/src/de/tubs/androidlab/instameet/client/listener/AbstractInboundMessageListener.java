@@ -16,7 +16,7 @@ public abstract class AbstractInboundMessageListener implements InboundMessageLi
 		// Empty implementation
 	}
 
-	public void chatMessage(String message) {
+	public void chatMessage() {
 		// Empty implementation
 	}
 
