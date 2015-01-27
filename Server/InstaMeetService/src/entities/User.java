@@ -24,7 +24,8 @@ import java.util.Set;
 	@NamedQuery(name="User.login", query="SELECT u FROM User u WHERE u.username = :name and u.password = :password"),
 	@NamedQuery(name="User.findId", query="SELECT u FROM User u WHERE u.id = :id"),
 	@NamedQuery(name="User.findName", query="SELECT u FROM User u WHERE u.username = :name"),
-	@NamedQuery(name="User.findIds", query="SELECT u FROM User u WHERE  u.id IN :userIds")
+	@NamedQuery(name="User.findIds", query="SELECT u FROM User u WHERE  u.id IN :userIds"),
+	@NamedQuery(name="User.selectName", query="SELECT u FROM User u WHERE u.username like :subName")
 })
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -60,7 +60,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			CreateUser user = msg.getCreateUser();
 			SimpleUser createdUser  = service.createUser(user.getName(), user.getPassword());
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.BOOL).setBoolReply(bool).build());
-		}			
+		} break;			
 		case SEND_CHAT_MESSAGE: {
 		   ChatMessage message = msg.getMessage();
 		   int id = message.getFriendID();
@@ -170,7 +170,25 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			ctx.writeAndFlush(response);		
 		
 		} break;
-		
+		case ADD_FRIEND_REQUEST: {
+			
+			boolean successful = service.addFriendRequest(
+					msg.getAddFriendRequest().getSecurityToken(),
+					msg.getAddFriendRequest().getUserID(),
+					msg.getAddFriendRequest().getFriendID());
+			
+			//TODO: notify requested user to react
+		} break;
+		case ADD_FRIEND_REPLY: {
+			
+			boolean successful = service.addFriendReply(
+					msg.getAddFriendReply().getSecurityToken(),
+					msg.getAddFriendReply().getUserID(),
+					msg.getAddFriendReply().getFriendID(),
+					msg.getAddFriendReply().getAccepted());
+			
+			//TODO: notify requesting user if friendship was accepted or not			
+		} break;
 		default:
 			break;
 		}
