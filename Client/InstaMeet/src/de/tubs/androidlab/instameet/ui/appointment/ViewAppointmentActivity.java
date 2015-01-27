@@ -33,7 +33,7 @@ public class ViewAppointmentActivity extends Activity {
 		setContentView(R.layout.activity_view_appointment);
 		getActionBar().setTitle(getIntent().getStringExtra(EXTRA_APPOINTMENT_NAME));
 		
-		adapter = new ContactsListAdapter((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+		adapter = new ContactsListAdapter((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE),this);
 			List<SimpleUser> l = new ArrayList<SimpleUser>();
 			SimpleUser s = new SimpleUser();
 			s.setUsername("Peter");

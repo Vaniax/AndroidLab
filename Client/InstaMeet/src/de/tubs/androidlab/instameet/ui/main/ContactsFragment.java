@@ -36,7 +36,7 @@ public class ContactsFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		adapter = new ContactsListAdapter((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+		adapter = new ContactsListAdapter((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE),this.getActivity());
 		setListAdapter(adapter);
 		setHasOptionsMenu(true);
 	}
@@ -106,5 +106,4 @@ public class ContactsFragment extends ListFragment {
             service = null;
         }
     };
-
 }

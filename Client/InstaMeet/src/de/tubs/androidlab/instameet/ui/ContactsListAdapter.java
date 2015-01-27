@@ -3,6 +3,7 @@ package de.tubs.androidlab.instameet.ui;
 import java.util.List;
 
 import simpleEntities.SimpleUser;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import de.tubs.androidlab.instameet.R;
 public class ContactsListAdapter extends BaseAdapter
 {
 	private List<SimpleUser> contacts;
+	private Activity activity = null;
 
 	/**
 	 * Additional data assigned to each entry which holds
@@ -31,8 +33,9 @@ public class ContactsListAdapter extends BaseAdapter
 	
 	private LayoutInflater inflater;
 	
-	public ContactsListAdapter(LayoutInflater inflater) {
+	public ContactsListAdapter(LayoutInflater inflater, Activity activity) {
 		this.inflater = inflater; 
+		this.activity = activity;
 	}
 	
 	@Override
@@ -78,6 +81,14 @@ public class ContactsListAdapter extends BaseAdapter
 	 */
 	public void setContacts(List<SimpleUser> contacts) {
 		this.contacts = contacts;
-		notifyDataSetChanged();
+		activity.runOnUiThread(new Runnable() {
+				
+			@Override
+			public void run() {
+				notifyDataSetChanged();
+			}	
+		});
+//		notifyDataSetChanged();
+		
 	}
 }
