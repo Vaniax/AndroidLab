@@ -1,5 +1,6 @@
 package instameet.server.netty;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -227,7 +228,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		app.setHoster(msgApp.getHoster());
 		app.setLattitude(msgApp.getLocation().getLattitude());
 		app.setLongitude(msgApp.getLocation().getLongitude());
-		//app.setStartingTime(msgApp.getTime());
+		app.setStartingTime(new Timestamp(msgApp.getTime()));
 		app.setDescription(msgApp.getDescription());
 		for(int msgUser : msgApp.getParticipantsList()) {
 			app.getVisitingUsers().add(msgUser);
@@ -244,7 +245,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 				.setLattitude(app.getLattitude())
 				.setLongitude(app.getLongitude()).build();
 		msgApp.setLocation(loc);
-		//app.setStartingTime(msgApp.getTime());
+		msgApp.setTime(app.getStartingTime().getTime());
 		msgApp.setDescription(app.getDescription());
 		for(int userId : app.getVisitingUsers()) {
 			msgApp.addParticipants(userId);
