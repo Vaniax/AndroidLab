@@ -347,7 +347,8 @@ public class InstaMeetService implements ServiceInterface {
 		return false;
 	}
 	
-	public List<SimpleUser> getUsers(Set<Integer> ids) {
+	public List<SimpleUser> getUsers(String SecurityToken, int userId, Set<Integer> ids) {
+		verifyUser(SecurityToken, userId);
 		TypedQuery<User> result = em.createNamedQuery("User.findIds", User.class).setParameter("userIds", ids);
 		List<SimpleUser> users = new ArrayList<SimpleUser>(result.getResultList().size());
 		for(User u : result.getResultList()) {
@@ -358,7 +359,8 @@ public class InstaMeetService implements ServiceInterface {
 	}
 
 	@Override
-	public List<SimpleUser> getUsersByName(String subName) {
+	public List<SimpleUser> getUsersByName(String SecurityToken, int userId, String subName) {
+		verifyUser(SecurityToken, userId);
 		TypedQuery<User> result = em.createNamedQuery("User.selectName", User.class).setParameter("subName", subName);
 		List<SimpleUser> users = new ArrayList<SimpleUser>(result.getResultList().size());
 		for(User u : result.getResultList()) {

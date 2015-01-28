@@ -15,6 +15,7 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.AddFriendRequest;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.BoolReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateAppointment;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateUser;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.GetFriends;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.GetOwnData;
@@ -238,6 +239,37 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				.build();
 		this.client.insertToQueue(request);
 		Log.d(TAG,"Insert send request to queue with content:\n" + addFriend.toString());
+	}
+	
+	public void createAppointment(String securityToken, SimpleAppointment app) {
+		CreateAppointment createApp = CreateAppointment.newBuilder()
+				.setAppointment(createMessageAppFromApp(app))
+				.build();
+		ServerRequest request = ServerRequest
+				.newBuilder()
+				.setType(Type.CREATE_APPOINTMENT)
+				.setCreateAppointment(createApp)
+				.build();
+		this.client.insertToQueue(request);
+
+	}
+	
+	private de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment createMessageAppFromApp(SimpleAppointment app) {
+		Messages.SimpleAppointment.Builder msgApp = Messages.SimpleAppointment.newBuilder();
+		msgApp.setId(app.getId());
+		msgApp.setTitle(app.getTitle());
+		msgApp.setHoster(app.getHoster());
+		Messages.Location loc = Messages.Location.newBuilder()
+				.setLattitude(app.getLattitude())
+				.setLongitude(app.getLongitude()).build();
+		msgApp.setLocation(loc);
+		//app.setStartingTime(msgApp.getTime());
+		msgApp.setDescription(null);
+		for(int userId : app.getVisitingUsers()) {
+			msgApp.addParticipants(userId);
+			
+		}
+		return msgApp.build();
 	}
 	
 	public Map<Integer, SimpleUser> getUsers() {

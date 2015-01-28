@@ -90,6 +90,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 			editDescription.setText(appointment.getDescription());
 		} else {
 			isNewAppointment = true;
+			setTitle("New Appointment");
 			appointment = new SimpleAppointment();
 			appointment.setStartingTime(new Timestamp(System.currentTimeMillis()));
 		}
@@ -101,7 +102,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 			List<SimpleUser> l = new ArrayList<SimpleUser>();
 			SimpleUser s = new SimpleUser();
 			s.setUsername("Peter");
-			l.add(s); l.add(s); l.add(s);l.add(s); l.add(s); l.add(s);l.add(s); l.add(s); l.add(s);
+			l.add(s); l.add(s); 
 			adapter.setContacts(l);
 
 		editTitle.addTextChangedListener(this);
