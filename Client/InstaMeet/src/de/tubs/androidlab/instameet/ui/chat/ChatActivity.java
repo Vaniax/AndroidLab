@@ -82,6 +82,7 @@ public class ChatActivity extends Activity {
         	service = ( (InstaMeetServiceBinder) binder).getService();
         	user = service.getUser(friendID);
     		getActionBar().setTitle(user.getUsername());
+    		listener.addService(service);
     		service.processor.listener.addListener(listener);
         }
 
@@ -97,6 +98,8 @@ public class ChatActivity extends Activity {
 	protected void onStop() {
 		super.onStop();
     	if(service != null) {
+        	service.processor.listener.removeListener(listener);
+
     		unbindService(serviceConnection);
     		service = null;
     	}		
@@ -123,6 +126,11 @@ public class ChatActivity extends Activity {
 	
 	
 	private class MessageListener extends AbstractInboundMessageListener {
+		InstaMeetService service;
+		public void addService(InstaMeetService service) {
+			this.service = service;
+		}
+		
 		@Override
 		public void chatMessage() {
 			super.chatMessage();
