@@ -235,7 +235,8 @@ message Location {
 };
 
 message Time {
-	required string time = 1;
+	optional string timeString = 1;
+	optional int64 time = 2;
 }
 
 message SecurityToken {

@@ -22428,10 +22428,6 @@ public final class Messages {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!getTime().isInitialized()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -22786,10 +22782,6 @@ public final class Messages {
           return false;
         }
         if (!getLocation().isInitialized()) {
-          
-          return false;
-        }
-        if (!getTime().isInitialized()) {
           
           return false;
         }
@@ -23821,12 +23813,6 @@ public final class Messages {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (hasLatestLocationUpdate()) {
-        if (!getLatestLocationUpdate().isInitialized()) {
-          memoizedIsInitialized = 0;
-          return false;
-        }
-      }
       if (hasLocation()) {
         if (!getLocation().isInitialized()) {
           memoizedIsInitialized = 0;
@@ -24193,12 +24179,6 @@ public final class Messages {
         if (!hasUserID()) {
           
           return false;
-        }
-        if (hasLatestLocationUpdate()) {
-          if (!getLatestLocationUpdate().isInitialized()) {
-            
-            return false;
-          }
         }
         if (hasLocation()) {
           if (!getLocation().isInitialized()) {
@@ -25273,18 +25253,27 @@ public final class Messages {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>required string time = 1;</code>
+     * <code>optional string timeString = 1;</code>
+     */
+    boolean hasTimeString();
+    /**
+     * <code>optional string timeString = 1;</code>
+     */
+    java.lang.String getTimeString();
+    /**
+     * <code>optional string timeString = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getTimeStringBytes();
+
+    /**
+     * <code>optional int64 time = 2;</code>
      */
     boolean hasTime();
     /**
-     * <code>required string time = 1;</code>
+     * <code>optional int64 time = 2;</code>
      */
-    java.lang.String getTime();
-    /**
-     * <code>required string time = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getTimeBytes();
+    long getTime();
   }
   /**
    * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.Time}
@@ -25341,7 +25330,12 @@ public final class Messages {
             case 10: {
               com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              time_ = bs;
+              timeString_ = bs;
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              time_ = input.readInt64();
               break;
             }
           }
@@ -25384,19 +25378,19 @@ public final class Messages {
     }
 
     private int bitField0_;
-    public static final int TIME_FIELD_NUMBER = 1;
-    private java.lang.Object time_;
+    public static final int TIMESTRING_FIELD_NUMBER = 1;
+    private java.lang.Object timeString_;
     /**
-     * <code>required string time = 1;</code>
+     * <code>optional string timeString = 1;</code>
      */
-    public boolean hasTime() {
+    public boolean hasTimeString() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required string time = 1;</code>
+     * <code>optional string timeString = 1;</code>
      */
-    public java.lang.String getTime() {
-      java.lang.Object ref = time_;
+    public java.lang.String getTimeString() {
+      java.lang.Object ref = timeString_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
@@ -25404,30 +25398,46 @@ public final class Messages {
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         if (bs.isValidUtf8()) {
-          time_ = s;
+          timeString_ = s;
         }
         return s;
       }
     }
     /**
-     * <code>required string time = 1;</code>
+     * <code>optional string timeString = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getTimeBytes() {
-      java.lang.Object ref = time_;
+        getTimeStringBytes() {
+      java.lang.Object ref = timeString_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        time_ = b;
+        timeString_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
 
+    public static final int TIME_FIELD_NUMBER = 2;
+    private long time_;
+    /**
+     * <code>optional int64 time = 2;</code>
+     */
+    public boolean hasTime() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional int64 time = 2;</code>
+     */
+    public long getTime() {
+      return time_;
+    }
+
     private void initFields() {
-      time_ = "";
+      timeString_ = "";
+      time_ = 0L;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -25435,10 +25445,6 @@ public final class Messages {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
-      if (!hasTime()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -25447,7 +25453,10 @@ public final class Messages {
                         throws java.io.IOException {
       getSerializedSize();
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
-        output.writeBytes(1, getTimeBytes());
+        output.writeBytes(1, getTimeStringBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt64(2, time_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -25460,7 +25469,11 @@ public final class Messages {
       size = 0;
       if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(1, getTimeBytes());
+          .computeBytesSize(1, getTimeStringBytes());
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(2, time_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -25579,8 +25592,10 @@ public final class Messages {
 
       public Builder clear() {
         super.clear();
-        time_ = "";
+        timeString_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
+        time_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
@@ -25612,6 +25627,10 @@ public final class Messages {
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
+        result.timeString_ = timeString_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
         result.time_ = time_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -25629,20 +25648,19 @@ public final class Messages {
 
       public Builder mergeFrom(de.tubs.androidlab.instameet.server.protobuf.Messages.Time other) {
         if (other == de.tubs.androidlab.instameet.server.protobuf.Messages.Time.getDefaultInstance()) return this;
-        if (other.hasTime()) {
+        if (other.hasTimeString()) {
           bitField0_ |= 0x00000001;
-          time_ = other.time_;
+          timeString_ = other.timeString_;
           onChanged();
+        }
+        if (other.hasTime()) {
+          setTime(other.getTime());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
-        if (!hasTime()) {
-          
-          return false;
-        }
         return true;
       }
 
@@ -25665,24 +25683,24 @@ public final class Messages {
       }
       private int bitField0_;
 
-      private java.lang.Object time_ = "";
+      private java.lang.Object timeString_ = "";
       /**
-       * <code>required string time = 1;</code>
+       * <code>optional string timeString = 1;</code>
        */
-      public boolean hasTime() {
+      public boolean hasTimeString() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required string time = 1;</code>
+       * <code>optional string timeString = 1;</code>
        */
-      public java.lang.String getTime() {
-        java.lang.Object ref = time_;
+      public java.lang.String getTimeString() {
+        java.lang.Object ref = timeString_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
           if (bs.isValidUtf8()) {
-            time_ = s;
+            timeString_ = s;
           }
           return s;
         } else {
@@ -25690,53 +25708,85 @@ public final class Messages {
         }
       }
       /**
-       * <code>required string time = 1;</code>
+       * <code>optional string timeString = 1;</code>
        */
       public com.google.protobuf.ByteString
-          getTimeBytes() {
-        java.lang.Object ref = time_;
+          getTimeStringBytes() {
+        java.lang.Object ref = timeString_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          time_ = b;
+          timeString_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>required string time = 1;</code>
+       * <code>optional string timeString = 1;</code>
        */
-      public Builder setTime(
+      public Builder setTimeString(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000001;
-        time_ = value;
+        timeString_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required string time = 1;</code>
+       * <code>optional string timeString = 1;</code>
        */
-      public Builder clearTime() {
+      public Builder clearTimeString() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        time_ = getDefaultInstance().getTime();
+        timeString_ = getDefaultInstance().getTimeString();
         onChanged();
         return this;
       }
       /**
-       * <code>required string time = 1;</code>
+       * <code>optional string timeString = 1;</code>
        */
-      public Builder setTimeBytes(
+      public Builder setTimeStringBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   bitField0_ |= 0x00000001;
+        timeString_ = value;
+        onChanged();
+        return this;
+      }
+
+      private long time_ ;
+      /**
+       * <code>optional int64 time = 2;</code>
+       */
+      public boolean hasTime() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>optional int64 time = 2;</code>
+       */
+      public long getTime() {
+        return time_;
+      }
+      /**
+       * <code>optional int64 time = 2;</code>
+       */
+      public Builder setTime(long value) {
+        bitField0_ |= 0x00000002;
         time_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 time = 2;</code>
+       */
+      public Builder clearTime() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        time_ = 0L;
         onChanged();
         return this;
       }
@@ -31300,29 +31350,30 @@ public final class Messages {
       ".server.protobuf.Location\022\021\n\tfriendIDs\030\005" +
       " \003(\005\022\034\n\024hostedAppointmentIDs\030\006 \003(\005\022\036\n\026vi" +
       "sitingAppointmentIDs\030\007 \003(\005\"0\n\010Location\022\021" +
-      "\n\tlongitude\030\001 \002(\001\022\021\n\tlattitude\030\002 \002(\001\"\024\n\004",
-      "Time\022\014\n\004time\030\001 \002(\t\"\036\n\rSecurityToken\022\r\n\005t" +
-      "oken\030\001 \002(\t\"\013\n\tNoMessage\"f\n\nMapFriends\022X\n" +
-      "\003map\030\001 \002(\0132K.de.tubs.androidlab.instamee" +
-      "t.server.protobuf.Pair_Double_SimpleAppo" +
-      "intment\"r\n\026MapAppointmentDistance\022X\n\003map" +
-      "\030\001 \003(\0132K.de.tubs.androidlab.instameet.se" +
-      "rver.protobuf.Pair_Double_SimpleAppointm" +
-      "ent\"k\n\020MapAppointmentID\022W\n\003map\030\001 \003(\0132J.d" +
-      "e.tubs.androidlab.instameet.server.proto" +
-      "buf.Pair_Int32_SimpleAppointment\"]\n\tMapU",
-      "serID\022P\n\003map\030\001 \003(\0132C.de.tubs.androidlab." +
-      "instameet.server.protobuf.Pair_Int32_Sim" +
-      "pleUser\"m\n\025Pair_Int32_SimpleUser\022\013\n\003key\030" +
-      "\001 \002(\005\022G\n\005value\030\002 \002(\01328.de.tubs.androidla" +
-      "b.instameet.server.protobuf.SimpleUser\"{" +
-      "\n\034Pair_Int32_SimpleAppointment\022\013\n\003key\030\001 " +
-      "\002(\005\022N\n\005value\030\002 \002(\0132?.de.tubs.androidlab." +
-      "instameet.server.protobuf.SimpleAppointm" +
-      "ent\"|\n\035Pair_Double_SimpleAppointment\022\013\n\003" +
-      "key\030\001 \002(\001\022N\n\005value\030\002 \002(\0132?.de.tubs.andro",
-      "idlab.instameet.server.protobuf.SimpleAp" +
-      "pointmentB\nB\010Messages"
+      "\n\tlongitude\030\001 \002(\001\022\021\n\tlattitude\030\002 \002(\001\"(\n\004",
+      "Time\022\022\n\ntimeString\030\001 \001(\t\022\014\n\004time\030\002 \001(\003\"\036" +
+      "\n\rSecurityToken\022\r\n\005token\030\001 \002(\t\"\013\n\tNoMess" +
+      "age\"f\n\nMapFriends\022X\n\003map\030\001 \002(\0132K.de.tubs" +
+      ".androidlab.instameet.server.protobuf.Pa" +
+      "ir_Double_SimpleAppointment\"r\n\026MapAppoin" +
+      "tmentDistance\022X\n\003map\030\001 \003(\0132K.de.tubs.and" +
+      "roidlab.instameet.server.protobuf.Pair_D" +
+      "ouble_SimpleAppointment\"k\n\020MapAppointmen" +
+      "tID\022W\n\003map\030\001 \003(\0132J.de.tubs.androidlab.in" +
+      "stameet.server.protobuf.Pair_Int32_Simpl",
+      "eAppointment\"]\n\tMapUserID\022P\n\003map\030\001 \003(\0132C" +
+      ".de.tubs.androidlab.instameet.server.pro" +
+      "tobuf.Pair_Int32_SimpleUser\"m\n\025Pair_Int3" +
+      "2_SimpleUser\022\013\n\003key\030\001 \002(\005\022G\n\005value\030\002 \002(\013" +
+      "28.de.tubs.androidlab.instameet.server.p" +
+      "rotobuf.SimpleUser\"{\n\034Pair_Int32_SimpleA" +
+      "ppointment\022\013\n\003key\030\001 \002(\005\022N\n\005value\030\002 \002(\0132?" +
+      ".de.tubs.androidlab.instameet.server.pro" +
+      "tobuf.SimpleAppointment\"|\n\035Pair_Double_S" +
+      "impleAppointment\022\013\n\003key\030\001 \002(\001\022N\n\005value\030\002",
+      " \002(\0132?.de.tubs.androidlab.instameet.serv" +
+      "er.protobuf.SimpleAppointmentB\nB\010Message" +
+      "s"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -31503,7 +31554,7 @@ public final class Messages {
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Time_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_Time_descriptor,
-        new java.lang.String[] { "Time", });
+        new java.lang.String[] { "TimeString", "Time", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SecurityToken_descriptor =
       getDescriptor().getMessageTypes().get(28);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SecurityToken_fieldAccessorTable = new
