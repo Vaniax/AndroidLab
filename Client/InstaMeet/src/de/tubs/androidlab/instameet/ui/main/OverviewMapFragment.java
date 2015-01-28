@@ -1,7 +1,10 @@
 package de.tubs.androidlab.instameet.ui.main;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
 import android.app.Activity;
 import android.app.Fragment;
@@ -23,6 +26,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -38,8 +42,14 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
 
     private GoogleMap mMap;
     private InstaMeetService service = null;   
-    private boolean friendsLoading = true;
+    private ServiceListener listener = new ServiceListener();
 
+    private Map<Marker, SimpleUser> userMarker = new HashMap<Marker, SimpleUser>();
+    private Map<Marker, SimpleAppointment> nearAppMarker = new HashMap<Marker, SimpleAppointment>();
+    private Map<Marker, SimpleAppointment> myAppMarker = new HashMap<Marker, SimpleAppointment>();
+    private Map<Marker, SimpleAppointment> visitingAppMarker = new HashMap<Marker, SimpleAppointment>();
+    
+    
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_map, container, false);
@@ -65,7 +75,7 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
 		super.onDetach();
     	if(service != null) {
     		getActivity().unbindService(serviceConnection);
-//        	service.processor.listener.removeListener(listener);
+        	service.processor.listener.removeListener(listener);
     		service = null;
     	}
 	}
@@ -112,17 +122,24 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
     	//TODO: Get and Display your visiting Appointments from Service
     	//TODO: Get and Display near appointments from Service
     	//TODO: Get and Display friends from Service
+//    	mMap.clear();
     	if(service != null){
     		Log.i(TAG, "Friends added to Map");
     		List<SimpleUser> friends = service.getFriends();
-    		for(SimpleUser f : friends) {
-    	        mMap.addMarker(new MarkerOptions().position(new LatLng(f.getLattitude(), f.getLongitude()))
-    	        		.title(f.getUsername()));
-    			
+    		for(final SimpleUser f : friends) {
+    			getActivity().runOnUiThread(new Runnable() {
+    				@Override
+					public void run() {
+    	    	        Marker mark = mMap.addMarker(new MarkerOptions().position(new LatLng(f.getLattitude(), f.getLongitude()))
+    	    	        		.title(f.getUsername())
+    	    	        		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+    	    	        userMarker.put(mark, f);
+    				}
+    			});
+
     		}
-    		friendsLoading = false;
-    	} 
-        mMap.addMarker(new MarkerOptions().position(new LatLng(52.273821, 10.531404)).title("Feuerzangenbowle"));
+    		    	} 
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(52.273821, 10.531404)).title("Feuerzangenbowle"));
 //        mMap.addMarker(new MarkerOptions().position(new LatLng(52.266993, 10.553677)).title("Öffentl. Grillen"));
 //        mMap.addMarker(new MarkerOptions().position(new LatLng(52.263499, 10.527799)).title("Demo gegen alles")).showInfoWindow();
         
@@ -135,20 +152,35 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
 
 	@Override
 	public void onInfoWindowClick(Marker marker) {
-        Intent intent = new Intent(getActivity(), ViewAppointmentActivity.class);
-        intent.putExtra(ViewAppointmentActivity.EXTRA_APPOINTMENT_NAME, marker.getTitle());
+		Intent intent;
+		if(userMarker.containsKey(marker)) {
+			//TODO: ViewUser Intent. 
+	        intent = new Intent(getActivity(), ViewAppointmentActivity.class);
+	        //intent.putExtra(ViewUserActivity.EXTRA_USER_ID, userMarker.get(marker).getUserId());
+		} else {
+	        intent = new Intent(getActivity(), ViewAppointmentActivity.class);
+	        intent.putExtra(ViewAppointmentActivity.EXTRA_APPOINTMENT_NAME, marker.getTitle());
+
+		}
         startActivity(intent);
 	}
 
 
+	private class ServiceListener extends AbstractInboundMessageListener {
+		@Override
+		public void listFriends() {
+			super.listFriends();		
+			setUpMapIfAvailable();
+		}
+	}	
+	
     /** Defines callbacks for service binding, passed to bindService() */
     private ServiceConnection serviceConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
         	service = ( (InstaMeetServiceBinder) binder).getService();
-//        	service.processor.listener.addListener(listener);
-//        	service.fetchOwnData();
+        	service.processor.listener.addListener(listener);
         	setUpMapIfAvailable();
         }
 
