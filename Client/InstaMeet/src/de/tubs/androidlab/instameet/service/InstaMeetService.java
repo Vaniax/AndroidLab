@@ -97,6 +97,14 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	
 	public List<SimpleUser> getFriends() {
 		List<SimpleUser> friends = new ArrayList<SimpleUser>();
+		if(ownData == null) {
+			fetchOwnData();
+			return friends;
+		}
+		if(ownData.getFriends() == null) {
+			fetchFriends();
+			return friends;
+		}
 		for(int friendId : ownData.getFriends()) {
 			if(users.containsKey(friendId)) {
 				friends.add(users.get(friendId));
@@ -109,18 +117,11 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	}
 	
 	public void fetchFriends() {
-//		if(ownData == null)
-//			return null;
-//		
-//		List<SimpleUser> friends = new ArrayList<SimpleUser>(ownData.getFriends().size());
-//		
-//		for(int i : ownData.getFriends()) {
-//			if(!users.containsKey(i)) {
-//				
-//			}
-//			friends.add(users.get(i));
-//		}
-//		return friends;
+		if(ownData == null || ownData.getFriends() == null) {
+			fetchOwnData();
+			return;
+		}
+
 		GetFriends.Builder friendRequest = GetFriends.newBuilder();
 		for(int i : ownData.getFriends()) {
 			if(!users.containsKey(i)) {

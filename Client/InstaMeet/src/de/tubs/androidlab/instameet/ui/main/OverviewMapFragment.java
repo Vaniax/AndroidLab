@@ -97,11 +97,10 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the MapFragment.
-        	mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.main_map) ).getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
+        	mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.main_map) ).getMap(); 
+        }
+        if (mMap != null) {
+            setUpMap();
         }
     }
 
