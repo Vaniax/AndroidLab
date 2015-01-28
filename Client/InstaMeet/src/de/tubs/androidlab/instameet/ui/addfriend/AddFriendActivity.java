@@ -1,9 +1,5 @@
 package de.tubs.androidlab.instameet.ui.addfriend;
 
-import de.tubs.androidlab.instameet.R;
-import de.tubs.androidlab.instameet.service.InstaMeetService;
-import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
-import de.tubs.androidlab.instameet.ui.main.MainActivity;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -15,13 +11,24 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.service.InstaMeetService;
+import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
+import de.tubs.androidlab.instameet.ui.main.MainActivity;
 
 public class AddFriendActivity extends Activity  {
 	private final static String TAG = MainActivity.class.getSimpleName();
     private SharedPreferences pref = null;
+    
+    private static final String[] COUNTRIES = new String[] {
+        "Belgium", "France", "Italy", "Germany", "Spain"
+    };
+
 
 	private Button addButton = null;
 	private EditText friendName = null;
@@ -35,7 +42,7 @@ public class AddFriendActivity extends Activity  {
     	pref = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		addButton = (Button) findViewById(R.id.addfriend_button_add);
-		friendName = (EditText) findViewById(R.id.addfriend_username);
+	//	friendName = (EditText) findViewById(R.id.addfriend_username);
 		
 		addButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -51,6 +58,13 @@ public class AddFriendActivity extends Activity  {
 				}
 			}
 		});
+		
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
+        AutoCompleteTextView textView = (AutoCompleteTextView)
+                findViewById(R.id.addfriend_username);
+        textView.setAdapter(adapter);
+
 	}
 	
     @Override
