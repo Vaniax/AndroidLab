@@ -24,7 +24,6 @@
     <string name="login_password_repeat">Repeat password</string>
     <string name="login_register">Register</string>
     <string name="addfriend_username">User name to add</string>
-    <string name="addfriend_button_add">Add</string>
     <string name="title_activity_view_appointment">View Appointment</string>
     <string name="title_activity_edit_appointment">Edit Appointment</string>
     <string name="appointment_edit_title">Title</string>

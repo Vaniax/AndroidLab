@@ -1,5 +1,9 @@
 package de.tubs.androidlab.instameet.ui.addfriend;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import simpleEntities.SimpleUser;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,29 +14,30 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.Toast;
 import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
+import de.tubs.androidlab.instameet.ui.ContactsListAdapter;
 import de.tubs.androidlab.instameet.ui.main.MainActivity;
 
-public class AddFriendActivity extends Activity  {
+public class AddFriendActivity extends Activity implements OnItemClickListener  {
 	private final static String TAG = MainActivity.class.getSimpleName();
-    private SharedPreferences pref = null;
+	
+	private SharedPreferences pref = null;
+    private ContactsListAdapter adapter;
     
-    private static final String[] COUNTRIES = new String[] {
-        "Belgium", "France", "Italy", "Germany", "Spain"
-    };
-
-
-	private Button addButton = null;
+	private ImageButton searchButton = null;
 	private EditText friendName = null;
     private InstaMeetService service = null;
+    private ListView searchResults = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,31 +45,34 @@ public class AddFriendActivity extends Activity  {
 		setContentView(R.layout.activity_addfriend);
 		
     	pref = PreferenceManager.getDefaultSharedPreferences(this);
+    	adapter = new ContactsListAdapter((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE), this);
 		
-		addButton = (Button) findViewById(R.id.addfriend_button_add);
-	//	friendName = (EditText) findViewById(R.id.addfriend_username);
+		searchButton = (ImageButton) findViewById(R.id.button_search);
+		friendName = (EditText) findViewById(R.id.addfriend_username);
+		searchResults = (ListView) findViewById(R.id.list_search_results);
 		
-		addButton.setOnClickListener(new View.OnClickListener() {
+		searchButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (friendName.getText().toString().isEmpty()) {
 					Toast.makeText(AddFriendActivity.this, "Please enter a username", Toast.LENGTH_LONG).show();
 				} else if (pref.contains("securityToken")) {
+					searchButton.setEnabled(false);
 					String token = pref.getString("securityToken", "");
-					service.addFriendRequest(token, friendName.getText().toString());
-					toMainActivity();
+					//TODO: list all search results...
+					//service.addFriendRequest(token, friendName.getText().toString());
+						List<SimpleUser> l = new ArrayList<SimpleUser>();
+						SimpleUser s = new SimpleUser();
+						s.setUsername("Peter");
+						l.add(s); l.add(s); 
+						adapter.setContacts(l);
 				} else {
 					Toast.makeText(AddFriendActivity.this, "Token not available", Toast.LENGTH_LONG).show();
 				}
 			}
 		});
-		
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        AutoCompleteTextView textView = (AutoCompleteTextView)
-                findViewById(R.id.addfriend_username);
-        textView.setAdapter(adapter);
-
+		searchResults.setAdapter(adapter);
+		searchResults.setOnItemClickListener(this);
 	}
 	
     @Override
@@ -85,11 +93,6 @@ public class AddFriendActivity extends Activity  {
     	}
     }
     
-    private void toMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
-    
     /** Defines callbacks for service binding, passed to bindService() */
     private ServiceConnection serviceConnection = new ServiceConnection() {
 
@@ -104,5 +107,11 @@ public class AddFriendActivity extends Activity  {
             service = null;
         }
     };
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		SimpleUser user = adapter.getItem(position);
+		//TODO: show profile
+	}
     
 }
