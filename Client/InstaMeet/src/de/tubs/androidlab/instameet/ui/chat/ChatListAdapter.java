@@ -75,6 +75,8 @@ class ChatListAdapter extends BaseAdapter
 
 		if (message.getDirection().equals(DIRECTION.OUTGOING)){
 			rowView.setBackgroundColor(Color.LTGRAY);
+		} else {
+			rowView.setBackgroundColor(Color.WHITE);
 		}
 		
 		return rowView;
