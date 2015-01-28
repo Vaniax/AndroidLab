@@ -1,9 +1,11 @@
 package de.tubs.androidlab.instameet.ui.appointment;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
@@ -16,6 +18,8 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -47,8 +51,11 @@ import de.tubs.androidlab.instameet.ui.ContactsListAdapter;
 public class EditAppointmentActivity extends Activity implements TextWatcher {
 	
 	public static final String EXTRA_APPOINTMENT_ID = "de.tubs.androidlab.instameet.APPOINTMENT_ID";
-	private ContactsListAdapter adapter;
 	
+	private static final int REQUEST_SELECT_LOCATION = 1;
+	
+	private ContactsListAdapter adapter;
+	private Geocoder geocoder;
 	private boolean isNewAppointment;
 	private SimpleAppointment appointment;
 	
@@ -57,6 +64,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 	private EditText editDescription;
 	private Button buttonDate;
 	private Button buttonTime;
+	private Button buttonSelectLocation;
 	
 	private AlertDialog dialogSaveAppointment;
 
@@ -77,6 +85,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		editDescription = (EditText) findViewById(R.id.edit_description);
 		buttonDate = (Button) findViewById(R.id.button_date);
 		buttonTime = (Button) findViewById(R.id.button_time);
+		buttonSelectLocation = (Button) findViewById(R.id.button_select_location);
 		
 		// fill form widgets with information
 		Bundle extras = getIntent().getExtras();
@@ -107,6 +116,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 
 		editTitle.addTextChangedListener(this);
 		editDescription.addTextChangedListener(this);
+		geocoder = new Geocoder(this, Locale.getDefault());
 		createDialog();
 	}
 
@@ -210,8 +220,33 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 	
 	public void selectLocationClicked(View view) {
 		Intent intent = new Intent(this, SelectLocationActivity.class);
-		startActivity(intent);
+		startActivityForResult(intent, REQUEST_SELECT_LOCATION);
 	}
+	
+	@Override  
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)  
+	{  
+		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode == RESULT_OK) {
+			switch(requestCode) {
+			case REQUEST_SELECT_LOCATION:
+				double longitude = data.getExtras().getDouble(SelectLocationActivity.EXTRA_LONGITUDE);
+				double latitude  = data.getExtras().getDouble(SelectLocationActivity.EXTRA_LATITUDE);
+				List<Address> addresses;
+				String text;
+				try {
+					addresses = geocoder.getFromLocation(latitude, longitude, 1);
+					text = addresses.get(0).getAddressLine(0);
+				} catch (IOException e) {
+					text = "(" + latitude + ", " + longitude + ")";
+				}
+				buttonSelectLocation.setText(text);
+				appointment.setLattitude(latitude);
+				appointment.setLongitude(longitude);
+				break;
+			}
+		}
+  } 
 	
 	/**
 	 * A dialog allowing the user to pick a specific time (hour and minute)

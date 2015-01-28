@@ -3,12 +3,6 @@
     tools:context="de.tubs.androidlab.instameet.SelectLocationActivity" >
 
     <item
-        android:id="@+id/action_cacnel"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_discard"
-        android:icon="@drawable/ic_action_cancel"/>
-
-    <item
         android:id="@+id/action_accept"
         android:showAsAction="always"
         android:title="@string/action_save"

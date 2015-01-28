@@ -17,8 +17,6 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:hint="@string/appointment_edit_title" >
-
-        <requestFocus />
     </EditText>
 
     <EditText
