@@ -363,7 +363,7 @@ public class User implements Serializable {
     	for(Appointment a : this.getHostedAppointments()) {
     		hApps.add(a.getId());
     	}
-    	user.setVisitingAppointments(hApps);    	
+    	user.setHostedAppointments(hApps);    	
     	
 		return user;
     	

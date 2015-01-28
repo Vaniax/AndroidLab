@@ -518,9 +518,12 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			app.setLongitude(msgApp.getLocation().getLongitude());
 			//app.setStartingTime(msgApp.getTime());
 			app.setDescription(null);
-			for(int msgUser : msgApp.getParticipantsList()) {
-				app.getVisitingUsers().add(msgUser);
+			if(msgApp.getParticipantsList() != null) {
+				for(int msgUser : msgApp.getParticipantsList()) {
+					app.getVisitingUsers().add(msgUser);
+				}
 			}
+
 			return app;
 		}
 	}

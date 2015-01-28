@@ -156,21 +156,16 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
 	    	    	        		.title(a.getTitle())
 	    	    	        		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
 	    	    	        nearAppMarker.put(mark, a);    		    			
-    		    		}   		    		
+    		    		}   
+    		            mMap.setMyLocationEnabled(true);
+    		            mMap.moveCamera(
+    		            		CameraUpdateFactory.newLatLngZoom(new LatLng(52.262948, 10.521834), 13f)
+    		            	);
+    		            mMap.setOnInfoWindowClickListener(OverviewMapFragment.this);
     				}
     			});
 
     	}
-  
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(52.273821, 10.531404)).title("Feuerzangenbowle"));
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(52.266993, 10.553677)).title("Öffentl. Grillen"));
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(52.263499, 10.527799)).title("Demo gegen alles")).showInfoWindow();
-        
-        mMap.setMyLocationEnabled(true);
-        mMap.moveCamera(
-        		CameraUpdateFactory.newLatLngZoom(new LatLng(52.262948, 10.521834), 13f)
-        	);
-        mMap.setOnInfoWindowClickListener(this);
     }
 
 	@Override

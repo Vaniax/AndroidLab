@@ -187,6 +187,8 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 				msgMyAppsBuilder.addAppointments(msgApp);
 			}
 			
+			System.out.println(msgMyAppsBuilder.build());
+			
 			ClientResponse response = ClientResponse.newBuilder()
 					.setType(Type.LIST_VISITING_APPOINTMENTS)
 					.setListVisitingAppointment(msgMyAppsBuilder.build())
