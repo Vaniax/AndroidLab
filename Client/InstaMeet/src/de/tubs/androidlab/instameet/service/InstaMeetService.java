@@ -230,6 +230,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		AddFriendRequest addFriend = AddFriendRequest.newBuilder()
 				.setSecurityToken(securityToken)
 				.setFriendName(friendName)
+				.setUserID(ownData.getId())
 				.build();
 		
 		ServerRequest request = ServerRequest

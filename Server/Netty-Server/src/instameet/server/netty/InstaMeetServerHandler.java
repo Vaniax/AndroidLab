@@ -32,11 +32,11 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		InstaMeetServerHandler.service = service;
 	}
 	
-	
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, ServerRequest msg)
 			throws Exception {
 		System.out.println("Message:\n" + msg.toString());
+				
 		switch (msg.getType()) {
 		
 		case LOGIN:
@@ -46,10 +46,8 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			if(data == null)
 				return;
 			int userID = data.getUserId();
-			if (!channels.containsKey(userID)) { // TODO: also test for successful login
-				channels.put(userID, ctx.channel());
-				System.out.println("Add new channel for user id: " + userID);
-			}
+			channels.put(userID, ctx.channel());
+			System.out.println("Add new channel for user id: " + userID);
 			SecurityToken token = SecurityToken.newBuilder().setToken(data.getToken()).build();
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.SECURITY_TOKEN).setToken(token).build());
 			break;
@@ -63,6 +61,10 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		} break;			
 		case SEND_CHAT_MESSAGE: {
 		   ChatMessage message = msg.getMessage();
+		   
+		   int userIDChannel = message.getUserID();
+		   checkChannel(userIDChannel,ctx.channel());
+		   
 		   int id = message.getFriendID();
 		   Channel ch = null;
 		   if (channels.containsKey(id)) {
@@ -74,6 +76,9 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			SimpleUser own = service.getOwnData(msg.getGetOwnData().getSecurityToken(), 1);
 			Messages.SimpleUser ownUser = createSimpleUserBuilder(own);
 			
+		   int userIDChannel = ownUser.getUserID();
+		   checkChannel(userIDChannel,ctx.channel());
+			   
 			System.out.println(ownUser.toString());
 			
 			ClientResponse response = ClientResponse.newBuilder()
@@ -84,6 +89,10 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		}break;
 		case GET_FRIENDS: {
 			List<SimpleUser> friends = service.GetFriends(msg.getGetFriendList().getSecurityToken(), msg.getGetFriendList().getUserID());
+			
+		   int userIDChannel = msg.getGetFriendList().getUserID();
+		   checkChannel(userIDChannel,ctx.channel());
+			   
 			Messages.ListFriends.Builder getFriends =  Messages.ListFriends.newBuilder();
 			
 			for(SimpleUser friend : friends) {
@@ -102,6 +111,10 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		}break;
 		case CREATE_APPOINTMENT: {
 			SimpleAppointment app = createAppFromAppMessage(msg.getCreateAppointment().getAppointment());
+			
+		   int userIDChannel = app.getHoster();
+		   checkChannel(userIDChannel,ctx.channel());
+			
 			app = service.createAppointment(msg.getCreateAppointment().getSecurityToken(), msg.getCreateAppointment().getUserID(), app);
 			Messages.SimpleAppointment msgAppointment = createAppMessageFromApp(app);
 
@@ -116,6 +129,10 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 					msg.getVisitAppointment().getSecurityToken(), 
 					msg.getVisitAppointment().getUserID(), 
 					msg.getVisitAppointment().getAppointmentID());
+			
+			   int userIDChannel = msg.getVisitAppointment().getUserID();
+			   checkChannel(userIDChannel,ctx.channel());
+			
 			BoolReply msgSucessful = BoolReply.newBuilder().setIsTrue(true).build();
 			ClientResponse response = ClientResponse.newBuilder()
 					.setType(Type.BOOL)
@@ -129,6 +146,9 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			loc.setLattitude(msg.getGetNearAppointments().getLocation().getLattitude());
 			loc.setLongitude(msg.getGetNearAppointments().getLocation().getLongitude());
 			
+		   int userIDChannel = msg.getGetNearAppointments().getUserID();
+		   checkChannel(userIDChannel,ctx.channel());
+			   
 			List<SimpleAppointment> nearApps = service.GetNearAppointments(
 					msg.getGetNearAppointments().getSecurityToken(), 
 					msg.getGetNearAppointments().getUserID(), 
@@ -151,6 +171,9 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		} break;
 		case GET_MY_VISITING_APPOINTMENTS: {
 			msg.getGetMyVisitingAppointments().getSecurityToken();
+			
+		   int userIDChannel = msg.getGetMyVisitingAppointments().getUserID();
+		   checkChannel(userIDChannel,ctx.channel());
 			
 			List<SimpleAppointment> myApps = service.GetMyVisitingAppointments(
 					msg.getGetMyVisitingAppointments().getSecurityToken(), 
@@ -177,6 +200,9 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 					msg.getAddFriendRequest().getUserID(),
 					msg.getAddFriendRequest().getFriendID());
 			
+		   int userIDChannel = msg.getAddFriendRequest().getUserID();
+		   checkChannel(userIDChannel,ctx.channel());
+			
 			//TODO: notify requested user to react
 		} break;
 		case ADD_FRIEND_REPLY: {
@@ -186,7 +212,8 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 					msg.getAddFriendReply().getUserID(),
 					msg.getAddFriendReply().getFriendID(),
 					msg.getAddFriendReply().getAccepted());
-			
+		   int userIDChannel = msg.getAddFriendReply().getUserID();
+		   checkChannel(userIDChannel,ctx.channel());
 			//TODO: notify requesting user if friendship was accepted or not			
 		} break;
 		default:
@@ -243,4 +270,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		
 	}
 	
+	private void checkChannel(int userID, Channel channel) {
+		channels.put(userID, channel);
+	}
 }
