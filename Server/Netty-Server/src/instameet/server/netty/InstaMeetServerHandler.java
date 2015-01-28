@@ -228,7 +228,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		app.setLattitude(msgApp.getLocation().getLattitude());
 		app.setLongitude(msgApp.getLocation().getLongitude());
 		//app.setStartingTime(msgApp.getTime());
-		app.setDescription(null);
+		app.setDescription(msgApp.getDescription());
 		for(int msgUser : msgApp.getParticipantsList()) {
 			app.getVisitingUsers().add(msgUser);
 		}
@@ -245,7 +245,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 				.setLongitude(app.getLongitude()).build();
 		msgApp.setLocation(loc);
 		//app.setStartingTime(msgApp.getTime());
-		msgApp.setDescription(null);
+		msgApp.setDescription(app.getDescription());
 		for(int userId : app.getVisitingUsers()) {
 			msgApp.addParticipants(userId);
 			

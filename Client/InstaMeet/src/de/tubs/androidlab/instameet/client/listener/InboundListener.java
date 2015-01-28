@@ -46,4 +46,16 @@ public class InboundListener {
 			l.listFriends();
 		}
 	}
+	
+	public synchronized void notifyListNearApps() {
+		for (AbstractInboundMessageListener l : listeners) {
+			l.listNearAppointments();
+		}
+	}
+	
+	public synchronized void notifyListVisitingApps() {
+		for (AbstractInboundMessageListener l : listeners) {
+			l.listVisitingAppointments();
+		}
+	}
 }

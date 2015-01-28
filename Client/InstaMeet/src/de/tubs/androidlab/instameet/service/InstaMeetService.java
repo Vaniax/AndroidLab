@@ -18,11 +18,14 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateAppointment;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateUser;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.GetFriends;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.GetMyVisitingAppointments;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.GetNearAppointments;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.GetOwnData;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListFriends;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListNearestAppointments;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListVisitingAppointments;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.Location;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.OwnData;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.SecurityToken;
@@ -154,7 +157,41 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				.build();
 		client.insertToQueue(request);
 	}
+	
+	public void fetchNearAppointments() {
+		//TODO: replace dummy location
+		double lat = 5.3;
+		double lon = 3.3;
+		Location loc = Location.newBuilder().setLattitude(lat).setLongitude(lon).build();
+		
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		GetNearAppointments t = GetNearAppointments.newBuilder()
+				.setSecurityToken(token)
+				.setUserID(ownData.getId())
+				.setLocation(loc)
+				.build();
+		ServerRequest request = ServerRequest
+				.newBuilder()
+				.setType(Type.GET_NEAR_APPOINTMENTS)
+				.setGetNearAppointments(t)
+				.build();
+		client.insertToQueue(request);		
+	}
 
+	public void fetchVisitingAppointments() {
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		GetMyVisitingAppointments t = GetMyVisitingAppointments.newBuilder()
+				.setSecurityToken(token)
+				.setUserID(ownData.getId())
+				.build();
+		ServerRequest request = ServerRequest
+				.newBuilder()
+				.setType(Type.GET_MY_VISITING_APPOINTMENTS)
+				.setGetMyVisitingAppointments(t)
+				.build();
+		client.insertToQueue(request);		
+	}	
+	
 	public List<SimpleAppointment> getNearAppointments() {
 		List<SimpleAppointment> apps = new ArrayList<SimpleAppointment>();
 		for(int appId : nearAppList) {
@@ -444,6 +481,10 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			service.ownData = user;
 			
 			listener.notifyOwnData();
+			
+			//Trigger next requests
+			fetchVisitingAppointments();
+			fetchFriends();
 		}
 
 		@Override
@@ -455,6 +496,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				appointments.put(app.getId(), app);
 				nearAppList.add(app.getId());
 			}		
+			listener.notifyListNearApps();
 		}
 
 		@Override
@@ -464,6 +506,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				SimpleAppointment app = createAppFromAppMessage(a);
 				appointments.put(app.getId(), app);
 			}			
+			listener.notifyListVisitingApps();
 		}
 		
 		private SimpleAppointment createAppFromAppMessage(Messages.SimpleAppointment msgApp) {
