@@ -21,6 +21,8 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages.GetFriends;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.GetOwnData;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListFriends;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.ListNearestAppointments;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.ListVisitingAppointments;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.OwnData;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.SecurityToken;
@@ -55,6 +57,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	private Map<Integer, SimpleUser> users = new HashMap<Integer,SimpleUser>();		
 	//Contains all fetched appointments
 	private Map<Integer, SimpleAppointment> appointments = new HashMap<Integer, SimpleAppointment>();	
+	private List<Integer> nearAppList = new ArrayList<Integer>();
 	// Contains all incoming chat messages
 	private Map<Integer, List<ChatMessageProxy>> chatMessagesNew = 
 			new HashMap<Integer, List<ChatMessageProxy>>(); 
@@ -413,6 +416,41 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			service.ownData = user;
 			
 			listener.notifyOwnData();
+		}
+
+		@Override
+		public void listNearAppointments(ListNearestAppointments msg) {
+			// TODO Auto-generated method stub
+			List<de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment> msgApps = msg.getAppointmentsList();
+			for(de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment a : msgApps) {
+				SimpleAppointment app = createAppFromAppMessage(a);
+				appointments.put(app.getId(), app);
+				nearAppList.add(app.getId());
+			}		
+		}
+
+		@Override
+		public void listVisitingAppointments(ListVisitingAppointments msg) {
+			List<de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment> msgApps = msg.getAppointmentsList();
+			for(de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment a : msgApps) {
+				SimpleAppointment app = createAppFromAppMessage(a);
+				appointments.put(app.getId(), app);
+			}			
+		}
+		
+		private SimpleAppointment createAppFromAppMessage(Messages.SimpleAppointment msgApp) {
+			SimpleAppointment app = new SimpleAppointment();
+			app.setId(msgApp.getId());
+			app.setTitle(msgApp.getTitle());
+			app.setHoster(msgApp.getHoster());
+			app.setLattitude(msgApp.getLocation().getLattitude());
+			app.setLongitude(msgApp.getLocation().getLongitude());
+			//app.setStartingTime(msgApp.getTime());
+			app.setDescription(null);
+			for(int msgUser : msgApp.getParticipantsList()) {
+				app.getVisitingUsers().add(msgUser);
+			}
+			return app;
 		}
 	}
 

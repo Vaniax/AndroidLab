@@ -121,24 +121,25 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
     	//TODO: Get and Display Own Appointments from Service
     	//TODO: Get and Display your visiting Appointments from Service
     	//TODO: Get and Display near appointments from Service
-    	//TODO: Get and Display friends from Service
-//    	mMap.clear();
     	if(service != null){
-    		Log.i(TAG, "Friends added to Map");
-    		List<SimpleUser> friends = service.getFriends();
-    		for(final SimpleUser f : friends) {
+    		Log.i(TAG, "Adding markers to map");
     			getActivity().runOnUiThread(new Runnable() {
     				@Override
 					public void run() {
-    	    	        Marker mark = mMap.addMarker(new MarkerOptions().position(new LatLng(f.getLattitude(), f.getLongitude()))
-    	    	        		.title(f.getUsername())
-    	    	        		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-    	    	        userMarker.put(mark, f);
+    			    	mMap.clear();
+    		        	//Get and Display friends from Service
+    		    		List<SimpleUser> friends = service.getFriends();
+    		    		for(final SimpleUser f : friends) {
+	    	    	        Marker mark = mMap.addMarker(new MarkerOptions().position(new LatLng(f.getLattitude(), f.getLongitude()))
+	    	    	        		.title(f.getUsername())
+	    	    	        		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+	    	    	        userMarker.put(mark, f);
+    		    		}
     				}
     			});
 
-    		}
-    		    	} 
+    	}
+  
 //        mMap.addMarker(new MarkerOptions().position(new LatLng(52.273821, 10.531404)).title("Feuerzangenbowle"));
 //        mMap.addMarker(new MarkerOptions().position(new LatLng(52.266993, 10.553677)).title("Öffentl. Grillen"));
 //        mMap.addMarker(new MarkerOptions().position(new LatLng(52.263499, 10.527799)).title("Demo gegen alles")).showInfoWindow();

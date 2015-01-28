@@ -10,4 +10,6 @@ public interface ReceivedMessageCallbacks {
 	public void securityToken(SecurityToken token);
 	public void bool(BoolReply bool);
 	public void ownData(OwnData ownData);
+	public void listNearAppointments(ListNearestAppointments msg);
+	public void listVisitingAppointments(ListVisitingAppointments msg);
 }
