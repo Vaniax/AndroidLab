@@ -118,7 +118,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		}
 		return friends;
 	}
-	
+		
 	public void fetchFriends() {
 		if(ownData == null || ownData.getFriends() == null) {
 			fetchOwnData();
@@ -155,6 +155,18 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		client.insertToQueue(request);
 	}
 
+	public List<SimpleAppointment> getNearAppointments() {
+		List<SimpleAppointment> apps = new ArrayList<SimpleAppointment>();
+		for(int appId : nearAppList) {
+			if(appointments.containsKey(appId)) {
+				apps.add(appointments.get(appId));
+			} else {
+				//TODO: request appointmentdata here				
+			}
+		}
+		return apps;
+	}
+	
 	public List<SimpleAppointment> getVisitingAppointments() {
 		if(ownData == null)
 			return null;
@@ -162,12 +174,28 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		List<SimpleAppointment> visitingAppointments = new ArrayList<SimpleAppointment>(ownData.getVisitingAppointments().size());
 		for(int i : ownData.getVisitingAppointments()) {
 			if(!appointments.containsKey(i)) {
-				//Add new getApplication Request and maybe placeholder in application
+				//TODO: add new getApplication Request and maybe placeholder in application
+			} else {
+				visitingAppointments.add(appointments.get(i));
 			}
-			visitingAppointments.add(appointments.get(i));
 		}
 		return visitingAppointments;
 	}	
+
+	public List<SimpleAppointment> getMyHostedAppointments() {
+		if(ownData == null)
+			return null;
+		
+		List<SimpleAppointment> hostedAppointments = new ArrayList<SimpleAppointment>(ownData.getHostedAppointments().size());
+		for(int i : ownData.getHostedAppointments()) {
+			if(!appointments.containsKey(i)) {
+				//TODO: add new getApplication Request and maybe placeholder in application
+			} else {
+				hostedAppointments.add(appointments.get(i));
+			}
+		}
+		return hostedAppointments;
+	}		
 	
 	// Only for some stupid dummy testing
 	// Synchronization not necessary here

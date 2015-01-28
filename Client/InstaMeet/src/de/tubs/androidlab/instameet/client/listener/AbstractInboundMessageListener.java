@@ -27,5 +27,11 @@ public abstract class AbstractInboundMessageListener implements InboundMessageLi
 	public void listFriends() {
 		// Empty implementation
 	}
+	public void listVisitingAppointments() {
+		//Empty implementation
+	}
+	public void listNearAppointments() {
+		//Empty implementation
+	}
 	
 }

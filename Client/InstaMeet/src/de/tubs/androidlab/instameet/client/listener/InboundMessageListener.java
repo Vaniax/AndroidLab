@@ -7,4 +7,6 @@ public interface InboundMessageListener extends EventListener {
 	void chatMessage();
 	public void ownData();
 	public void listFriends();
+	public void listVisitingAppointments();
+	public void listNearAppointments();
 }

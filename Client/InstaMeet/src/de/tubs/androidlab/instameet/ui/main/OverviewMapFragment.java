@@ -118,9 +118,7 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
      * This is where we can add markers or lines, add listeners or move the camera.
      */
     private void setUpMap() {
-    	//TODO: Get and Display Own Appointments from Service
-    	//TODO: Get and Display your visiting Appointments from Service
-    	//TODO: Get and Display near appointments from Service
+
     	if(service != null){
     		Log.i(TAG, "Adding markers to map");
     			getActivity().runOnUiThread(new Runnable() {
@@ -132,9 +130,33 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
     		    		for(final SimpleUser f : friends) {
 	    	    	        Marker mark = mMap.addMarker(new MarkerOptions().position(new LatLng(f.getLattitude(), f.getLongitude()))
 	    	    	        		.title(f.getUsername())
-	    	    	        		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+	    	    	        		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
 	    	    	        userMarker.put(mark, f);
     		    		}
+    		        	//TODO: Get and Display Own Appointments from Service
+    		    		List<SimpleAppointment> hostedApps = service.getMyHostedAppointments();
+    		    		for(final SimpleAppointment a : hostedApps) {
+	    	    	        Marker mark = mMap.addMarker(new MarkerOptions().position(new LatLng(a.getLattitude(), a.getLongitude()))
+	    	    	        		.title(a.getTitle())
+	    	    	        		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+	    	    	        myAppMarker.put(mark, a);    		    			
+    		    		}
+    		        	//TODO: Get and Display your visiting Appointments from Service
+    		    		List<SimpleAppointment> visitingApps = service.getVisitingAppointments();
+    		    		for(final SimpleAppointment a : visitingApps) {
+	    	    	        Marker mark = mMap.addMarker(new MarkerOptions().position(new LatLng(a.getLattitude(), a.getLongitude()))
+	    	    	        		.title(a.getTitle())
+	    	    	        		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+	    	    	        visitingAppMarker.put(mark, a);    		    			
+    		    		}   		    		
+    		        	//TODO: Get and Display near appointments from Service   		    		
+    		    		List<SimpleAppointment> nearApps = service.getNearAppointments();
+    		    		for(final SimpleAppointment a : nearApps) {
+	    	    	        Marker mark = mMap.addMarker(new MarkerOptions().position(new LatLng(a.getLattitude(), a.getLongitude()))
+	    	    	        		.title(a.getTitle())
+	    	    	        		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+	    	    	        nearAppMarker.put(mark, a);    		    			
+    		    		}   		    		
     				}
     			});
 
@@ -173,6 +195,21 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
 			super.listFriends();		
 			setUpMapIfAvailable();
 		}
+		
+		@Override
+		public void listNearAppointments() {
+			// TODO Auto-generated method stub
+			super.listNearAppointments();
+			setUpMapIfAvailable();
+		}
+		
+		@Override
+		public void listVisitingAppointments() {
+			// TODO Auto-generated method stub
+			super.listVisitingAppointments();
+			setUpMapIfAvailable();
+		}
+		
 	}	
 	
     /** Defines callbacks for service binding, passed to bindService() */
