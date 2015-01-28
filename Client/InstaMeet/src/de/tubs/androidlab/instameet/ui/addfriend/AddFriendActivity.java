@@ -27,8 +27,13 @@ import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import de.tubs.androidlab.instameet.ui.ContactsListAdapter;
 import de.tubs.androidlab.instameet.ui.main.MainActivity;
+import de.tubs.androidlab.instameet.ui.viewuser.ViewUserActivity;
 
+/**
+ * This activity allows the user to add a new friend to his/her contacts
+ */
 public class AddFriendActivity extends Activity implements OnItemClickListener  {
+
 	private final static String TAG = MainActivity.class.getSimpleName();
 	
 	private SharedPreferences pref = null;
@@ -111,7 +116,9 @@ public class AddFriendActivity extends Activity implements OnItemClickListener  
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		SimpleUser user = adapter.getItem(position);
-		//TODO: show profile
+		Intent intent = new Intent(this, ViewUserActivity.class);
+		intent.putExtra(ViewUserActivity.EXTRA_USER_ID, user.getId());
+		startActivity(intent);
 	}
     
 }

@@ -40,7 +40,7 @@
         meta-data
     		android:name="com.google.android.maps.v2.API_KEY"
     		android:value="??"/>
-    	SEE: https://developers.google.com/maps/documentation/android/start#display_your_apps_certificate_information
+    	SEE: https://developers.google.com/maps/documentation/android/start#display_your_apps_certificate_information
         -->
 
         <activity
@@ -113,8 +113,16 @@
             android:name=".ui.appointment.EditAppointmentActivity"
             android:label="@string/title_activity_edit_appointment" />
         <activity
-            android:name="de.tubs.androidlab.instameet.ui.appointment.SelectLocationActivity"
+            android:name=".ui.appointment.SelectLocationActivity"
             android:label="@string/title_activity_select_location" >
+        </activity>
+        <activity
+            android:name="de.tubs.androidlab.instameet.ui.viewuser.ViewUserActivity"
+            android:label="@string/title_activity_view_user"
+            android:parentActivityName=".ui.main.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.tubs.androidlab.instameet.ui.main.MainActivity" />
         </activity>
     </application>
 
