@@ -1,8 +1,17 @@
 package de.tubs.androidlab.instameet.ui.main;
 
+import java.util.List;
+
+import simpleEntities.SimpleUser;
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,11 +28,17 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.client.listener.AbstractInboundMessageListener;
+import de.tubs.androidlab.instameet.service.InstaMeetService;
+import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import de.tubs.androidlab.instameet.ui.appointment.ViewAppointmentActivity;
 
 public class OverviewMapFragment extends Fragment implements OnInfoWindowClickListener {
+	private final static String TAG = OverviewMapFragment.class.getSimpleName();
 
     private GoogleMap mMap;
+    private InstaMeetService service = null;   
+    private boolean friendsLoading = true;
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +50,25 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.overview_map, menu);
     }
+    
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+    	Intent intent = new Intent(activity, InstaMeetService.class);
+    	if(!getActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
+    		Log.e(TAG, "Service not available");
+    	}   	
+	}
+	
+	@Override
+	public void onDetach() {
+		super.onDetach();
+    	if(service != null) {
+    		getActivity().unbindService(serviceConnection);
+//        	service.processor.listener.removeListener(listener);
+    		service = null;
+    	}
+	}
     
     @Override
 	public void onResume() {
@@ -75,9 +109,23 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
      * This is where we can add markers or lines, add listeners or move the camera.
      */
     private void setUpMap() {
+    	//TODO: Get and Display Own Appointments from Service
+    	//TODO: Get and Display your visiting Appointments from Service
+    	//TODO: Get and Display near appointments from Service
+    	//TODO: Get and Display friends from Service
+    	if(service != null){
+    		Log.i(TAG, "Friends added to Map");
+    		List<SimpleUser> friends = service.getFriends();
+    		for(SimpleUser f : friends) {
+    	        mMap.addMarker(new MarkerOptions().position(new LatLng(f.getLattitude(), f.getLongitude()))
+    	        		.title(f.getUsername()));
+    			
+    		}
+    		friendsLoading = false;
+    	} 
         mMap.addMarker(new MarkerOptions().position(new LatLng(52.273821, 10.531404)).title("Feuerzangenbowle"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(52.266993, 10.553677)).title("Öffentl. Grillen"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(52.263499, 10.527799)).title("Demo gegen alles")).showInfoWindow();
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(52.266993, 10.553677)).title("Öffentl. Grillen"));
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(52.263499, 10.527799)).title("Demo gegen alles")).showInfoWindow();
         
         mMap.setMyLocationEnabled(true);
         mMap.moveCamera(
@@ -92,4 +140,23 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
         intent.putExtra(ViewAppointmentActivity.EXTRA_APPOINTMENT_NAME, marker.getTitle());
         startActivity(intent);
 	}
+
+
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+        	service = ( (InstaMeetServiceBinder) binder).getService();
+//        	service.processor.listener.addListener(listener);
+//        	service.fetchOwnData();
+        	setUpMapIfAvailable();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+        	Log.e(TAG, "Connection lost");
+            service = null;
+        }
+    };
 }
