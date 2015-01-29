@@ -3,6 +3,8 @@ package de.tubs.androidlab.instameet.client.listener;
 import java.util.ArrayList;
 import java.util.List;
 
+import simpleEntities.SimpleUser;
+
 public class InboundListener {
 
 	private List<AbstractInboundMessageListener> listeners = new ArrayList<AbstractInboundMessageListener>();
@@ -56,6 +58,12 @@ public class InboundListener {
 	public synchronized void notifyListVisitingApps() {
 		for (AbstractInboundMessageListener l : listeners) {
 			l.listVisitingAppointments();
+		}
+	}
+	
+	public synchronized void notifyListUsers(List<SimpleUser> users) {
+		for (AbstractInboundMessageListener l : listeners) {
+			l.listUsers(users);
 		}
 	}
 }

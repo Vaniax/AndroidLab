@@ -9,4 +9,5 @@ public interface InboundMessageListener extends EventListener {
 	public void listFriends();
 	public void listVisitingAppointments();
 	public void listNearAppointments();
+	public void listUsers();
 }

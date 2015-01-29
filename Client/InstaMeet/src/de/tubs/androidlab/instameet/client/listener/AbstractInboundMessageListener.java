@@ -1,5 +1,9 @@
 package de.tubs.androidlab.instameet.client.listener;
 
+import java.util.List;
+
+import simpleEntities.SimpleUser;
+
 
 /**
  * @author Vaniax
@@ -31,6 +35,9 @@ public abstract class AbstractInboundMessageListener implements InboundMessageLi
 		//Empty implementation
 	}
 	public void listNearAppointments() {
+		//Empty implementation
+	}
+	public void listUsers(List<SimpleUser> users) {
 		//Empty implementation
 	}
 	

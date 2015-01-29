@@ -62,6 +62,10 @@ public class ClientHandler extends SimpleChannelInboundHandler<ClientResponse> {
 			Log.i(TAG,"Message type" + type);
 			cb.listVisitingAppointments(msg);
 			break;
+		case LIST_USERS: {
+			Log.i(TAG,"Message type" + type);
+			cb.listUsers(msg.getListUsers());
+		} break;
 		default:
 			break;
 		}

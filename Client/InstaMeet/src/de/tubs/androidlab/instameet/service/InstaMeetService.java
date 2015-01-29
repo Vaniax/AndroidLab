@@ -25,6 +25,7 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages.GetOwnData;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListFriends;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListNearestAppointments;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.ListUsers;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListVisitingAppointments;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Location;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
@@ -566,6 +567,13 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			listener.notifyListVisitingApps();
 		}
 		
+		@Override
+		public void listUsers(ListUsers listUsers) {
+			List<SimpleUser> users = createListUser(listUsers.getUsersList());
+			
+			listener.notifyListUsers(users);
+		}
+		
 		private SimpleAppointment createAppFromAppMessage(Messages.SimpleAppointment msgApp) {
 			SimpleAppointment app = new SimpleAppointment();
 			app.setId(msgApp.getId());
@@ -580,9 +588,40 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 					app.getVisitingUsers().add(msgUser);
 				}
 			}
-
 			return app;
 		}
+		
+		private SimpleUser createUserFromUserMessage(Messages.SimpleUser user) 
+		{
+			SimpleUser simpleUser = new SimpleUser();
+			
+			simpleUser.setId(user.getUserID());
+			simpleUser.setUsername(user.getUserName());
+			simpleUser.setLattitude(user.getLocation().getLattitude());
+			simpleUser.setLongitude(user.getLocation().getLongitude());
+			
+			Set<Integer> hostedAppointments = new HashSet<Integer>(user.getHostedAppointmentIDsList());
+			simpleUser.setHostedAppointments(hostedAppointments);
+			
+			Set<Integer> visitingAppointments = new HashSet<Integer>(user.getVisitingAppointmentIDsList());
+			simpleUser.setVisitingAppointments(visitingAppointments);
+			
+//			Timestamp timestamp = Timestamp.valueOf(data.getLatestLocationUpdate().getTime());
+//			user.setLatestLocationUpdate(timestamp);
+			
+			Set<Integer> friends = new HashSet<Integer>(user.getFriendIDsList());
+			simpleUser.setFriends(friends);
+			return simpleUser;
+		}
+		
+		private List<SimpleUser> createListUser(List<Messages.SimpleUser> users) {
+			List<SimpleUser> result = new ArrayList<SimpleUser>();
+			for (Messages.SimpleUser u : users) {
+				result.add(createUserFromUserMessage(u));
+			}
+			return result;
+		}
+
 	}
 
 }

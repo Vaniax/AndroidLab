@@ -1,5 +1,6 @@
 package de.tubs.androidlab.instameet.service;
 
+import de.tubs.androidlab.instameet.server.protobuf.Messages.ListUsers;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.*;
 
 public interface ReceivedMessageCallbacks {
@@ -12,4 +13,5 @@ public interface ReceivedMessageCallbacks {
 	public void ownData(OwnData ownData);
 	public void listNearAppointments(ListNearestAppointments msg);
 	public void listVisitingAppointments(ClientResponse msg);
+	public void listUsers(ListUsers listUsers);
 }
