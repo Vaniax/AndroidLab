@@ -26,6 +26,8 @@ message ServerRequest{
 		UPDATE_LOCATION = 12;
 		GET_FRIENDS = 13;
 		ADD_FRIEND_REPLY = 14;
+		GET_USERS_BY_NAME = 15;
+		GET_HOSTED_APPOINTMENTS = 17;
 		NO_MESSAGE = 20;
 	};
 	
@@ -46,6 +48,8 @@ message ServerRequest{
 	optional GetFriends getFriendList = 14;
 	optional NoMessage noMessage = 15;
 	optional AddFriendReply addFriendReply = 16;
+	optional GetUsersByName getUsersByName = 17;
+	optional GetHostedAppointments getHostedAppointments = 18;
 	
 	optional string messageID = 20;
 };
@@ -127,6 +131,11 @@ message GetNearAppointments {
 	required int32 userID = 3;
 };
 
+message GetHostedAppointments {
+	required string securityToken = 1;
+	required int32 userID = 2;
+};
+
 message AddFriendRequest {
 	required string securityToken = 1;
 	optional int32 friendID = 2;
@@ -176,6 +185,12 @@ message UpdateLocation {
 	required int32 userID = 3;
 };
 
+message GetUsersByName {
+	required string securityToken = 1;
+	required int32 userID = 3;
+	required int32 friendID = 4;
+	required string subName = 5;
+};
 
 /// Server -> Client Replies
 
