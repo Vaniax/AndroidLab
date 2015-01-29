@@ -13,7 +13,7 @@ public interface OutgoingMessages {
 	public void fetchNearAppointments();
 	public void fetchVisitingAppointments();
 	public void fetchUsersByName(String subString);
-	public void createAppointment(String securityToken, SimpleAppointment app);
+	public void createAppointment(SimpleAppointment app);
 
 //	public void createAppointment(String SecurityToken, int userId,SimpleAppointment appointment);
 //

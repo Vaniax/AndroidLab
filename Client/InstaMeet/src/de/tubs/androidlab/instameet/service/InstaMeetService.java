@@ -340,10 +340,11 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	}
 	
 	@Override
-	public void createAppointment(String securityToken, SimpleAppointment app) {
+	public void createAppointment(SimpleAppointment app) {
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
 		CreateAppointment createApp = CreateAppointment.newBuilder()
 				.setAppointment(createMessageAppFromApp(app))
-				.setSecurityToken(securityToken)
+				.setSecurityToken(token)
 				.setUserID(ownData.getId())
 				.build();
 		ServerRequest request = ServerRequest
@@ -363,8 +364,8 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				.setLattitude(app.getLattitude())
 				.setLongitude(app.getLongitude()).build();
 		msgApp.setLocation(loc);
-		//app.setStartingTime(msgApp.getTime());
-		msgApp.setDescription(null);
+		msgApp.setTime(app.getStartingTime());
+		msgApp.setDescription(app.getDescription());
 		for(int userId : app.getVisitingUsers()) {
 			msgApp.addParticipants(userId);
 			

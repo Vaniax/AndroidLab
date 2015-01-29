@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,26 +16,35 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.service.InstaMeetService;
+import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import de.tubs.androidlab.instameet.ui.ContactsListAdapter;
+import de.tubs.androidlab.instameet.ui.main.MainActivity;
+import de.tubs.androidlab.instameet.ui.viewuser.ViewUserActivity;
 
 /**
  * This activity displays a form to create a new appointment
@@ -49,10 +59,12 @@ import de.tubs.androidlab.instameet.ui.ContactsListAdapter;
  *
  */
 public class EditAppointmentActivity extends Activity implements TextWatcher {
-	
+	private final static String TAG = EditAppointmentActivity.class.getSimpleName();
+
 	public static final String EXTRA_APPOINTMENT_ID = "de.tubs.androidlab.instameet.APPOINTMENT_ID";
 	
 	private static final int REQUEST_SELECT_LOCATION = 1;
+	private InstaMeetService service = null;
 	
 	private ContactsListAdapter adapter;
 	private Geocoder geocoder;
@@ -94,14 +106,14 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 			//TODO: fetch appointment from service, like
 			//service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID));
 			appointment = new SimpleAppointment(); //TODO: remove this and get it from service via its id
-			appointment.setStartingTime(new Timestamp(1422379242)); //TODO remove this
+//			appointment.setStartingTime(new Timestamp(1422379242)); //TODO remove this
 			editTitle.setText(appointment.getTitle());
 			editDescription.setText(appointment.getDescription());
 		} else {
 			isNewAppointment = true;
 			setTitle("New Appointment");
 			appointment = new SimpleAppointment();
-			appointment.setStartingTime(new Timestamp(System.currentTimeMillis()));
+			appointment.setStartingTime(System.currentTimeMillis());
 		}
 		refreshDateButton();
 		refreshTimeButton();
@@ -119,6 +131,24 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		geocoder = new Geocoder(this, Locale.getDefault());
 		createDialog();
 	}
+
+	@Override
+	protected void onStart() {
+    	super.onStart();
+    	Intent intent = new Intent(this, InstaMeetService.class);
+    	if(!bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
+    		Log.e(TAG, "Service not available");
+    	}   	
+	}
+	
+    @Override
+    protected void onStop() {
+    	super.onStop();
+    	if(service != null) {
+    		unbindService(serviceConnection);
+    		service = null;
+    	}		
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -154,9 +184,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		if(isNewAppointment) {
 			appointment.setTitle(editTitle.getText().toString());
 			appointment.setDescription(editDescription.getText().toString());
-			//TODO: Send createAppointment via Service
-			//service.createAppointment(ownUserId, appointment);
-
+			service.createAppointment(appointment);
 		}
 		finish();
 	}
@@ -258,11 +286,14 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 	 * @author Bjoern
 	 */
 	private class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			int hour = appointment.getStartingTime().getHours();
-			int minute = appointment.getStartingTime().getMinutes();
+			Calendar cal = Calendar.getInstance();
+
+			cal.setTimeInMillis(appointment.getStartingTime());
+			
+			int hour = cal.get(cal.HOUR);
+			int minute = cal.get(cal.MINUTE);
 
 			// Create a new instance of TimePickerDialog and return it
 			return new TimePickerDialog(getActivity(), this, hour, minute,
@@ -270,8 +301,11 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		}
 
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			appointment.getStartingTime().setHours(hourOfDay);
-			appointment.getStartingTime().setMinutes(minute);
+			Calendar cal = Calendar.getInstance();
+			cal.set(cal.HOUR, hourOfDay);
+			cal.set(cal.MINUTE, minute);
+			appointment.setStartingTime(cal.getTimeInMillis());
+
 			isModified = true;
 			refreshTimeButton();
 		}
@@ -287,20 +321,40 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 
 	    @Override
 	    public Dialog onCreateDialog(Bundle savedInstanceState) {
-	        int year = appointment.getStartingTime().getYear();
-	        int month = appointment.getStartingTime().getMonth();
-	        int day = appointment.getStartingTime().getDate();
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(appointment.getStartingTime());
+	    	
+	        int year = cal.get(cal.YEAR);
+	        int month = cal.get(cal.MONTH);
+	        int day = cal.get(cal.DAY_OF_MONTH);
 	        // Create a new instance of DatePickerDialog and return it
 	        return new DatePickerDialog(getActivity(), this, year, month, day);
 	    }
 
 	    public void onDateSet(DatePicker view, int year, int month, int day) {
-	        appointment.getStartingTime().setYear(year);
-	        appointment.getStartingTime().setMonth(month);
-	        appointment.getStartingTime().setDate(day);
+			Calendar cal = Calendar.getInstance();
+			
+			cal.set(cal.YEAR, year);
+			cal.set(cal.MONTH, month);
+			cal.set(cal.DAY_OF_MONTH, day);
+	        appointment.setStartingTime(cal.getTimeInMillis());
 	        isModified = true;
 	        refreshDateButton();
 	    }
 	}
 	
+	/** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+        	service = ( (InstaMeetServiceBinder) binder).getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+        	Log.e(TAG, "Connection lost");
+            service = null;
+        }
+    };
 }
