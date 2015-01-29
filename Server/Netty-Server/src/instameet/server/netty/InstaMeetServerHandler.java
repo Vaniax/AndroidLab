@@ -283,6 +283,15 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		    
 		    ctx.writeAndFlush(response);
 		} break;
+		case UPDATE_LOCATION: {
+			Location loc = new Location(
+					msg.getUpdateLocation().getLocation().getLongitude(),
+					msg.getUpdateLocation().getLocation().getLattitude());
+			boolean sucessful = service.UpdateLocation(
+					msg.getUpdateLocation().getSecurityToken(), 
+					msg.getUpdateLocation().getUserID(), 
+					loc);
+		} break;
 		default:
 			break;
 		}
