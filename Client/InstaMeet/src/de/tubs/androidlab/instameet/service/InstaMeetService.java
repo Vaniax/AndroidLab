@@ -359,6 +359,10 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	
 	
 	public List<ChatMessageProxy> getHistoryMessages(int friendID) {
+		if (!chatMessageHistory.containsKey(friendID)) {
+			List<ChatMessageProxy> newList = new ArrayList<ChatMessageProxy>();
+			chatMessageHistory.put(friendID, newList);
+		}
 		return chatMessageHistory.get(friendID);
 	}
 	public class IncomingMessageProcessor implements ReceivedMessageCallbacks {

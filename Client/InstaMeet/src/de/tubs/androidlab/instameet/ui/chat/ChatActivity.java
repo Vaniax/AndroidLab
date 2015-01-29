@@ -61,6 +61,7 @@ public class ChatActivity extends Activity {
             	ChatMessageProxy proxy = new ChatMessageProxy(message, DIRECTION.OUTGOING);
             	adapter.addMessage(new ChatMessageProxy(message, DIRECTION.OUTGOING));
                 editText.setText(null);
+                
                 service.getHistoryMessages(friendID).add(proxy);
             }
         });
