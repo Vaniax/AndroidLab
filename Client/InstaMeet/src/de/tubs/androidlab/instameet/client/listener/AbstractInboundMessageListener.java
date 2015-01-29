@@ -40,5 +40,8 @@ public abstract class AbstractInboundMessageListener implements InboundMessageLi
 	public void listUsers(List<SimpleUser> users) {
 		//Empty implementation
 	}
+	public void appointment() {
+		// Empty implementation
+	}
 	
 }

@@ -14,4 +14,5 @@ public interface ReceivedMessageCallbacks {
 	public void listNearAppointments(ListNearestAppointments msg);
 	public void listVisitingAppointments(ClientResponse msg);
 	public void listUsers(ListUsers listUsers);
+	public void simpleAppointment(SimpleAppointment app);
 }

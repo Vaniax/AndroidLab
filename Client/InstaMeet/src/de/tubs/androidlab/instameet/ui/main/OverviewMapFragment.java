@@ -207,6 +207,11 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
 			setUpMapIfAvailable();
 		}
 		
+		@Override
+		public void appointment() {
+			super.appointment();
+			setUpMap();
+		}		
 	}	
 	
     /** Defines callbacks for service binding, passed to bindService() */
@@ -222,7 +227,9 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
         	Log.e(TAG, "Connection lost");
+        	service.processor.listener.removeListener(listener);
             service = null;
         }
     };
+
 }

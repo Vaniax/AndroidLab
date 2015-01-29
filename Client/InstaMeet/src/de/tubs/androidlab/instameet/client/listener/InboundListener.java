@@ -66,4 +66,10 @@ public class InboundListener {
 			l.listUsers(users);
 		}
 	}
+	
+	public synchronized void notifyAppointment() {
+		for (AbstractInboundMessageListener l : listeners) {
+			l.appointment();
+		}
+	}
 }

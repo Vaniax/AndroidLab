@@ -554,10 +554,20 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		}
 
 		@Override
+		public void simpleAppointment(Messages.SimpleAppointment msg) {
+			SimpleAppointment app = createAppFromAppMessage(msg);
+			if (app.getHoster().intValue() == (ownData.getId())) {
+				ownData.getHostedAppointments().add(app.getId());
+			}
+			appointments.put(msg.getId(), app);
+			listener.notifyAppointment();
+		}
+		
+		@Override
 		public void listNearAppointments(ListNearestAppointments msg) {
 			// TODO Auto-generated method stub
-			List<de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment> msgApps = msg.getAppointmentsList();
-			for(de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment a : msgApps) {
+			List<Messages.SimpleAppointment> msgApps = msg.getAppointmentsList();
+			for(Messages.SimpleAppointment a : msgApps) {
 				SimpleAppointment app = createAppFromAppMessage(a);
 				appointments.put(app.getId(), app);
 				nearAppList.add(app.getId());
@@ -567,14 +577,14 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 
 		@Override
 		public void listVisitingAppointments(ClientResponse msg) {
-			List<de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment> msgApps = msg.getListVisitingAppointment().getAppointmentsList();
-			for(de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment a : msgApps) {
+			List<Messages.SimpleAppointment> msgApps = msg.getListVisitingAppointment().getAppointmentsList();
+			for(Messages.SimpleAppointment a : msgApps) {
 				SimpleAppointment app = createAppFromAppMessage(a);
 				appointments.put(app.getId(), app);
 			}			
 			if(msg.hasHostedAppointments()) {
 				msgApps = msg.getHostedAppointments().getAppointmentsList();
-				for(de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment a : msgApps) {
+				for(Messages.SimpleAppointment a : msgApps) {
 					SimpleAppointment app = createAppFromAppMessage(a);
 					appointments.put(app.getId(), app);
 				}	
@@ -589,6 +599,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			listener.notifyListUsers(users);
 		}
 		
+		/** Converter functions **/
 		private SimpleAppointment createAppFromAppMessage(Messages.SimpleAppointment msgApp) {
 			SimpleAppointment app = new SimpleAppointment();
 			app.setId(msgApp.getId());
@@ -636,7 +647,6 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			}
 			return result;
 		}
-
 	}
 
 }
