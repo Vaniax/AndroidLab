@@ -319,6 +319,8 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	public void createAppointment(String securityToken, SimpleAppointment app) {
 		CreateAppointment createApp = CreateAppointment.newBuilder()
 				.setAppointment(createMessageAppFromApp(app))
+				.setSecurityToken(securityToken)
+				.setUserID(ownData.getId())
 				.build();
 		ServerRequest request = ServerRequest
 				.newBuilder()
