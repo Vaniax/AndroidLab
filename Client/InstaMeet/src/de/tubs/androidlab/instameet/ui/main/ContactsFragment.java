@@ -1,5 +1,12 @@
 package de.tubs.androidlab.instameet.ui.main;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
+
+import simpleEntities.SimpleUser;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.content.ComponentName;
@@ -32,7 +39,8 @@ public class ContactsFragment extends ListFragment {
 	public ContactsListAdapter adapter;
     private InstaMeetService service = null;
     private ServiceListener listener = new ServiceListener();
-	
+    private Map<Integer,Integer> positionUserID = new HashMap<Integer,Integer>();
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,7 +56,9 @@ public class ContactsFragment extends ListFragment {
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	return inflater.inflate(R.layout.fragment_contacts, container, false);
+    	View view = inflater.inflate(R.layout.fragment_contacts, container, false);
+    	return view;
+
     }
     
     @Override
@@ -65,6 +75,7 @@ public class ContactsFragment extends ListFragment {
     	if(!getActivity().bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
     		Log.e(TAG, "Service not available");
     	}   	
+
 	}
 
 	@Override
@@ -85,8 +96,22 @@ public class ContactsFragment extends ListFragment {
 		}
 		@Override
 		public void listFriends() {
-			super.listFriends();		
-			adapter.setContacts(service.getFriends());
+			super.listFriends();	
+			List<SimpleUser> list = service.getFriends();
+			adapter.setContacts(list);
+			ListIterator it = list.listIterator();
+			while (it.hasNext()) {
+				positionUserID.put(((SimpleUser) it.next()).getId(),it.nextIndex()-1);
+			}
+		}
+		@Override
+		public void chatMessage() {
+			super.chatMessage();
+			Set<Integer> set = service.getNewMessages().keySet();
+			for (Integer i : set) {
+				adapter.setMessageIconVisibility(positionUserID.get(i));
+			}
+			adapter.notifyChanges();
 		}
 	}
 	

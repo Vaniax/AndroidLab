@@ -1,7 +1,8 @@
 package de.tubs.androidlab.instameet.ui;
 
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import simpleEntities.SimpleUser;
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ public class ContactsListAdapter extends BaseAdapter
 {
 	private List<SimpleUser> contacts;
 	private Activity activity = null;
+	private ViewHolder holder = null;
+	private Map<Integer,Boolean> isVisible = new HashMap<Integer,Boolean>();
 
 	/**
 	 * Additional data assigned to each entry which holds
@@ -29,6 +32,7 @@ public class ContactsListAdapter extends BaseAdapter
 	class ViewHolder {
 		public TextView name;
 		public ImageView picture;
+		public ImageView messageIcon;
 	}
 	
 	private LayoutInflater inflater;
@@ -36,6 +40,7 @@ public class ContactsListAdapter extends BaseAdapter
 	public ContactsListAdapter(LayoutInflater inflater, Activity activity) {
 		this.inflater = inflater; 
 		this.activity = activity;
+		holder = new ViewHolder();
 	}
 	
 	@Override
@@ -60,7 +65,6 @@ public class ContactsListAdapter extends BaseAdapter
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View rowView;
-		ViewHolder holder;
 		if(convertView != null) {
 			rowView = convertView;
 			holder = (ViewHolder) rowView.getTag();
@@ -69,7 +73,16 @@ public class ContactsListAdapter extends BaseAdapter
 			holder = new ViewHolder();
 			holder.name = (TextView) rowView.findViewById(R.id.name);
 			holder.picture = (ImageView) rowView.findViewById(R.id.picture);
+			holder.messageIcon = (ImageView) rowView.findViewById(R.id.contacts_message_icon);
+
 			rowView.setTag(holder);
+		}
+		if (isVisible.containsKey(position)) {
+			if (isVisible.remove(position)) {
+				holder.messageIcon.setVisibility(View.VISIBLE);
+			}
+		} else {
+			holder.messageIcon.setVisibility(View.GONE);
 		}
 		holder.name.setText(contacts.get(position).getUsername());
 		return rowView;
@@ -81,14 +94,19 @@ public class ContactsListAdapter extends BaseAdapter
 	 */
 	public void setContacts(List<SimpleUser> contacts) {
 		this.contacts = contacts;
+		notifyChanges();
+	}
+	
+	public void setMessageIconVisibility(int position) {
+		isVisible.put(position, true);
+	}
+	public void notifyChanges() {
 		activity.runOnUiThread(new Runnable() {
-				
+			
 			@Override
 			public void run() {
 				notifyDataSetChanged();
 			}	
 		});
-//		notifyDataSetChanged();
-		
 	}
 }

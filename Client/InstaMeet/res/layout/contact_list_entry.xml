@@ -7,7 +7,7 @@
         android:id="@+id/picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_launcher" />
 
@@ -15,8 +15,17 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:ems="10"/>
+        android:layout_toRightOf="@+id/picture"
+        android:ems="10" />
+
+    <ImageView
+        android:id="@+id/contacts_message_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@android:drawable/sym_action_chat"
+        android:visibility="gone" />
 
 </RelativeLayout>

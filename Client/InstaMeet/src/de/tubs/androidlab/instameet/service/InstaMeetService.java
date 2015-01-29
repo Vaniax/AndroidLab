@@ -350,10 +350,17 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		return users.get(userID);
 	}
 	
-	public List<ChatMessageProxy> getNewMessages(int friendID) {
+	public List<ChatMessageProxy> getNewMessagesAndRemove(int friendID) {
 		return chatMessagesNew.remove(friendID);
+	}	
+	public Map<Integer, List<ChatMessageProxy>> getNewMessages() {
+		return chatMessagesNew;
 	}
 	
+	
+	public List<ChatMessageProxy> getHistoryMessages(int friendID) {
+		return chatMessageHistory.get(friendID);
+	}
 	public class IncomingMessageProcessor implements ReceivedMessageCallbacks {
 
 		private final static String TAG = "InstaMeetService MessageProcessor";

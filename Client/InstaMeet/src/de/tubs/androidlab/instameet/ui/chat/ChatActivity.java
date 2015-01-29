@@ -83,6 +83,18 @@ public class ChatActivity extends Activity {
         	user = service.getUser(friendID);
     		getActionBar().setTitle(user.getUsername());
     		listener.addService(service);
+    		List<ChatMessageProxy> historyMessages = service.getHistoryMessages(friendID);
+    		List<ChatMessageProxy> newMessages = service.getNewMessagesAndRemove(friendID);
+    		if (historyMessages != null) {
+        		for(ChatMessageProxy p : historyMessages) {
+        			adapter.addMessage(p);
+        		}
+			} else if (newMessages != null) {
+        		for(ChatMessageProxy p : newMessages) {
+        			adapter.addMessage(p);
+        		}
+			}
+
     		service.processor.listener.addListener(listener);
         }
 
@@ -135,7 +147,7 @@ public class ChatActivity extends Activity {
 		public void chatMessage() {
 			super.chatMessage();
 			if(adapter != null) {
-				List<ChatMessageProxy> message = service.getNewMessages(friendID);
+				List<ChatMessageProxy> message = service.getNewMessagesAndRemove(friendID);
 				
 				for (ChatMessageProxy chatMessage : message) {
 					adapter.addMessage(chatMessage);		
