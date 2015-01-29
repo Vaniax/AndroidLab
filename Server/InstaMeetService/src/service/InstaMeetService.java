@@ -120,6 +120,20 @@ public class InstaMeetService implements ServiceInterface {
 		return null;
 	}
 
+	@Override
+	public List<SimpleAppointment> GetMyHostedAppointments(
+			String SecurityToken, int userId) {
+		if(verifyUser(SecurityToken, userId)) {
+			List<SimpleAppointment> appList = new ArrayList<SimpleAppointment>();
+			
+			for(Appointment a : sessions.get(SecurityToken).getHostedAppointments()) {
+				appList.add(a.toSimpleAppointment());
+			}
+			return appList;
+		}
+		return null;
+	}
+	
 	public Location GetFriendLocation(String SecurityToken, int userId,
 			int friendId) {
 		// TODO Auto-generated method stub
@@ -372,5 +386,6 @@ public class InstaMeetService implements ServiceInterface {
 		}	
 		return users;
 	}
+
 
 }

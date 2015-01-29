@@ -177,7 +177,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			
 		   int userIDChannel = msg.getGetMyVisitingAppointments().getUserID();
 		   checkChannel(userIDChannel,ctx.channel());
-			
+			//Visiting Appointments
 			List<SimpleAppointment> myApps = service.GetMyVisitingAppointments(
 					msg.getGetMyVisitingAppointments().getSecurityToken(), 
 					msg.getGetMyVisitingAppointments().getUserID());	
@@ -191,13 +191,56 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 			
 			System.out.println(msgMyAppsBuilder.build());
 			
+			//Additional hosted appointments for lesser messages
+			List<SimpleAppointment> hApps = service.GetMyHostedAppointments(
+					msg.getGetMyVisitingAppointments().getSecurityToken(), 
+					msg.getGetMyVisitingAppointments().getUserID());	
+			
+			Messages.ListHostedAppointments.Builder msgHoAppsBuilder = Messages.ListHostedAppointments.newBuilder();
+			
+			for(SimpleAppointment app : hApps) {
+				Messages.SimpleAppointment  msgApp= createAppMessageFromApp(app);
+				msgHoAppsBuilder.addAppointments(msgApp);
+			}
+			
+			System.out.println(msgHoAppsBuilder.build());			
+			
+			//Send message
 			ClientResponse response = ClientResponse.newBuilder()
 					.setType(Type.LIST_VISITING_APPOINTMENTS)
 					.setListVisitingAppointment(msgMyAppsBuilder.build())
+					.setHostedAppointments(msgHoAppsBuilder.build())
 					.build();
 			ctx.writeAndFlush(response);		
 		
 		} break;
+		case GET_HOSTED_APPOINTMENTS: {
+			msg.getGetHostedAppointments().getSecurityToken();
+			
+		   int userIDChannel = msg.getGetHostedAppointments().getUserID();
+		   checkChannel(userIDChannel,ctx.channel());
+			
+			List<SimpleAppointment> hApps = service.GetMyHostedAppointments(
+					msg.getGetMyVisitingAppointments().getSecurityToken(), 
+					msg.getGetMyVisitingAppointments().getUserID());	
+			
+			Messages.ListHostedAppointments.Builder msgHoAppsBuilder = Messages.ListHostedAppointments.newBuilder();
+			
+			for(SimpleAppointment app : hApps) {
+				Messages.SimpleAppointment  msgApp= createAppMessageFromApp(app);
+				msgHoAppsBuilder.addAppointments(msgApp);
+			}
+			
+			System.out.println(msgHoAppsBuilder.build());
+			
+			ClientResponse response = ClientResponse.newBuilder()
+					.setType(Type.LIST_HOSTED_APPOINTMENTS)
+					.setHostedAppointments(msgHoAppsBuilder.build())
+					.build();
+			ctx.writeAndFlush(response);		
+		
+		} break;		
+		
 		case ADD_FRIEND_REQUEST: {
 			
 			boolean successful = service.addFriendRequest(

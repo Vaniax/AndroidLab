@@ -31,6 +31,7 @@ public interface ServiceInterface {
 	List<String> GetMessages(String SecurityToken, int userId);
 	List<SimpleAppointment> GetNearAppointments(String SecurityToken, int userId, Location location);
 	List<SimpleAppointment> GetMyVisitingAppointments(String SecurityToken, int userId);
+	List<SimpleAppointment> GetMyHostedAppointments(String SecurityToken, int userId);
 	
 	List<SimpleUser> getUsers(String SecurityToken, int userId, Set<Integer> ids);
 	List<SimpleUser> getUsersByName(String SecurityToken, int userId, String subName);
