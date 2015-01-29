@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.client.listener.AbstractInboundMessageListener;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import de.tubs.androidlab.instameet.ui.ContactsListAdapter;
@@ -43,6 +44,7 @@ public class AddFriendActivity extends Activity implements OnItemClickListener  
 	private EditText friendName = null;
     private InstaMeetService service = null;
     private ListView searchResults = null;
+    private MessageListener listener = new MessageListener();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,14 +65,14 @@ public class AddFriendActivity extends Activity implements OnItemClickListener  
 					Toast.makeText(AddFriendActivity.this, "Please enter a username", Toast.LENGTH_LONG).show();
 				} else if (pref.contains("securityToken")) {
 					searchButton.setEnabled(false);
-					String token = pref.getString("securityToken", "");
+					service.fetchUsersByName(friendName.getText().toString());
 					//TODO: list all search results...
 					//service.addFriendRequest(token, friendName.getText().toString());
-						List<SimpleUser> l = new ArrayList<SimpleUser>();
-						SimpleUser s = new SimpleUser();
-						s.setUsername("Peter");
-						l.add(s); l.add(s); 
-						adapter.setContacts(l);
+//						List<SimpleUser> l = new ArrayList<SimpleUser>();
+//						SimpleUser s = new SimpleUser();
+//						s.setUsername("Peter");
+//						l.add(s); l.add(s); 
+//						adapter.setContacts(l);
 				} else {
 					Toast.makeText(AddFriendActivity.this, "Token not available", Toast.LENGTH_LONG).show();
 				}
@@ -93,9 +95,11 @@ public class AddFriendActivity extends Activity implements OnItemClickListener  
     protected void onStop() {
     	super.onStop();
     	if(service != null) {
+        	service.processor.listener.removeListener(listener);
+
     		unbindService(serviceConnection);
     		service = null;
-    	}
+    	}		
     }
     
     /** Defines callbacks for service binding, passed to bindService() */
@@ -104,11 +108,13 @@ public class AddFriendActivity extends Activity implements OnItemClickListener  
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
         	service = ( (InstaMeetServiceBinder) binder).getService();
+    		service.processor.listener.addListener(listener);
         }
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
         	Log.e(TAG, "Connection lost");
+        	service.processor.listener.removeListener(listener);
             service = null;
         }
     };
@@ -120,5 +126,16 @@ public class AddFriendActivity extends Activity implements OnItemClickListener  
 		intent.putExtra(ViewUserActivity.EXTRA_USER_ID, user.getId());
 		startActivity(intent);
 	}
-    
+	
+	private class MessageListener extends AbstractInboundMessageListener {
+
+		@Override
+		public void listUsers(List<SimpleUser> users) {
+			super.listUsers(users);
+			if (adapter != null) {
+				adapter.setContacts(users);
+				adapter.notifyChanges();
+			}
+		}
+	}
 }
