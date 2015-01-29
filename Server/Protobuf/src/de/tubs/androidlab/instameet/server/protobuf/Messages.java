@@ -4371,15 +4371,28 @@ public final class Messages {
     de.tubs.androidlab.instameet.server.protobuf.Messages.ListUsersOrBuilder getListUsersOrBuilder();
 
     /**
-     * <code>optional string messageID = 15;</code>
+     * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+     */
+    boolean hasHostedAppointments();
+    /**
+     * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+     */
+    de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments getHostedAppointments();
+    /**
+     * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+     */
+    de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointmentsOrBuilder getHostedAppointmentsOrBuilder();
+
+    /**
+     * <code>optional string messageID = 20;</code>
      */
     boolean hasMessageID();
     /**
-     * <code>optional string messageID = 15;</code>
+     * <code>optional string messageID = 20;</code>
      */
     java.lang.String getMessageID();
     /**
-     * <code>optional string messageID = 15;</code>
+     * <code>optional string messageID = 20;</code>
      */
     com.google.protobuf.ByteString
         getMessageIDBytes();
@@ -4604,8 +4617,21 @@ public final class Messages {
               break;
             }
             case 122: {
-              com.google.protobuf.ByteString bs = input.readBytes();
+              de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.Builder subBuilder = null;
+              if (((bitField0_ & 0x00002000) == 0x00002000)) {
+                subBuilder = hostedAppointments_.toBuilder();
+              }
+              hostedAppointments_ = input.readMessage(de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(hostedAppointments_);
+                hostedAppointments_ = subBuilder.buildPartial();
+              }
               bitField0_ |= 0x00002000;
+              break;
+            }
+            case 162: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00004000;
               messageID_ = bs;
               break;
             }
@@ -4698,9 +4724,13 @@ public final class Messages {
        */
       LIST_USERS(10, 11),
       /**
+       * <code>LIST_HOSTED_APPOINTMENTS = 12;</code>
+       */
+      LIST_HOSTED_APPOINTMENTS(11, 12),
+      /**
        * <code>NO_MESSAGE = 20;</code>
        */
-      NO_MESSAGE(11, 20),
+      NO_MESSAGE(12, 20),
       ;
 
       /**
@@ -4748,6 +4778,10 @@ public final class Messages {
        */
       public static final int LIST_USERS_VALUE = 11;
       /**
+       * <code>LIST_HOSTED_APPOINTMENTS = 12;</code>
+       */
+      public static final int LIST_HOSTED_APPOINTMENTS_VALUE = 12;
+      /**
        * <code>NO_MESSAGE = 20;</code>
        */
       public static final int NO_MESSAGE_VALUE = 20;
@@ -4768,6 +4802,7 @@ public final class Messages {
           case 9: return LIST_NEAREST_APPOINTMENTS;
           case 10: return LIST_VISITING_APPOINTMENTS;
           case 11: return LIST_USERS;
+          case 12: return LIST_HOSTED_APPOINTMENTS;
           case 20: return NO_MESSAGE;
           default: return null;
         }
@@ -5088,16 +5123,37 @@ public final class Messages {
       return listUsers_;
     }
 
-    public static final int MESSAGEID_FIELD_NUMBER = 15;
-    private java.lang.Object messageID_;
+    public static final int HOSTEDAPPOINTMENTS_FIELD_NUMBER = 15;
+    private de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments hostedAppointments_;
     /**
-     * <code>optional string messageID = 15;</code>
+     * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
      */
-    public boolean hasMessageID() {
+    public boolean hasHostedAppointments() {
       return ((bitField0_ & 0x00002000) == 0x00002000);
     }
     /**
-     * <code>optional string messageID = 15;</code>
+     * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+     */
+    public de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments getHostedAppointments() {
+      return hostedAppointments_;
+    }
+    /**
+     * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+     */
+    public de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointmentsOrBuilder getHostedAppointmentsOrBuilder() {
+      return hostedAppointments_;
+    }
+
+    public static final int MESSAGEID_FIELD_NUMBER = 20;
+    private java.lang.Object messageID_;
+    /**
+     * <code>optional string messageID = 20;</code>
+     */
+    public boolean hasMessageID() {
+      return ((bitField0_ & 0x00004000) == 0x00004000);
+    }
+    /**
+     * <code>optional string messageID = 20;</code>
      */
     public java.lang.String getMessageID() {
       java.lang.Object ref = messageID_;
@@ -5114,7 +5170,7 @@ public final class Messages {
       }
     }
     /**
-     * <code>optional string messageID = 15;</code>
+     * <code>optional string messageID = 20;</code>
      */
     public com.google.protobuf.ByteString
         getMessageIDBytes() {
@@ -5144,6 +5200,7 @@ public final class Messages {
       listNearestAppointments_ = de.tubs.androidlab.instameet.server.protobuf.Messages.ListNearestAppointments.getDefaultInstance();
       listVisitingAppointment_ = de.tubs.androidlab.instameet.server.protobuf.Messages.ListVisitingAppointments.getDefaultInstance();
       listUsers_ = de.tubs.androidlab.instameet.server.protobuf.Messages.ListUsers.getDefaultInstance();
+      hostedAppointments_ = de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.getDefaultInstance();
       messageID_ = "";
     }
     private byte memoizedIsInitialized = -1;
@@ -5222,6 +5279,12 @@ public final class Messages {
           return false;
         }
       }
+      if (hasHostedAppointments()) {
+        if (!getHostedAppointments().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -5269,7 +5332,10 @@ public final class Messages {
         output.writeMessage(14, listUsers_);
       }
       if (((bitField0_ & 0x00002000) == 0x00002000)) {
-        output.writeBytes(15, getMessageIDBytes());
+        output.writeMessage(15, hostedAppointments_);
+      }
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+        output.writeBytes(20, getMessageIDBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -5334,7 +5400,11 @@ public final class Messages {
       }
       if (((bitField0_ & 0x00002000) == 0x00002000)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(15, getMessageIDBytes());
+          .computeMessageSize(15, hostedAppointments_);
+      }
+      if (((bitField0_ & 0x00004000) == 0x00004000)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(20, getMessageIDBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -5457,6 +5527,7 @@ public final class Messages {
           getListNearestAppointmentsFieldBuilder();
           getListVisitingAppointmentFieldBuilder();
           getListUsersFieldBuilder();
+          getHostedAppointmentsFieldBuilder();
         }
       }
       private static Builder create() {
@@ -5539,8 +5610,14 @@ public final class Messages {
           listUsersBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00001000);
-        messageID_ = "";
+        if (hostedAppointmentsBuilder_ == null) {
+          hostedAppointments_ = de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.getDefaultInstance();
+        } else {
+          hostedAppointmentsBuilder_.clear();
+        }
         bitField0_ = (bitField0_ & ~0x00002000);
+        messageID_ = "";
+        bitField0_ = (bitField0_ & ~0x00004000);
         return this;
       }
 
@@ -5672,6 +5749,14 @@ public final class Messages {
         if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
           to_bitField0_ |= 0x00002000;
         }
+        if (hostedAppointmentsBuilder_ == null) {
+          result.hostedAppointments_ = hostedAppointments_;
+        } else {
+          result.hostedAppointments_ = hostedAppointmentsBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00004000) == 0x00004000)) {
+          to_bitField0_ |= 0x00004000;
+        }
         result.messageID_ = messageID_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -5728,8 +5813,11 @@ public final class Messages {
         if (other.hasListUsers()) {
           mergeListUsers(other.getListUsers());
         }
+        if (other.hasHostedAppointments()) {
+          mergeHostedAppointments(other.getHostedAppointments());
+        }
         if (other.hasMessageID()) {
-          bitField0_ |= 0x00002000;
+          bitField0_ |= 0x00004000;
           messageID_ = other.messageID_;
           onChanged();
         }
@@ -5804,6 +5892,12 @@ public final class Messages {
         }
         if (hasListUsers()) {
           if (!getListUsers().isInitialized()) {
+            
+            return false;
+          }
+        }
+        if (hasHostedAppointments()) {
+          if (!getHostedAppointments().isInitialized()) {
             
             return false;
           }
@@ -7257,15 +7351,131 @@ public final class Messages {
         return listUsersBuilder_;
       }
 
-      private java.lang.Object messageID_ = "";
+      private de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments hostedAppointments_ = de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments, de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.Builder, de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointmentsOrBuilder> hostedAppointmentsBuilder_;
       /**
-       * <code>optional string messageID = 15;</code>
+       * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
        */
-      public boolean hasMessageID() {
+      public boolean hasHostedAppointments() {
         return ((bitField0_ & 0x00002000) == 0x00002000);
       }
       /**
-       * <code>optional string messageID = 15;</code>
+       * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+       */
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments getHostedAppointments() {
+        if (hostedAppointmentsBuilder_ == null) {
+          return hostedAppointments_;
+        } else {
+          return hostedAppointmentsBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+       */
+      public Builder setHostedAppointments(de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments value) {
+        if (hostedAppointmentsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          hostedAppointments_ = value;
+          onChanged();
+        } else {
+          hostedAppointmentsBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00002000;
+        return this;
+      }
+      /**
+       * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+       */
+      public Builder setHostedAppointments(
+          de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.Builder builderForValue) {
+        if (hostedAppointmentsBuilder_ == null) {
+          hostedAppointments_ = builderForValue.build();
+          onChanged();
+        } else {
+          hostedAppointmentsBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00002000;
+        return this;
+      }
+      /**
+       * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+       */
+      public Builder mergeHostedAppointments(de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments value) {
+        if (hostedAppointmentsBuilder_ == null) {
+          if (((bitField0_ & 0x00002000) == 0x00002000) &&
+              hostedAppointments_ != de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.getDefaultInstance()) {
+            hostedAppointments_ =
+              de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.newBuilder(hostedAppointments_).mergeFrom(value).buildPartial();
+          } else {
+            hostedAppointments_ = value;
+          }
+          onChanged();
+        } else {
+          hostedAppointmentsBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00002000;
+        return this;
+      }
+      /**
+       * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+       */
+      public Builder clearHostedAppointments() {
+        if (hostedAppointmentsBuilder_ == null) {
+          hostedAppointments_ = de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.getDefaultInstance();
+          onChanged();
+        } else {
+          hostedAppointmentsBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00002000);
+        return this;
+      }
+      /**
+       * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+       */
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.Builder getHostedAppointmentsBuilder() {
+        bitField0_ |= 0x00002000;
+        onChanged();
+        return getHostedAppointmentsFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+       */
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointmentsOrBuilder getHostedAppointmentsOrBuilder() {
+        if (hostedAppointmentsBuilder_ != null) {
+          return hostedAppointmentsBuilder_.getMessageOrBuilder();
+        } else {
+          return hostedAppointments_;
+        }
+      }
+      /**
+       * <code>optional .de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments hostedAppointments = 15;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments, de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.Builder, de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointmentsOrBuilder> 
+          getHostedAppointmentsFieldBuilder() {
+        if (hostedAppointmentsBuilder_ == null) {
+          hostedAppointmentsBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments, de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.Builder, de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointmentsOrBuilder>(
+                  getHostedAppointments(),
+                  getParentForChildren(),
+                  isClean());
+          hostedAppointments_ = null;
+        }
+        return hostedAppointmentsBuilder_;
+      }
+
+      private java.lang.Object messageID_ = "";
+      /**
+       * <code>optional string messageID = 20;</code>
+       */
+      public boolean hasMessageID() {
+        return ((bitField0_ & 0x00004000) == 0x00004000);
+      }
+      /**
+       * <code>optional string messageID = 20;</code>
        */
       public java.lang.String getMessageID() {
         java.lang.Object ref = messageID_;
@@ -7282,7 +7492,7 @@ public final class Messages {
         }
       }
       /**
-       * <code>optional string messageID = 15;</code>
+       * <code>optional string messageID = 20;</code>
        */
       public com.google.protobuf.ByteString
           getMessageIDBytes() {
@@ -7298,36 +7508,36 @@ public final class Messages {
         }
       }
       /**
-       * <code>optional string messageID = 15;</code>
+       * <code>optional string messageID = 20;</code>
        */
       public Builder setMessageID(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00002000;
+  bitField0_ |= 0x00004000;
         messageID_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string messageID = 15;</code>
+       * <code>optional string messageID = 20;</code>
        */
       public Builder clearMessageID() {
-        bitField0_ = (bitField0_ & ~0x00002000);
+        bitField0_ = (bitField0_ & ~0x00004000);
         messageID_ = getDefaultInstance().getMessageID();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string messageID = 15;</code>
+       * <code>optional string messageID = 20;</code>
        */
       public Builder setMessageIDBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00002000;
+  bitField0_ |= 0x00004000;
         messageID_ = value;
         onChanged();
         return this;
@@ -24577,6 +24787,694 @@ public final class Messages {
     // @@protoc_insertion_point(class_scope:de.tubs.androidlab.instameet.server.protobuf.ListVisitingAppointments)
   }
 
+  public interface ListHostedAppointmentsOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+     */
+    java.util.List<de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment> 
+        getAppointmentsList();
+    /**
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+     */
+    de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment getAppointments(int index);
+    /**
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+     */
+    int getAppointmentsCount();
+    /**
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+     */
+    java.util.List<? extends de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointmentOrBuilder> 
+        getAppointmentsOrBuilderList();
+    /**
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+     */
+    de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointmentOrBuilder getAppointmentsOrBuilder(
+        int index);
+  }
+  /**
+   * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments}
+   */
+  public static final class ListHostedAppointments extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments)
+      ListHostedAppointmentsOrBuilder {
+    // Use ListHostedAppointments.newBuilder() to construct.
+    private ListHostedAppointments(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private ListHostedAppointments(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final ListHostedAppointments defaultInstance;
+    public static ListHostedAppointments getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public ListHostedAppointments getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ListHostedAppointments(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+                appointments_ = new java.util.ArrayList<de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              appointments_.add(input.readMessage(de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.PARSER, extensionRegistry));
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          appointments_ = java.util.Collections.unmodifiableList(appointments_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return de.tubs.androidlab.instameet.server.protobuf.Messages.internal_static_de_tubs_androidlab_instameet_server_protobuf_ListHostedAppointments_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return de.tubs.androidlab.instameet.server.protobuf.Messages.internal_static_de_tubs_androidlab_instameet_server_protobuf_ListHostedAppointments_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.class, de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<ListHostedAppointments> PARSER =
+        new com.google.protobuf.AbstractParser<ListHostedAppointments>() {
+      public ListHostedAppointments parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ListHostedAppointments(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ListHostedAppointments> getParserForType() {
+      return PARSER;
+    }
+
+    public static final int APPOINTMENTS_FIELD_NUMBER = 1;
+    private java.util.List<de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment> appointments_;
+    /**
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+     */
+    public java.util.List<de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment> getAppointmentsList() {
+      return appointments_;
+    }
+    /**
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+     */
+    public java.util.List<? extends de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointmentOrBuilder> 
+        getAppointmentsOrBuilderList() {
+      return appointments_;
+    }
+    /**
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+     */
+    public int getAppointmentsCount() {
+      return appointments_.size();
+    }
+    /**
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+     */
+    public de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment getAppointments(int index) {
+      return appointments_.get(index);
+    }
+    /**
+     * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+     */
+    public de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointmentOrBuilder getAppointmentsOrBuilder(
+        int index) {
+      return appointments_.get(index);
+    }
+
+    private void initFields() {
+      appointments_ = java.util.Collections.emptyList();
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      for (int i = 0; i < getAppointmentsCount(); i++) {
+        if (!getAppointments(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      for (int i = 0; i < appointments_.size(); i++) {
+        output.writeMessage(1, appointments_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      for (int i = 0; i < appointments_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, appointments_.get(i));
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments)
+        de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointmentsOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return de.tubs.androidlab.instameet.server.protobuf.Messages.internal_static_de_tubs_androidlab_instameet_server_protobuf_ListHostedAppointments_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return de.tubs.androidlab.instameet.server.protobuf.Messages.internal_static_de_tubs_androidlab_instameet_server_protobuf_ListHostedAppointments_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.class, de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.Builder.class);
+      }
+
+      // Construct using de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getAppointmentsFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        if (appointmentsBuilder_ == null) {
+          appointments_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          appointmentsBuilder_.clear();
+        }
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return de.tubs.androidlab.instameet.server.protobuf.Messages.internal_static_de_tubs_androidlab_instameet_server_protobuf_ListHostedAppointments_descriptor;
+      }
+
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments getDefaultInstanceForType() {
+        return de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.getDefaultInstance();
+      }
+
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments build() {
+        de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments buildPartial() {
+        de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments result = new de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments(this);
+        int from_bitField0_ = bitField0_;
+        if (appointmentsBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            appointments_ = java.util.Collections.unmodifiableList(appointments_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.appointments_ = appointments_;
+        } else {
+          result.appointments_ = appointmentsBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments) {
+          return mergeFrom((de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments other) {
+        if (other == de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments.getDefaultInstance()) return this;
+        if (appointmentsBuilder_ == null) {
+          if (!other.appointments_.isEmpty()) {
+            if (appointments_.isEmpty()) {
+              appointments_ = other.appointments_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureAppointmentsIsMutable();
+              appointments_.addAll(other.appointments_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.appointments_.isEmpty()) {
+            if (appointmentsBuilder_.isEmpty()) {
+              appointmentsBuilder_.dispose();
+              appointmentsBuilder_ = null;
+              appointments_ = other.appointments_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              appointmentsBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getAppointmentsFieldBuilder() : null;
+            } else {
+              appointmentsBuilder_.addAllMessages(other.appointments_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        for (int i = 0; i < getAppointmentsCount(); i++) {
+          if (!getAppointments(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (de.tubs.androidlab.instameet.server.protobuf.Messages.ListHostedAppointments) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.util.List<de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment> appointments_ =
+        java.util.Collections.emptyList();
+      private void ensureAppointmentsIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          appointments_ = new java.util.ArrayList<de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment>(appointments_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment, de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.Builder, de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointmentOrBuilder> appointmentsBuilder_;
+
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public java.util.List<de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment> getAppointmentsList() {
+        if (appointmentsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(appointments_);
+        } else {
+          return appointmentsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public int getAppointmentsCount() {
+        if (appointmentsBuilder_ == null) {
+          return appointments_.size();
+        } else {
+          return appointmentsBuilder_.getCount();
+        }
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment getAppointments(int index) {
+        if (appointmentsBuilder_ == null) {
+          return appointments_.get(index);
+        } else {
+          return appointmentsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public Builder setAppointments(
+          int index, de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment value) {
+        if (appointmentsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAppointmentsIsMutable();
+          appointments_.set(index, value);
+          onChanged();
+        } else {
+          appointmentsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public Builder setAppointments(
+          int index, de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.Builder builderForValue) {
+        if (appointmentsBuilder_ == null) {
+          ensureAppointmentsIsMutable();
+          appointments_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          appointmentsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public Builder addAppointments(de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment value) {
+        if (appointmentsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAppointmentsIsMutable();
+          appointments_.add(value);
+          onChanged();
+        } else {
+          appointmentsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public Builder addAppointments(
+          int index, de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment value) {
+        if (appointmentsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAppointmentsIsMutable();
+          appointments_.add(index, value);
+          onChanged();
+        } else {
+          appointmentsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public Builder addAppointments(
+          de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.Builder builderForValue) {
+        if (appointmentsBuilder_ == null) {
+          ensureAppointmentsIsMutable();
+          appointments_.add(builderForValue.build());
+          onChanged();
+        } else {
+          appointmentsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public Builder addAppointments(
+          int index, de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.Builder builderForValue) {
+        if (appointmentsBuilder_ == null) {
+          ensureAppointmentsIsMutable();
+          appointments_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          appointmentsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public Builder addAllAppointments(
+          java.lang.Iterable<? extends de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment> values) {
+        if (appointmentsBuilder_ == null) {
+          ensureAppointmentsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, appointments_);
+          onChanged();
+        } else {
+          appointmentsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public Builder clearAppointments() {
+        if (appointmentsBuilder_ == null) {
+          appointments_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          appointmentsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public Builder removeAppointments(int index) {
+        if (appointmentsBuilder_ == null) {
+          ensureAppointmentsIsMutable();
+          appointments_.remove(index);
+          onChanged();
+        } else {
+          appointmentsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.Builder getAppointmentsBuilder(
+          int index) {
+        return getAppointmentsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointmentOrBuilder getAppointmentsOrBuilder(
+          int index) {
+        if (appointmentsBuilder_ == null) {
+          return appointments_.get(index);  } else {
+          return appointmentsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public java.util.List<? extends de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointmentOrBuilder> 
+           getAppointmentsOrBuilderList() {
+        if (appointmentsBuilder_ != null) {
+          return appointmentsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(appointments_);
+        }
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.Builder addAppointmentsBuilder() {
+        return getAppointmentsFieldBuilder().addBuilder(
+            de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.Builder addAppointmentsBuilder(
+          int index) {
+        return getAppointmentsFieldBuilder().addBuilder(
+            index, de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.getDefaultInstance());
+      }
+      /**
+       * <code>repeated .de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment appointments = 1;</code>
+       */
+      public java.util.List<de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.Builder> 
+           getAppointmentsBuilderList() {
+        return getAppointmentsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment, de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.Builder, de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointmentOrBuilder> 
+          getAppointmentsFieldBuilder() {
+        if (appointmentsBuilder_ == null) {
+          appointmentsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment, de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment.Builder, de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointmentOrBuilder>(
+                  appointments_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          appointments_ = null;
+        }
+        return appointmentsBuilder_;
+      }
+
+      // @@protoc_insertion_point(builder_scope:de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments)
+    }
+
+    static {
+      defaultInstance = new ListHostedAppointments(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:de.tubs.androidlab.instameet.server.protobuf.ListHostedAppointments)
+  }
+
   public interface SimpleAppointmentOrBuilder extends
       // @@protoc_insertion_point(interface_extends:de.tubs.androidlab.instameet.server.protobuf.SimpleAppointment)
       com.google.protobuf.MessageOrBuilder {
@@ -33000,6 +33898,11 @@ public final class Messages {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_de_tubs_androidlab_instameet_server_protobuf_ListVisitingAppointments_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_de_tubs_androidlab_instameet_server_protobuf_ListHostedAppointments_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_de_tubs_androidlab_instameet_server_protobuf_ListHostedAppointments_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleAppointment_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -33118,7 +34021,7 @@ public final class Messages {
       "T_MY_VISITING_APPOINTMENTS\020\013\022\023\n\017UPDATE_L" +
       "OCATION\020\014\022\017\n\013GET_FRIENDS\020\r\022\024\n\020ADD_FRIEND" +
       "_REPLY\020\016\022\025\n\021GET_USERS_BY_NAME\020\017\022\033\n\027GET_H",
-      "OSTED_APPOINTMENTS\020\021\022\016\n\nNO_MESSAGE\020\024\"\346\n\n" +
+      "OSTED_APPOINTMENTS\020\021\022\016\n\nNO_MESSAGE\020\024\"\346\013\n" +
       "\016ClientResponse\022[\n\004type\030\001 \002(\0162A.de.tubs." +
       "androidlab.instameet.server.protobuf.Cli" +
       "entResponse.Type:\nNO_MESSAGE\022N\n\013listFrie" +
@@ -33146,101 +34049,107 @@ public final class Messages {
       "(\0132F.de.tubs.androidlab.instameet.server" +
       ".protobuf.ListVisitingAppointments\022J\n\tli" +
       "stUsers\030\016 \001(\01327.de.tubs.androidlab.insta" +
-      "meet.server.protobuf.ListUsers\022\021\n\tmessag" +
-      "eID\030\017 \001(\t\"\371\001\n\004Type\022\020\n\014LIST_FRIENDS\020\001\022\022\n\016",
-      "LIST_LOCATIONS\020\002\022\026\n\022LIST_CHAT_MESSAGES\020\003" +
-      "\022\010\n\004BOOL\020\004\022\022\n\016SECURITY_TOKEN\020\005\022\020\n\014CHAT_M" +
-      "ESSAGE\020\006\022\014\n\010OWN_DATA\020\007\022\026\n\022SIMPLE_APPOINT" +
-      "MENT\020\010\022\035\n\031LIST_NEAREST_APPOINTMENTS\020\t\022\036\n" +
-      "\032LIST_VISITING_APPOINTMENTS\020\n\022\016\n\nLIST_US" +
-      "ERS\020\013\022\016\n\nNO_MESSAGE\020\024\"\'\n\005Login\022\014\n\004name\030\001" +
-      " \002(\t\022\020\n\010password\030\002 \002(\t\",\n\nCreateUser\022\014\n\004" +
-      "name\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\"W\n\013ChatMess" +
-      "age\022\025\n\rsecurityToken\030\001 \001(\t\022\017\n\007message\030\002 " +
-      "\002(\t\022\020\n\010friendID\030\003 \002(\005\022\016\n\006userID\030\004 \002(\005\"G\n",
-      "\013GetMessages\022\025\n\rsecurityToken\030\001 \002(\t\022\021\n\tf" +
-      "riendIDs\030\002 \003(\005\022\016\n\006userID\030\003 \002(\005\"\220\001\n\021Creat" +
-      "eAppointment\022\025\n\rsecurityToken\030\001 \002(\t\022T\n\013a" +
-      "ppointment\030\002 \002(\0132?.de.tubs.androidlab.in" +
-      "stameet.server.protobuf.SimpleAppointmen" +
-      "t\022\016\n\006userID\030\003 \002(\005\"P\n\020VisitAppointment\022\025\n" +
-      "\rsecurityToken\030\001 \002(\t\022\025\n\rappointmentID\030\002 " +
-      "\002(\005\022\016\n\006userID\030\003 \002(\005\"\206\001\n\023GetNearAppointme" +
-      "nts\022\025\n\rsecurityToken\030\001 \002(\t\022H\n\010location\030\002" +
-      " \001(\01326.de.tubs.androidlab.instameet.serv",
-      "er.protobuf.Location\022\016\n\006userID\030\003 \002(\005\">\n\025" +
-      "GetHostedAppointments\022\025\n\rsecurityToken\030\001" +
-      " \002(\t\022\016\n\006userID\030\002 \002(\005\"_\n\020AddFriendRequest" +
-      "\022\025\n\rsecurityToken\030\001 \002(\t\022\020\n\010friendID\030\002 \001(" +
-      "\005\022\022\n\nfriendName\030\003 \001(\t\022\016\n\006userID\030\004 \002(\005\"o\n" +
-      "\016AddFriendReply\022\025\n\rsecurityToken\030\001 \002(\t\022\020" +
-      "\n\010friendID\030\002 \001(\005\022\022\n\nfriendName\030\003 \001(\t\022\016\n\006" +
-      "userID\030\004 \002(\005\022\020\n\010accepted\030\005 \002(\010\"3\n\nGetOwn" +
-      "Data\022\025\n\rsecurityToken\030\001 \002(\t\022\016\n\006userID\030\002 " +
-      "\001(\005\"F\n\nGetFriends\022\025\n\rsecurityToken\030\001 \002(\t",
-      "\022\021\n\tfriendIDs\030\002 \003(\005\022\016\n\006userID\030\003 \002(\005\"D\n\010G" +
-      "etUsers\022\025\n\rsecurityToken\030\001 \002(\t\022\021\n\tfriend" +
-      "IDs\030\002 \003(\005\022\016\n\006userID\030\003 \002(\005\"L\n\021GetFriendLo" +
-      "cation\022\025\n\rsecurityToken\030\001 \002(\t\022\020\n\010friendI" +
-      "D\030\002 \002(\005\022\016\n\006userID\030\003 \002(\005\"B\n\031GetMyVisiting" +
-      "Appointments\022\025\n\rsecurityToken\030\001 \002(\t\022\016\n\006u" +
-      "serID\030\002 \002(\005\"\201\001\n\016UpdateLocation\022\025\n\rsecuri" +
-      "tyToken\030\001 \002(\t\022H\n\010location\030\002 \002(\01326.de.tub" +
-      "s.androidlab.instameet.server.protobuf.L" +
-      "ocation\022\016\n\006userID\030\003 \002(\005\"H\n\016GetUsersByNam",
-      "e\022\025\n\rsecurityToken\030\001 \002(\t\022\016\n\006userID\030\002 \002(\005" +
-      "\022\017\n\007subName\030\003 \002(\t\"X\n\013ListFriends\022I\n\007frie" +
-      "nds\030\001 \003(\01328.de.tubs.androidlab.instameet" +
-      ".server.protobuf.SimpleUser\"T\n\tListUsers" +
-      "\022G\n\005users\030\001 \003(\01328.de.tubs.androidlab.ins" +
-      "tameet.server.protobuf.SimpleUser\"Y\n\rLis" +
-      "tLocations\022H\n\010location\030\001 \003(\01326.de.tubs.a" +
-      "ndroidlab.instameet.server.protobuf.Loca" +
-      "tion\"_\n\020ListChatMessages\022K\n\010messages\030\001 \003" +
-      "(\01329.de.tubs.androidlab.instameet.server",
-      ".protobuf.ChatMessage\"\033\n\tBoolReply\022\016\n\006is" +
-      "True\030\001 \002(\010\"U\n\007OwnData\022J\n\010userData\030\001 \002(\0132" +
-      "8.de.tubs.androidlab.instameet.server.pr" +
-      "otobuf.SimpleUser\"p\n\027ListNearestAppointm" +
-      "ents\022U\n\014appointments\030\001 \003(\0132?.de.tubs.and" +
-      "roidlab.instameet.server.protobuf.Simple" +
-      "Appointment\"q\n\030ListVisitingAppointments\022" +
-      "U\n\014appointments\030\001 \003(\0132?.de.tubs.androidl" +
-      "ab.instameet.server.protobuf.SimpleAppoi" +
-      "ntment\"\301\001\n\021SimpleAppointment\022\n\n\002id\030\001 \002(\005",
-      "\022\r\n\005title\030\002 \002(\t\022H\n\010location\030\003 \002(\01326.de.t" +
-      "ubs.androidlab.instameet.server.protobuf" +
-      ".Location\022\014\n\004time\030\004 \002(\003\022\016\n\006hoster\030\005 \002(\005\022" +
-      "\024\n\014participants\030\006 \003(\005\022\023\n\013description\030\007 \002" +
-      "(\t\"\347\001\n\nSimpleUser\022\020\n\010userName\030\001 \002(\t\022\016\n\006u" +
-      "serID\030\002 \002(\005\022\034\n\024latestLocationUpdate\030\003 \001(" +
-      "\003\022H\n\010location\030\004 \001(\01326.de.tubs.androidlab" +
-      ".instameet.server.protobuf.Location\022\021\n\tf" +
-      "riendIDs\030\005 \003(\005\022\034\n\024hostedAppointmentIDs\030\006" +
-      " \003(\005\022\036\n\026visitingAppointmentIDs\030\007 \003(\005\"0\n\010",
-      "Location\022\021\n\tlongitude\030\001 \002(\001\022\021\n\tlattitude" +
-      "\030\002 \002(\001\"\036\n\rSecurityToken\022\r\n\005token\030\001 \002(\t\"\013" +
-      "\n\tNoMessage\"f\n\nMapFriends\022X\n\003map\030\001 \002(\0132K" +
-      ".de.tubs.androidlab.instameet.server.pro" +
-      "tobuf.Pair_Double_SimpleAppointment\"r\n\026M" +
-      "apAppointmentDistance\022X\n\003map\030\001 \003(\0132K.de." +
+      "meet.server.protobuf.ListUsers\022`\n\022hosted" +
+      "Appointments\030\017 \001(\0132D.de.tubs.androidlab.",
+      "instameet.server.protobuf.ListHostedAppo" +
+      "intments\022\021\n\tmessageID\030\024 \001(\t\"\227\002\n\004Type\022\020\n\014" +
+      "LIST_FRIENDS\020\001\022\022\n\016LIST_LOCATIONS\020\002\022\026\n\022LI" +
+      "ST_CHAT_MESSAGES\020\003\022\010\n\004BOOL\020\004\022\022\n\016SECURITY" +
+      "_TOKEN\020\005\022\020\n\014CHAT_MESSAGE\020\006\022\014\n\010OWN_DATA\020\007" +
+      "\022\026\n\022SIMPLE_APPOINTMENT\020\010\022\035\n\031LIST_NEAREST" +
+      "_APPOINTMENTS\020\t\022\036\n\032LIST_VISITING_APPOINT" +
+      "MENTS\020\n\022\016\n\nLIST_USERS\020\013\022\034\n\030LIST_HOSTED_A" +
+      "PPOINTMENTS\020\014\022\016\n\nNO_MESSAGE\020\024\"\'\n\005Login\022\014" +
+      "\n\004name\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\",\n\nCreate",
+      "User\022\014\n\004name\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\"W\n\013" +
+      "ChatMessage\022\025\n\rsecurityToken\030\001 \001(\t\022\017\n\007me" +
+      "ssage\030\002 \002(\t\022\020\n\010friendID\030\003 \002(\005\022\016\n\006userID\030" +
+      "\004 \002(\005\"G\n\013GetMessages\022\025\n\rsecurityToken\030\001 " +
+      "\002(\t\022\021\n\tfriendIDs\030\002 \003(\005\022\016\n\006userID\030\003 \002(\005\"\220" +
+      "\001\n\021CreateAppointment\022\025\n\rsecurityToken\030\001 " +
+      "\002(\t\022T\n\013appointment\030\002 \002(\0132?.de.tubs.andro" +
+      "idlab.instameet.server.protobuf.SimpleAp" +
+      "pointment\022\016\n\006userID\030\003 \002(\005\"P\n\020VisitAppoin" +
+      "tment\022\025\n\rsecurityToken\030\001 \002(\t\022\025\n\rappointm",
+      "entID\030\002 \002(\005\022\016\n\006userID\030\003 \002(\005\"\206\001\n\023GetNearA" +
+      "ppointments\022\025\n\rsecurityToken\030\001 \002(\t\022H\n\010lo" +
+      "cation\030\002 \001(\01326.de.tubs.androidlab.instam" +
+      "eet.server.protobuf.Location\022\016\n\006userID\030\003" +
+      " \002(\005\">\n\025GetHostedAppointments\022\025\n\rsecurit" +
+      "yToken\030\001 \002(\t\022\016\n\006userID\030\002 \002(\005\"_\n\020AddFrien" +
+      "dRequest\022\025\n\rsecurityToken\030\001 \002(\t\022\020\n\010frien" +
+      "dID\030\002 \001(\005\022\022\n\nfriendName\030\003 \001(\t\022\016\n\006userID\030" +
+      "\004 \002(\005\"o\n\016AddFriendReply\022\025\n\rsecurityToken" +
+      "\030\001 \002(\t\022\020\n\010friendID\030\002 \001(\005\022\022\n\nfriendName\030\003",
+      " \001(\t\022\016\n\006userID\030\004 \002(\005\022\020\n\010accepted\030\005 \002(\010\"3" +
+      "\n\nGetOwnData\022\025\n\rsecurityToken\030\001 \002(\t\022\016\n\006u" +
+      "serID\030\002 \001(\005\"F\n\nGetFriends\022\025\n\rsecurityTok" +
+      "en\030\001 \002(\t\022\021\n\tfriendIDs\030\002 \003(\005\022\016\n\006userID\030\003 " +
+      "\002(\005\"D\n\010GetUsers\022\025\n\rsecurityToken\030\001 \002(\t\022\021" +
+      "\n\tfriendIDs\030\002 \003(\005\022\016\n\006userID\030\003 \002(\005\"L\n\021Get" +
+      "FriendLocation\022\025\n\rsecurityToken\030\001 \002(\t\022\020\n" +
+      "\010friendID\030\002 \002(\005\022\016\n\006userID\030\003 \002(\005\"B\n\031GetMy" +
+      "VisitingAppointments\022\025\n\rsecurityToken\030\001 " +
+      "\002(\t\022\016\n\006userID\030\002 \002(\005\"\201\001\n\016UpdateLocation\022\025",
+      "\n\rsecurityToken\030\001 \002(\t\022H\n\010location\030\002 \002(\0132" +
+      "6.de.tubs.androidlab.instameet.server.pr" +
+      "otobuf.Location\022\016\n\006userID\030\003 \002(\005\"H\n\016GetUs" +
+      "ersByName\022\025\n\rsecurityToken\030\001 \002(\t\022\016\n\006user" +
+      "ID\030\002 \002(\005\022\017\n\007subName\030\003 \002(\t\"X\n\013ListFriends" +
+      "\022I\n\007friends\030\001 \003(\01328.de.tubs.androidlab.i" +
+      "nstameet.server.protobuf.SimpleUser\"T\n\tL" +
+      "istUsers\022G\n\005users\030\001 \003(\01328.de.tubs.androi" +
+      "dlab.instameet.server.protobuf.SimpleUse" +
+      "r\"Y\n\rListLocations\022H\n\010location\030\001 \003(\01326.d",
+      "e.tubs.androidlab.instameet.server.proto" +
+      "buf.Location\"_\n\020ListChatMessages\022K\n\010mess" +
+      "ages\030\001 \003(\01329.de.tubs.androidlab.instamee" +
+      "t.server.protobuf.ChatMessage\"\033\n\tBoolRep" +
+      "ly\022\016\n\006isTrue\030\001 \002(\010\"U\n\007OwnData\022J\n\010userDat" +
+      "a\030\001 \002(\01328.de.tubs.androidlab.instameet.s" +
+      "erver.protobuf.SimpleUser\"p\n\027ListNearest" +
+      "Appointments\022U\n\014appointments\030\001 \003(\0132?.de." +
       "tubs.androidlab.instameet.server.protobu" +
-      "f.Pair_Double_SimpleAppointment\"k\n\020MapAp" +
-      "pointmentID\022W\n\003map\030\001 \003(\0132J.de.tubs.andro" +
-      "idlab.instameet.server.protobuf.Pair_Int",
-      "32_SimpleAppointment\"]\n\tMapUserID\022P\n\003map" +
-      "\030\001 \003(\0132C.de.tubs.androidlab.instameet.se" +
-      "rver.protobuf.Pair_Int32_SimpleUser\"m\n\025P" +
-      "air_Int32_SimpleUser\022\013\n\003key\030\001 \002(\005\022G\n\005val" +
-      "ue\030\002 \002(\01328.de.tubs.androidlab.instameet." +
-      "server.protobuf.SimpleUser\"{\n\034Pair_Int32" +
-      "_SimpleAppointment\022\013\n\003key\030\001 \002(\005\022N\n\005value" +
-      "\030\002 \002(\0132?.de.tubs.androidlab.instameet.se" +
-      "rver.protobuf.SimpleAppointment\"|\n\035Pair_" +
-      "Double_SimpleAppointment\022\013\n\003key\030\001 \002(\001\022N\n",
-      "\005value\030\002 \002(\0132?.de.tubs.androidlab.instam" +
-      "eet.server.protobuf.SimpleAppointmentB\nB" +
-      "\010Messages"
+      "f.SimpleAppointment\"q\n\030ListVisitingAppoi",
+      "ntments\022U\n\014appointments\030\001 \003(\0132?.de.tubs." +
+      "androidlab.instameet.server.protobuf.Sim" +
+      "pleAppointment\"o\n\026ListHostedAppointments" +
+      "\022U\n\014appointments\030\001 \003(\0132?.de.tubs.android" +
+      "lab.instameet.server.protobuf.SimpleAppo" +
+      "intment\"\301\001\n\021SimpleAppointment\022\n\n\002id\030\001 \002(" +
+      "\005\022\r\n\005title\030\002 \002(\t\022H\n\010location\030\003 \002(\01326.de." +
+      "tubs.androidlab.instameet.server.protobu" +
+      "f.Location\022\014\n\004time\030\004 \002(\003\022\016\n\006hoster\030\005 \002(\005" +
+      "\022\024\n\014participants\030\006 \003(\005\022\023\n\013description\030\007 ",
+      "\002(\t\"\347\001\n\nSimpleUser\022\020\n\010userName\030\001 \002(\t\022\016\n\006" +
+      "userID\030\002 \002(\005\022\034\n\024latestLocationUpdate\030\003 \001" +
+      "(\003\022H\n\010location\030\004 \001(\01326.de.tubs.androidla" +
+      "b.instameet.server.protobuf.Location\022\021\n\t" +
+      "friendIDs\030\005 \003(\005\022\034\n\024hostedAppointmentIDs\030" +
+      "\006 \003(\005\022\036\n\026visitingAppointmentIDs\030\007 \003(\005\"0\n" +
+      "\010Location\022\021\n\tlongitude\030\001 \002(\001\022\021\n\tlattitud" +
+      "e\030\002 \002(\001\"\036\n\rSecurityToken\022\r\n\005token\030\001 \002(\t\"" +
+      "\013\n\tNoMessage\"f\n\nMapFriends\022X\n\003map\030\001 \002(\0132" +
+      "K.de.tubs.androidlab.instameet.server.pr",
+      "otobuf.Pair_Double_SimpleAppointment\"r\n\026" +
+      "MapAppointmentDistance\022X\n\003map\030\001 \003(\0132K.de" +
+      ".tubs.androidlab.instameet.server.protob" +
+      "uf.Pair_Double_SimpleAppointment\"k\n\020MapA" +
+      "ppointmentID\022W\n\003map\030\001 \003(\0132J.de.tubs.andr" +
+      "oidlab.instameet.server.protobuf.Pair_In" +
+      "t32_SimpleAppointment\"]\n\tMapUserID\022P\n\003ma" +
+      "p\030\001 \003(\0132C.de.tubs.androidlab.instameet.s" +
+      "erver.protobuf.Pair_Int32_SimpleUser\"m\n\025" +
+      "Pair_Int32_SimpleUser\022\013\n\003key\030\001 \002(\005\022G\n\005va",
+      "lue\030\002 \002(\01328.de.tubs.androidlab.instameet" +
+      ".server.protobuf.SimpleUser\"{\n\034Pair_Int3" +
+      "2_SimpleAppointment\022\013\n\003key\030\001 \002(\005\022N\n\005valu" +
+      "e\030\002 \002(\0132?.de.tubs.androidlab.instameet.s" +
+      "erver.protobuf.SimpleAppointment\"|\n\035Pair" +
+      "_Double_SimpleAppointment\022\013\n\003key\030\001 \002(\001\022N" +
+      "\n\005value\030\002 \002(\0132?.de.tubs.androidlab.insta" +
+      "meet.server.protobuf.SimpleAppointmentB\n" +
+      "B\010Messages"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -33265,7 +34174,7 @@ public final class Messages {
     internal_static_de_tubs_androidlab_instameet_server_protobuf_ClientResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_ClientResponse_descriptor,
-        new java.lang.String[] { "Type", "ListFriends", "ListLocations", "ListChatMessages", "BoolReply", "Token", "Message", "UserData", "NoMessage", "Appointment", "ListNearestAppointments", "ListVisitingAppointment", "ListUsers", "MessageID", });
+        new java.lang.String[] { "Type", "ListFriends", "ListLocations", "ListChatMessages", "BoolReply", "Token", "Message", "UserData", "NoMessage", "Appointment", "ListNearestAppointments", "ListVisitingAppointment", "ListUsers", "HostedAppointments", "MessageID", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Login_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Login_fieldAccessorTable = new
@@ -33416,74 +34325,80 @@ public final class Messages {
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_ListVisitingAppointments_descriptor,
         new java.lang.String[] { "Appointments", });
-    internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleAppointment_descriptor =
+    internal_static_de_tubs_androidlab_instameet_server_protobuf_ListHostedAppointments_descriptor =
       getDescriptor().getMessageTypes().get(27);
+    internal_static_de_tubs_androidlab_instameet_server_protobuf_ListHostedAppointments_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_de_tubs_androidlab_instameet_server_protobuf_ListHostedAppointments_descriptor,
+        new java.lang.String[] { "Appointments", });
+    internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleAppointment_descriptor =
+      getDescriptor().getMessageTypes().get(28);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleAppointment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleAppointment_descriptor,
         new java.lang.String[] { "Id", "Title", "Location", "Time", "Hoster", "Participants", "Description", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleUser_descriptor =
-      getDescriptor().getMessageTypes().get(28);
+      getDescriptor().getMessageTypes().get(29);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleUser_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_SimpleUser_descriptor,
         new java.lang.String[] { "UserName", "UserID", "LatestLocationUpdate", "Location", "FriendIDs", "HostedAppointmentIDs", "VisitingAppointmentIDs", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Location_descriptor =
-      getDescriptor().getMessageTypes().get(29);
+      getDescriptor().getMessageTypes().get(30);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Location_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_Location_descriptor,
         new java.lang.String[] { "Longitude", "Lattitude", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SecurityToken_descriptor =
-      getDescriptor().getMessageTypes().get(30);
+      getDescriptor().getMessageTypes().get(31);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_SecurityToken_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_SecurityToken_descriptor,
         new java.lang.String[] { "Token", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_NoMessage_descriptor =
-      getDescriptor().getMessageTypes().get(31);
+      getDescriptor().getMessageTypes().get(32);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_NoMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_NoMessage_descriptor,
         new java.lang.String[] { });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapFriends_descriptor =
-      getDescriptor().getMessageTypes().get(32);
+      getDescriptor().getMessageTypes().get(33);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapFriends_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_MapFriends_descriptor,
         new java.lang.String[] { "Map", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapAppointmentDistance_descriptor =
-      getDescriptor().getMessageTypes().get(33);
+      getDescriptor().getMessageTypes().get(34);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapAppointmentDistance_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_MapAppointmentDistance_descriptor,
         new java.lang.String[] { "Map", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapAppointmentID_descriptor =
-      getDescriptor().getMessageTypes().get(34);
+      getDescriptor().getMessageTypes().get(35);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapAppointmentID_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_MapAppointmentID_descriptor,
         new java.lang.String[] { "Map", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapUserID_descriptor =
-      getDescriptor().getMessageTypes().get(35);
+      getDescriptor().getMessageTypes().get(36);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_MapUserID_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_MapUserID_descriptor,
         new java.lang.String[] { "Map", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Int32_SimpleUser_descriptor =
-      getDescriptor().getMessageTypes().get(36);
+      getDescriptor().getMessageTypes().get(37);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Int32_SimpleUser_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Int32_SimpleUser_descriptor,
         new java.lang.String[] { "Key", "Value", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Int32_SimpleAppointment_descriptor =
-      getDescriptor().getMessageTypes().get(37);
+      getDescriptor().getMessageTypes().get(38);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Int32_SimpleAppointment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Int32_SimpleAppointment_descriptor,
         new java.lang.String[] { "Key", "Value", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Double_SimpleAppointment_descriptor =
-      getDescriptor().getMessageTypes().get(38);
+      getDescriptor().getMessageTypes().get(39);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Double_SimpleAppointment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_Pair_Double_SimpleAppointment_descriptor,

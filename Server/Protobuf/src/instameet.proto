@@ -67,6 +67,7 @@ message ClientResponse {
 		LIST_NEAREST_APPOINTMENTS=9;
 		LIST_VISITING_APPOINTMENTS=10;
 		LIST_USERS = 11;
+		LIST_HOSTED_APPOINTMENTS = 12;
 		NO_MESSAGE = 20;
 	};
 	
@@ -84,8 +85,9 @@ message ClientResponse {
 	optional ListNearestAppointments listNearestAppointments = 12;
 	optional ListVisitingAppointments listVisitingAppointment = 13;
 	optional ListUsers listUsers = 14;
+	optional ListHostedAppointments hostedAppointments = 15;
 		
-	optional string messageID = 15;
+	optional string messageID = 20;
 }
 
 
@@ -224,6 +226,10 @@ message ListNearestAppointments {
 }
 
 message ListVisitingAppointments {
+	repeated SimpleAppointment appointments = 1;
+}
+
+message ListHostedAppointments {
 	repeated SimpleAppointment appointments = 1;
 }
 
