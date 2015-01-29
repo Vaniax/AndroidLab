@@ -197,6 +197,20 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		client.insertToQueue(request);		
 	}	
 	
+	public void fetchUsersByName(String subString) {
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		Messages.GetUsersByName userByName = Messages.GetUsersByName.newBuilder()
+				.setUserID(ownData.getId())
+				.setSecurityToken(token)
+				.setSubName(subString)
+				.build();
+		Messages.ServerRequest request = Messages.ServerRequest.newBuilder()
+				.setType(Type.GET_USERS_BY_NAME)
+				.setGetUsersByName(userByName)
+				.build();
+		client.insertToQueue(request);
+	}
+	
 	public List<SimpleAppointment> getNearAppointments() {
 		List<SimpleAppointment> apps = new ArrayList<SimpleAppointment>();
 		for(int appId : nearAppList) {
@@ -238,7 +252,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		}
 		return hostedAppointments;
 	}		
-	
+		
 	// Only for some stupid dummy testing
 	// Synchronization not necessary here
 	public void sendDummyMessage(String msg) {
@@ -328,10 +342,9 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				.setCreateAppointment(createApp)
 				.build();
 		this.client.insertToQueue(request);
-
 	}
 	
-	private de.tubs.androidlab.instameet.server.protobuf.Messages.SimpleAppointment createMessageAppFromApp(SimpleAppointment app) {
+	private Messages.SimpleAppointment createMessageAppFromApp(SimpleAppointment app) {
 		Messages.SimpleAppointment.Builder msgApp = Messages.SimpleAppointment.newBuilder();
 		msgApp.setId(app.getId());
 		msgApp.setTitle(app.getTitle());
@@ -364,7 +377,6 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		return chatMessagesNew;
 	}
 	
-	
 	public List<ChatMessageProxy> getHistoryMessages(int friendID) {
 		if (!chatMessageHistory.containsKey(friendID)) {
 			List<ChatMessageProxy> newList = new ArrayList<ChatMessageProxy>();
@@ -372,6 +384,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		}
 		return chatMessageHistory.get(friendID);
 	}
+	
 	public class IncomingMessageProcessor implements ReceivedMessageCallbacks {
 
 		private final static String TAG = "InstaMeetService MessageProcessor";

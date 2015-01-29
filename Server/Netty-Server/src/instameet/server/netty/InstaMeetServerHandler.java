@@ -1,6 +1,7 @@
 package instameet.server.netty;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -12,6 +13,7 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.BoolReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ClientResponse;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.CreateUser;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.GetUsersByName;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.SecurityToken;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
@@ -219,6 +221,25 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		   checkChannel(userIDChannel,ctx.channel());
 			//TODO: notify requesting user if friendship was accepted or not			
 		} break;
+		case GET_USERS_BY_NAME: {
+			Messages.GetUsersByName message = msg.getGetUsersByName();
+			List<SimpleUser> users = service.getUsersByName(message.getSecurityToken(), message.getUserID(), message.getSubName());
+
+			Messages.ListUsers userList = Messages.ListUsers.newBuilder()
+					.addAllUsers(createSimpleUserList(users))
+					.build();
+			
+			Messages.ClientResponse response = Messages.ClientResponse.newBuilder()
+					.setType(Type.LIST_USERS)
+					.setListUsers(userList)
+					.build();
+					
+			
+		    int userIDChannel = message.getUserID();
+		    checkChannel(userIDChannel,ctx.channel());
+		    
+		    ctx.writeAndFlush(response);
+		} break;
 		default:
 			break;
 		}
@@ -271,6 +292,15 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		
 		return userBuild.build();
 		
+	}
+	
+	private List<Messages.SimpleUser> createSimpleUserList(List<SimpleUser> users)
+	{
+		List<Messages.SimpleUser> result = new ArrayList<Messages.SimpleUser>();
+		for(SimpleUser user : users) {
+			result.add(createSimpleUserBuilder(user));
+		}
+		return result;
 	}
 	
 	private void checkChannel(int userID, Channel channel) {
