@@ -381,6 +381,12 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		return users.get(userID);
 	}
 	
+	public SimpleAppointment getAppointment(int appId) {
+		if(appointments.containsKey(appId))
+			return appointments.get(appId);
+		return null;
+	}
+	
 	public List<ChatMessageProxy> getNewMessagesAndRemove(int friendID) {
 		return chatMessagesNew.remove(friendID);
 	}	
