@@ -144,10 +144,12 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
     		        	//TODO: Get and Display your visiting Appointments from Service
     		    		List<SimpleAppointment> visitingApps = service.getVisitingAppointments();
     		    		for(final SimpleAppointment a : visitingApps) {
-	    	    	        Marker mark = mMap.addMarker(new MarkerOptions().position(new LatLng(a.getLattitude(), a.getLongitude()))
-	    	    	        		.title(a.getTitle())
-	    	    	        		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-	    	    	        visitingAppMarker.put(mark, a);    		    			
+    		    			if(!hostedApps.contains(a)) {
+		    	    	        Marker mark = mMap.addMarker(new MarkerOptions().position(new LatLng(a.getLattitude(), a.getLongitude()))
+		    	    	        		.title(a.getTitle())
+		    	    	        		.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+		    	    	        visitingAppMarker.put(mark, a);    		
+    		    			}
     		    		}   		    		
     		        	//TODO: Get and Display near appointments from Service   		    		
     		    		List<SimpleAppointment> nearApps = service.getNearAppointments();
