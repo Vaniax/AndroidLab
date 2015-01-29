@@ -152,8 +152,11 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		//TODO: check, if all fields are vaild!
 		//TODO: save appointment
 		if(isNewAppointment) {
-			//... appointmentId ...
-			//...
+			appointment.setTitle(editTitle.getText().toString());
+			appointment.setDescription(editDescription.getText().toString());
+			//TODO: Send createAppointment via Service
+			//service.createAppointment(ownUserId, appointment);
+
 		}
 		finish();
 	}
