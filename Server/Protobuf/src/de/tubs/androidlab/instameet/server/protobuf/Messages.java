@@ -18594,33 +18594,24 @@ public final class Messages {
         getSecurityTokenBytes();
 
     /**
-     * <code>required int32 userID = 3;</code>
+     * <code>required int32 userID = 2;</code>
      */
     boolean hasUserID();
     /**
-     * <code>required int32 userID = 3;</code>
+     * <code>required int32 userID = 2;</code>
      */
     int getUserID();
 
     /**
-     * <code>required int32 friendID = 4;</code>
-     */
-    boolean hasFriendID();
-    /**
-     * <code>required int32 friendID = 4;</code>
-     */
-    int getFriendID();
-
-    /**
-     * <code>required string subName = 5;</code>
+     * <code>required string subName = 3;</code>
      */
     boolean hasSubName();
     /**
-     * <code>required string subName = 5;</code>
+     * <code>required string subName = 3;</code>
      */
     java.lang.String getSubName();
     /**
-     * <code>required string subName = 5;</code>
+     * <code>required string subName = 3;</code>
      */
     com.google.protobuf.ByteString
         getSubNameBytes();
@@ -18683,19 +18674,14 @@ public final class Messages {
               securityToken_ = bs;
               break;
             }
-            case 24: {
+            case 16: {
               bitField0_ |= 0x00000002;
               userID_ = input.readInt32();
               break;
             }
-            case 32: {
-              bitField0_ |= 0x00000004;
-              friendID_ = input.readInt32();
-              break;
-            }
-            case 42: {
+            case 26: {
               com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000004;
               subName_ = bs;
               break;
             }
@@ -18781,46 +18767,31 @@ public final class Messages {
       }
     }
 
-    public static final int USERID_FIELD_NUMBER = 3;
+    public static final int USERID_FIELD_NUMBER = 2;
     private int userID_;
     /**
-     * <code>required int32 userID = 3;</code>
+     * <code>required int32 userID = 2;</code>
      */
     public boolean hasUserID() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required int32 userID = 3;</code>
+     * <code>required int32 userID = 2;</code>
      */
     public int getUserID() {
       return userID_;
     }
 
-    public static final int FRIENDID_FIELD_NUMBER = 4;
-    private int friendID_;
+    public static final int SUBNAME_FIELD_NUMBER = 3;
+    private java.lang.Object subName_;
     /**
-     * <code>required int32 friendID = 4;</code>
+     * <code>required string subName = 3;</code>
      */
-    public boolean hasFriendID() {
+    public boolean hasSubName() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>required int32 friendID = 4;</code>
-     */
-    public int getFriendID() {
-      return friendID_;
-    }
-
-    public static final int SUBNAME_FIELD_NUMBER = 5;
-    private java.lang.Object subName_;
-    /**
-     * <code>required string subName = 5;</code>
-     */
-    public boolean hasSubName() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
-    }
-    /**
-     * <code>required string subName = 5;</code>
+     * <code>required string subName = 3;</code>
      */
     public java.lang.String getSubName() {
       java.lang.Object ref = subName_;
@@ -18837,7 +18808,7 @@ public final class Messages {
       }
     }
     /**
-     * <code>required string subName = 5;</code>
+     * <code>required string subName = 3;</code>
      */
     public com.google.protobuf.ByteString
         getSubNameBytes() {
@@ -18856,7 +18827,6 @@ public final class Messages {
     private void initFields() {
       securityToken_ = "";
       userID_ = 0;
-      friendID_ = 0;
       subName_ = "";
     }
     private byte memoizedIsInitialized = -1;
@@ -18870,10 +18840,6 @@ public final class Messages {
         return false;
       }
       if (!hasUserID()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasFriendID()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -18892,13 +18858,10 @@ public final class Messages {
         output.writeBytes(1, getSecurityTokenBytes());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeInt32(3, userID_);
+        output.writeInt32(2, userID_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeInt32(4, friendID_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        output.writeBytes(5, getSubNameBytes());
+        output.writeBytes(3, getSubNameBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -18915,15 +18878,11 @@ public final class Messages {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, userID_);
+          .computeInt32Size(2, userID_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(4, friendID_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBytesSize(5, getSubNameBytes());
+          .computeBytesSize(3, getSubNameBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -19046,10 +19005,8 @@ public final class Messages {
         bitField0_ = (bitField0_ & ~0x00000001);
         userID_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
-        friendID_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000004);
         subName_ = "";
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -19089,10 +19046,6 @@ public final class Messages {
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        result.friendID_ = friendID_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
-        }
         result.subName_ = subName_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
@@ -19118,11 +19071,8 @@ public final class Messages {
         if (other.hasUserID()) {
           setUserID(other.getUserID());
         }
-        if (other.hasFriendID()) {
-          setFriendID(other.getFriendID());
-        }
         if (other.hasSubName()) {
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000004;
           subName_ = other.subName_;
           onChanged();
         }
@@ -19136,10 +19086,6 @@ public final class Messages {
           return false;
         }
         if (!hasUserID()) {
-          
-          return false;
-        }
-        if (!hasFriendID()) {
           
           return false;
         }
@@ -19247,19 +19193,19 @@ public final class Messages {
 
       private int userID_ ;
       /**
-       * <code>required int32 userID = 3;</code>
+       * <code>required int32 userID = 2;</code>
        */
       public boolean hasUserID() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required int32 userID = 3;</code>
+       * <code>required int32 userID = 2;</code>
        */
       public int getUserID() {
         return userID_;
       }
       /**
-       * <code>required int32 userID = 3;</code>
+       * <code>required int32 userID = 2;</code>
        */
       public Builder setUserID(int value) {
         bitField0_ |= 0x00000002;
@@ -19268,7 +19214,7 @@ public final class Messages {
         return this;
       }
       /**
-       * <code>required int32 userID = 3;</code>
+       * <code>required int32 userID = 2;</code>
        */
       public Builder clearUserID() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -19277,47 +19223,15 @@ public final class Messages {
         return this;
       }
 
-      private int friendID_ ;
+      private java.lang.Object subName_ = "";
       /**
-       * <code>required int32 friendID = 4;</code>
+       * <code>required string subName = 3;</code>
        */
-      public boolean hasFriendID() {
+      public boolean hasSubName() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>required int32 friendID = 4;</code>
-       */
-      public int getFriendID() {
-        return friendID_;
-      }
-      /**
-       * <code>required int32 friendID = 4;</code>
-       */
-      public Builder setFriendID(int value) {
-        bitField0_ |= 0x00000004;
-        friendID_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>required int32 friendID = 4;</code>
-       */
-      public Builder clearFriendID() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        friendID_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object subName_ = "";
-      /**
-       * <code>required string subName = 5;</code>
-       */
-      public boolean hasSubName() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
-      }
-      /**
-       * <code>required string subName = 5;</code>
+       * <code>required string subName = 3;</code>
        */
       public java.lang.String getSubName() {
         java.lang.Object ref = subName_;
@@ -19334,7 +19248,7 @@ public final class Messages {
         }
       }
       /**
-       * <code>required string subName = 5;</code>
+       * <code>required string subName = 3;</code>
        */
       public com.google.protobuf.ByteString
           getSubNameBytes() {
@@ -19350,36 +19264,36 @@ public final class Messages {
         }
       }
       /**
-       * <code>required string subName = 5;</code>
+       * <code>required string subName = 3;</code>
        */
       public Builder setSubName(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  bitField0_ |= 0x00000004;
         subName_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required string subName = 5;</code>
+       * <code>required string subName = 3;</code>
        */
       public Builder clearSubName() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
         subName_ = getDefaultInstance().getSubName();
         onChanged();
         return this;
       }
       /**
-       * <code>required string subName = 5;</code>
+       * <code>required string subName = 3;</code>
        */
       public Builder setSubNameBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  bitField0_ |= 0x00000004;
         subName_ = value;
         onChanged();
         return this;
@@ -32368,58 +32282,57 @@ public final class Messages {
       "\201\001\n\016UpdateLocation\022\025\n\rsecurityToken\030\001 \002(" +
       "\t\022H\n\010location\030\002 \002(\01326.de.tubs.androidlab" +
       ".instameet.server.protobuf.Location\022\016\n\006u" +
-      "serID\030\003 \002(\005\"Z\n\016GetUsersByName\022\025\n\rsecurit" +
-      "yToken\030\001 \002(\t\022\016\n\006userID\030\003 \002(\005\022\020\n\010friendID" +
-      "\030\004 \002(\005\022\017\n\007subName\030\005 \002(\t\"X\n\013ListFriends\022I",
-      "\n\007friends\030\001 \003(\01328.de.tubs.androidlab.ins" +
-      "tameet.server.protobuf.SimpleUser\"Y\n\rLis" +
-      "tLocations\022H\n\010location\030\001 \003(\01326.de.tubs.a" +
-      "ndroidlab.instameet.server.protobuf.Loca" +
-      "tion\"_\n\020ListChatMessages\022K\n\010messages\030\001 \003" +
-      "(\01329.de.tubs.androidlab.instameet.server" +
-      ".protobuf.ChatMessage\"\033\n\tBoolReply\022\016\n\006is" +
-      "True\030\001 \002(\010\"U\n\007OwnData\022J\n\010userData\030\001 \002(\0132" +
-      "8.de.tubs.androidlab.instameet.server.pr" +
-      "otobuf.SimpleUser\"p\n\027ListNearestAppointm",
-      "ents\022U\n\014appointments\030\001 \003(\0132?.de.tubs.and" +
-      "roidlab.instameet.server.protobuf.Simple" +
-      "Appointment\"q\n\030ListVisitingAppointments\022" +
-      "U\n\014appointments\030\001 \003(\0132?.de.tubs.androidl" +
-      "ab.instameet.server.protobuf.SimpleAppoi" +
-      "ntment\"\301\001\n\021SimpleAppointment\022\n\n\002id\030\001 \002(\005" +
-      "\022\r\n\005title\030\002 \002(\t\022H\n\010location\030\003 \002(\01326.de.t" +
-      "ubs.androidlab.instameet.server.protobuf" +
-      ".Location\022\014\n\004time\030\004 \002(\003\022\016\n\006hoster\030\005 \002(\005\022" +
-      "\024\n\014participants\030\006 \003(\005\022\023\n\013description\030\007 \002",
-      "(\t\"\347\001\n\nSimpleUser\022\020\n\010userName\030\001 \002(\t\022\016\n\006u" +
-      "serID\030\002 \002(\005\022\034\n\024latestLocationUpdate\030\003 \001(" +
-      "\003\022H\n\010location\030\004 \001(\01326.de.tubs.androidlab" +
-      ".instameet.server.protobuf.Location\022\021\n\tf" +
-      "riendIDs\030\005 \003(\005\022\034\n\024hostedAppointmentIDs\030\006" +
-      " \003(\005\022\036\n\026visitingAppointmentIDs\030\007 \003(\005\"0\n\010" +
-      "Location\022\021\n\tlongitude\030\001 \002(\001\022\021\n\tlattitude" +
-      "\030\002 \002(\001\"\036\n\rSecurityToken\022\r\n\005token\030\001 \002(\t\"\013" +
-      "\n\tNoMessage\"f\n\nMapFriends\022X\n\003map\030\001 \002(\0132K" +
-      ".de.tubs.androidlab.instameet.server.pro",
-      "tobuf.Pair_Double_SimpleAppointment\"r\n\026M" +
-      "apAppointmentDistance\022X\n\003map\030\001 \003(\0132K.de." +
+      "serID\030\003 \002(\005\"H\n\016GetUsersByName\022\025\n\rsecurit" +
+      "yToken\030\001 \002(\t\022\016\n\006userID\030\002 \002(\005\022\017\n\007subName\030" +
+      "\003 \002(\t\"X\n\013ListFriends\022I\n\007friends\030\001 \003(\01328.",
+      "de.tubs.androidlab.instameet.server.prot" +
+      "obuf.SimpleUser\"Y\n\rListLocations\022H\n\010loca" +
+      "tion\030\001 \003(\01326.de.tubs.androidlab.instamee" +
+      "t.server.protobuf.Location\"_\n\020ListChatMe" +
+      "ssages\022K\n\010messages\030\001 \003(\01329.de.tubs.andro" +
+      "idlab.instameet.server.protobuf.ChatMess" +
+      "age\"\033\n\tBoolReply\022\016\n\006isTrue\030\001 \002(\010\"U\n\007OwnD" +
+      "ata\022J\n\010userData\030\001 \002(\01328.de.tubs.androidl" +
+      "ab.instameet.server.protobuf.SimpleUser\"" +
+      "p\n\027ListNearestAppointments\022U\n\014appointmen",
+      "ts\030\001 \003(\0132?.de.tubs.androidlab.instameet." +
+      "server.protobuf.SimpleAppointment\"q\n\030Lis" +
+      "tVisitingAppointments\022U\n\014appointments\030\001 " +
+      "\003(\0132?.de.tubs.androidlab.instameet.serve" +
+      "r.protobuf.SimpleAppointment\"\301\001\n\021SimpleA" +
+      "ppointment\022\n\n\002id\030\001 \002(\005\022\r\n\005title\030\002 \002(\t\022H\n" +
+      "\010location\030\003 \002(\01326.de.tubs.androidlab.ins" +
+      "tameet.server.protobuf.Location\022\014\n\004time\030" +
+      "\004 \002(\003\022\016\n\006hoster\030\005 \002(\005\022\024\n\014participants\030\006 " +
+      "\003(\005\022\023\n\013description\030\007 \002(\t\"\347\001\n\nSimpleUser\022",
+      "\020\n\010userName\030\001 \002(\t\022\016\n\006userID\030\002 \002(\005\022\034\n\024lat" +
+      "estLocationUpdate\030\003 \001(\003\022H\n\010location\030\004 \001(" +
+      "\01326.de.tubs.androidlab.instameet.server." +
+      "protobuf.Location\022\021\n\tfriendIDs\030\005 \003(\005\022\034\n\024" +
+      "hostedAppointmentIDs\030\006 \003(\005\022\036\n\026visitingAp" +
+      "pointmentIDs\030\007 \003(\005\"0\n\010Location\022\021\n\tlongit" +
+      "ude\030\001 \002(\001\022\021\n\tlattitude\030\002 \002(\001\"\036\n\rSecurity" +
+      "Token\022\r\n\005token\030\001 \002(\t\"\013\n\tNoMessage\"f\n\nMap" +
+      "Friends\022X\n\003map\030\001 \002(\0132K.de.tubs.androidla" +
+      "b.instameet.server.protobuf.Pair_Double_",
+      "SimpleAppointment\"r\n\026MapAppointmentDista" +
+      "nce\022X\n\003map\030\001 \003(\0132K.de.tubs.androidlab.in" +
+      "stameet.server.protobuf.Pair_Double_Simp" +
+      "leAppointment\"k\n\020MapAppointmentID\022W\n\003map" +
+      "\030\001 \003(\0132J.de.tubs.androidlab.instameet.se" +
+      "rver.protobuf.Pair_Int32_SimpleAppointme" +
+      "nt\"]\n\tMapUserID\022P\n\003map\030\001 \003(\0132C.de.tubs.a" +
+      "ndroidlab.instameet.server.protobuf.Pair" +
+      "_Int32_SimpleUser\"m\n\025Pair_Int32_SimpleUs" +
+      "er\022\013\n\003key\030\001 \002(\005\022G\n\005value\030\002 \002(\01328.de.tubs",
+      ".androidlab.instameet.server.protobuf.Si" +
+      "mpleUser\"{\n\034Pair_Int32_SimpleAppointment" +
+      "\022\013\n\003key\030\001 \002(\005\022N\n\005value\030\002 \002(\0132?.de.tubs.a" +
+      "ndroidlab.instameet.server.protobuf.Simp" +
+      "leAppointment\"|\n\035Pair_Double_SimpleAppoi" +
+      "ntment\022\013\n\003key\030\001 \002(\001\022N\n\005value\030\002 \002(\0132?.de." +
       "tubs.androidlab.instameet.server.protobu" +
-      "f.Pair_Double_SimpleAppointment\"k\n\020MapAp" +
-      "pointmentID\022W\n\003map\030\001 \003(\0132J.de.tubs.andro" +
-      "idlab.instameet.server.protobuf.Pair_Int" +
-      "32_SimpleAppointment\"]\n\tMapUserID\022P\n\003map" +
-      "\030\001 \003(\0132C.de.tubs.androidlab.instameet.se" +
-      "rver.protobuf.Pair_Int32_SimpleUser\"m\n\025P" +
-      "air_Int32_SimpleUser\022\013\n\003key\030\001 \002(\005\022G\n\005val",
-      "ue\030\002 \002(\01328.de.tubs.androidlab.instameet." +
-      "server.protobuf.SimpleUser\"{\n\034Pair_Int32" +
-      "_SimpleAppointment\022\013\n\003key\030\001 \002(\005\022N\n\005value" +
-      "\030\002 \002(\0132?.de.tubs.androidlab.instameet.se" +
-      "rver.protobuf.SimpleAppointment\"|\n\035Pair_" +
-      "Double_SimpleAppointment\022\013\n\003key\030\001 \002(\001\022N\n" +
-      "\005value\030\002 \002(\0132?.de.tubs.androidlab.instam" +
-      "eet.server.protobuf.SimpleAppointmentB\nB" +
-      "\010Messages"
+      "f.SimpleAppointmentB\nB\010Messages"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -32546,7 +32459,7 @@ public final class Messages {
     internal_static_de_tubs_androidlab_instameet_server_protobuf_GetUsersByName_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_de_tubs_androidlab_instameet_server_protobuf_GetUsersByName_descriptor,
-        new java.lang.String[] { "SecurityToken", "UserID", "FriendID", "SubName", });
+        new java.lang.String[] { "SecurityToken", "UserID", "SubName", });
     internal_static_de_tubs_androidlab_instameet_server_protobuf_ListFriends_descriptor =
       getDescriptor().getMessageTypes().get(19);
     internal_static_de_tubs_androidlab_instameet_server_protobuf_ListFriends_fieldAccessorTable = new

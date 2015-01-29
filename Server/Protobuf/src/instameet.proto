@@ -187,9 +187,8 @@ message UpdateLocation {
 
 message GetUsersByName {
 	required string securityToken = 1;
-	required int32 userID = 3;
-	required int32 friendID = 4;
-	required string subName = 5;
+	required int32 userID = 2;
+	required string subName = 3;
 };
 
 /// Server -> Client Replies
