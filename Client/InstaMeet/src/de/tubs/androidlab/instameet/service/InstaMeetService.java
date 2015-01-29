@@ -128,90 +128,8 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		}
 		return friends;
 	}
-		
-	public void fetchFriends() {
-		if(ownData == null || ownData.getFriends() == null) {
-			fetchOwnData();
-			return;
-		}
+	
 
-		GetFriends.Builder friendRequest = GetFriends.newBuilder();
-		for(int i : ownData.getFriends()) {
-			if(!users.containsKey(i)) {
-				friendRequest.addFriendIDs(i);
-			}
-		}
-		
-		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
-		friendRequest.setUserID(ownData.getId());
-		friendRequest.setSecurityToken(token);
-		ServerRequest request = ServerRequest
-				.newBuilder()
-				.setType(Type.GET_FRIENDS)
-				.setGetFriendList(friendRequest.build())
-				.build();
-		Log.d(TAG,token);
-		client.insertToQueue(request);
-	}
-	
-	public void fetchOwnData() {
-		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
-		GetOwnData t = GetOwnData.newBuilder().setSecurityToken(token).build();
-		ServerRequest request = ServerRequest
-				.newBuilder()
-				.setType(Type.GET_OWN_DATA)
-				.setGetOwnData(t)
-				.build();
-		client.insertToQueue(request);
-	}
-	
-	public void fetchNearAppointments() {
-		//TODO: replace dummy location
-		double lat = 5.3;
-		double lon = 3.3;
-		Location loc = Location.newBuilder().setLattitude(lat).setLongitude(lon).build();
-		
-		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
-		GetNearAppointments t = GetNearAppointments.newBuilder()
-				.setSecurityToken(token)
-				.setUserID(ownData.getId())
-				.setLocation(loc)
-				.build();
-		ServerRequest request = ServerRequest
-				.newBuilder()
-				.setType(Type.GET_NEAR_APPOINTMENTS)
-				.setGetNearAppointments(t)
-				.build();
-		client.insertToQueue(request);		
-	}
-
-	public void fetchVisitingAppointments() {
-		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
-		GetMyVisitingAppointments t = GetMyVisitingAppointments.newBuilder()
-				.setSecurityToken(token)
-				.setUserID(ownData.getId())
-				.build();
-		ServerRequest request = ServerRequest
-				.newBuilder()
-				.setType(Type.GET_MY_VISITING_APPOINTMENTS)
-				.setGetMyVisitingAppointments(t)
-				.build();
-		client.insertToQueue(request);		
-	}	
-	
-	public void fetchUsersByName(String subString) {
-		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
-		Messages.GetUsersByName userByName = Messages.GetUsersByName.newBuilder()
-				.setUserID(ownData.getId())
-				.setSecurityToken(token)
-				.setSubName(subString)
-				.build();
-		Messages.ServerRequest request = Messages.ServerRequest.newBuilder()
-				.setType(Type.GET_USERS_BY_NAME)
-				.setGetUsersByName(userByName)
-				.build();
-		client.insertToQueue(request);
-	}
 	
 	public List<SimpleAppointment> getNearAppointments() {
 		List<SimpleAppointment> apps = new ArrayList<SimpleAppointment>();
@@ -332,6 +250,96 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		Log.d(TAG,"Insert send request to queue with content:\n" + addFriend.toString());
 	}
 	
+	@Override	
+	public void fetchFriends() {
+		if(ownData == null || ownData.getFriends() == null) {
+			fetchOwnData();
+			return;
+		}
+
+		GetFriends.Builder friendRequest = GetFriends.newBuilder();
+		for(int i : ownData.getFriends()) {
+			if(!users.containsKey(i)) {
+				friendRequest.addFriendIDs(i);
+			}
+		}
+		
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		friendRequest.setUserID(ownData.getId());
+		friendRequest.setSecurityToken(token);
+		ServerRequest request = ServerRequest
+				.newBuilder()
+				.setType(Type.GET_FRIENDS)
+				.setGetFriendList(friendRequest.build())
+				.build();
+		Log.d(TAG,token);
+		client.insertToQueue(request);
+	}
+	
+	@Override
+	public void fetchOwnData() {
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		GetOwnData t = GetOwnData.newBuilder().setSecurityToken(token).build();
+		ServerRequest request = ServerRequest
+				.newBuilder()
+				.setType(Type.GET_OWN_DATA)
+				.setGetOwnData(t)
+				.build();
+		client.insertToQueue(request);
+	}
+	
+	@Override
+	public void fetchNearAppointments() {
+		//TODO: replace dummy location
+		double lat = 5.3;
+		double lon = 3.3;
+		Location loc = Location.newBuilder().setLattitude(lat).setLongitude(lon).build();
+		
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		GetNearAppointments t = GetNearAppointments.newBuilder()
+				.setSecurityToken(token)
+				.setUserID(ownData.getId())
+				.setLocation(loc)
+				.build();
+		ServerRequest request = ServerRequest
+				.newBuilder()
+				.setType(Type.GET_NEAR_APPOINTMENTS)
+				.setGetNearAppointments(t)
+				.build();
+		client.insertToQueue(request);		
+	}
+
+	@Override
+	public void fetchVisitingAppointments() {
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		GetMyVisitingAppointments t = GetMyVisitingAppointments.newBuilder()
+				.setSecurityToken(token)
+				.setUserID(ownData.getId())
+				.build();
+		ServerRequest request = ServerRequest
+				.newBuilder()
+				.setType(Type.GET_MY_VISITING_APPOINTMENTS)
+				.setGetMyVisitingAppointments(t)
+				.build();
+		client.insertToQueue(request);		
+	}	
+	
+	@Override
+	public void fetchUsersByName(String subString) {
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		Messages.GetUsersByName userByName = Messages.GetUsersByName.newBuilder()
+				.setUserID(ownData.getId())
+				.setSecurityToken(token)
+				.setSubName(subString)
+				.build();
+		Messages.ServerRequest request = Messages.ServerRequest.newBuilder()
+				.setType(Type.GET_USERS_BY_NAME)
+				.setGetUsersByName(userByName)
+				.build();
+		client.insertToQueue(request);
+	}
+	
+	@Override
 	public void createAppointment(String securityToken, SimpleAppointment app) {
 		CreateAppointment createApp = CreateAppointment.newBuilder()
 				.setAppointment(createMessageAppFromApp(app))

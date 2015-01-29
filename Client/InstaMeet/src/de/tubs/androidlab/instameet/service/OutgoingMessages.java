@@ -1,11 +1,19 @@
 package de.tubs.androidlab.instameet.service;
 
+import simpleEntities.SimpleAppointment;
+
 public interface OutgoingMessages {
 	public void login(String name, String password);
 
 	public void createUser(String name, String password);
 
 	public void sendMessage(String message, int friendID);
+	public void fetchFriends();
+	public void fetchOwnData();
+	public void fetchNearAppointments();
+	public void fetchVisitingAppointments();
+	public void fetchUsersByName(String subString);
+	public void createAppointment(String securityToken, SimpleAppointment app);
 
 //	public void createAppointment(String SecurityToken, int userId,SimpleAppointment appointment);
 //

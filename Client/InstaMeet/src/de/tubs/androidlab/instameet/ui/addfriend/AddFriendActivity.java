@@ -64,15 +64,7 @@ public class AddFriendActivity extends Activity implements OnItemClickListener  
 				if (friendName.getText().toString().isEmpty()) {
 					Toast.makeText(AddFriendActivity.this, "Please enter a username", Toast.LENGTH_LONG).show();
 				} else if (pref.contains("securityToken")) {
-					searchButton.setEnabled(false);
 					service.fetchUsersByName(friendName.getText().toString());
-					//TODO: list all search results...
-					//service.addFriendRequest(token, friendName.getText().toString());
-//						List<SimpleUser> l = new ArrayList<SimpleUser>();
-//						SimpleUser s = new SimpleUser();
-//						s.setUsername("Peter");
-//						l.add(s); l.add(s); 
-//						adapter.setContacts(l);
 				} else {
 					Toast.makeText(AddFriendActivity.this, "Token not available", Toast.LENGTH_LONG).show();
 				}
