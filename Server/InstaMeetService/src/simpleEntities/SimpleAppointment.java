@@ -22,7 +22,7 @@ public class SimpleAppointment implements Serializable {
 	private double lattitude;
 	private double longitude;
 
-	private Timestamp startingTime;
+	private long startingTime;
 	private int hoster;
 	
 	private double distance;
@@ -70,11 +70,11 @@ public class SimpleAppointment implements Serializable {
 		this.longitude = longitude;
 	}
 
-	public Timestamp getStartingTime() {
+	public long getStartingTime() {
 		return startingTime;
 	}
 
-	public void setStartingTime(Timestamp startingTime) {
+	public void setStartingTime(long startingTime) {
 		this.startingTime = startingTime;
 	}
 

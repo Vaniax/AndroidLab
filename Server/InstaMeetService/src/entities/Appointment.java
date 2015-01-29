@@ -37,7 +37,7 @@ public class Appointment implements Serializable {
 		this.lattitude = app.getLattitude();
 		this.longitude = app.getLongitude();
 		
-		this.startingTime = app.getStartingTime();
+		this.startingTime = new Timestamp(app.getStartingTime());
 	}
 	
 
@@ -118,8 +118,8 @@ public class Appointment implements Serializable {
 		return this.startingTime;
 	}
 
-	public void setStartingTime(Timestamp startingTime) {
-		this.startingTime = startingTime;
+	public void setStartingTime(long startingTime) {
+		this.startingTime = new Timestamp(startingTime);
 	}
 
 	public String getTitle() {
@@ -208,7 +208,7 @@ public class Appointment implements Serializable {
 		app.setDescription(description);
 		app.setLattitude(lattitude);
 		app.setLongitude(longitude);
-		app.setStartingTime(startingTime);
+		app.setStartingTime(startingTime.getTime());
 		
 		app.setHoster(hoster.getId());
 		
