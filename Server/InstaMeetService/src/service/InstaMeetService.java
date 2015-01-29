@@ -1,5 +1,6 @@
 package service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -144,9 +145,12 @@ public class InstaMeetService implements ServiceInterface {
 			Location location) {
 		if(verifyUser(SecurityToken, userId)) {
 			User ownUser = sessions.get(SecurityToken);
+			em.getTransaction().begin();
 			ownUser.setLattitude(location.getLattitude());
 			ownUser.setLattitude(location.getLattitude());
-			
+			ownUser.setLatestLocationUpdate(new Timestamp(System.currentTimeMillis()));
+			em.persist(ownUser);
+			em.getTransaction().commit();
 		}
 		return false;
 	}

@@ -33,7 +33,12 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ServerRequest.Type;
 import de.tubs.androidlab.instameet.ui.chat.ChatMessageProxy;
 import de.tubs.androidlab.instameet.ui.chat.ChatMessageProxy.DIRECTION;
+import de.tubs.androidlab.instameet.ui.main.MainActivity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -406,6 +411,24 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			}
 
 			listener.notifyChatMessage();	
+			
+			Intent appIntent = new Intent(getApplicationContext(), MainActivity.class);
+			PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 
+					0,
+					appIntent,
+					0);
+		    NotificationManager mNotificationManager = 
+				     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+   
+		    Notification.Builder notificationBuilder = new Notification.Builder(
+		    		getApplicationContext())
+		    .setSmallIcon(android.R.drawable.stat_notify_chat)
+		    .setAutoCancel(true)
+		    .setContentTitle("InstaMeet")
+		    .setContentText("Neue Nachricht von (" + users.get(msg.getUserID()).getUsername() + ")")
+		    .setContentIntent(contentIntent);
+
+		    mNotificationManager.notify(1, notificationBuilder.build()); 
 		}
 
 		@Override
