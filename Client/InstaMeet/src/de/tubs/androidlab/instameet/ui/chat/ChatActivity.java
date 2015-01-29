@@ -58,8 +58,10 @@ public class ChatActivity extends Activity {
 //            	service.sendDummyMessage(editText.getText().toString());
             	String message = editText.getText().toString();
             	service.sendMessage(message, user.getId());
+            	ChatMessageProxy proxy = new ChatMessageProxy(message, DIRECTION.OUTGOING);
             	adapter.addMessage(new ChatMessageProxy(message, DIRECTION.OUTGOING));
                 editText.setText(null);
+                service.getHistoryMessages(friendID).add(proxy);
             }
         });
 		Intent intent = getIntent();
