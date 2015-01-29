@@ -66,6 +66,7 @@ message ClientResponse {
 		SIMPLE_APPOINTMENT=8;
 		LIST_NEAREST_APPOINTMENTS=9;
 		LIST_VISITING_APPOINTMENTS=10;
+		LIST_USERS = 11;
 		NO_MESSAGE = 20;
 	};
 	
@@ -82,6 +83,7 @@ message ClientResponse {
 	optional SimpleAppointment appointment = 11;
 	optional ListNearestAppointments listNearestAppointments = 12;
 	optional ListVisitingAppointments listVisitingAppointment = 13;
+	optional ListUsers listUsers = 14;
 		
 	optional string messageID = 15;
 }
@@ -195,6 +197,10 @@ message GetUsersByName {
 
 message ListFriends {
 	repeated SimpleUser friends = 1;
+}
+
+message ListUsers {
+	repeated SimpleUser users = 1;
 }
 
 message ListLocations {
