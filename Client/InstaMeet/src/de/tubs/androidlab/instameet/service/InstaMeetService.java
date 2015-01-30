@@ -26,7 +26,6 @@ import de.tubs.androidlab.instameet.server.protobuf.Messages.ListChatMessages;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListFriends;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListNearestAppointments;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ListUsers;
-import de.tubs.androidlab.instameet.server.protobuf.Messages.ListVisitingAppointments;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Location;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.Login;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.OwnData;
@@ -42,6 +41,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -80,12 +80,18 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	// SecurityToken
 //	String securityToken = new String();
 	
+	// Location update
+	Handler handler = new Handler();
+	Runnable locationUpdate = null;
+	
+	
 	@Override
 	public void onCreate() {
 		Log.i(TAG, "Service onCreate");
 		client = new InstaMeetClient(processor);
 		clientThread = new Thread(client);
 		clientThread.start();
+		LocationUpdate locationUpdate = new LocationUpdate(this);
 	}
 	
 	@Override
@@ -354,6 +360,28 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				.build();
 		this.client.insertToQueue(request);
 	}
+	
+	@Override
+	public void updateLocation(android.location.Location location)
+	{
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+
+		Messages.Location msgLoc = Messages.Location.newBuilder()
+				.setLattitude(location.getLatitude())
+				.setLongitude(location.getLongitude())
+				.build();
+		Messages.UpdateLocation update = Messages.UpdateLocation.newBuilder()
+				.setUserID(ownData.getId())
+				.setSecurityToken(token)
+				.setLocation(msgLoc) 
+				.build();
+		Messages.ServerRequest request = Messages.ServerRequest.newBuilder()
+				.setType(Type.UPDATE_LOCATION)
+				.setUpdateLocation(update)
+				.build();
+		client.insertToQueue(request);
+	}
+	
 	
 	private Messages.SimpleAppointment createMessageAppFromApp(SimpleAppointment app) {
 		Messages.SimpleAppointment.Builder msgApp = Messages.SimpleAppointment.newBuilder();

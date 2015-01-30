@@ -1,5 +1,6 @@
 package de.tubs.androidlab.instameet.service;
 
+import android.location.Location;
 import simpleEntities.SimpleAppointment;
 
 public interface OutgoingMessages {
@@ -14,6 +15,7 @@ public interface OutgoingMessages {
 	public void fetchVisitingAppointments();
 	public void fetchUsersByName(String subString);
 	public void createAppointment(SimpleAppointment app);
+	public void updateLocation(Location location);
 
 //	public void createAppointment(String SecurityToken, int userId,SimpleAppointment appointment);
 //
@@ -42,4 +44,5 @@ public interface OutgoingMessages {
 //	public void getUsers(Set<Integer> ids);
 //
 //	public void UpdateLocation(String SecurityToken, int userId,Location location);
+
 }

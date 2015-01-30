@@ -161,7 +161,7 @@ public class InstaMeetService implements ServiceInterface {
 			User ownUser = sessions.get(SecurityToken);
 			em.getTransaction().begin();
 			ownUser.setLattitude(location.getLattitude());
-			ownUser.setLattitude(location.getLattitude());
+			ownUser.setLongitude(location.getLongitude());
 			ownUser.setLatestLocationUpdate(new Timestamp(System.currentTimeMillis()));
 			em.persist(ownUser);
 			em.getTransaction().commit();
