@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/send_message_chat"
         android:layout_alignParentLeft="true"
+        android:stackFromBottom="true"
         android:layout_alignParentTop="true" >
 
     </ListView>
@@ -27,7 +28,6 @@
         android:layout_toLeftOf="@+id/send_message_chat"
         android:ems="10"
         android:inputType="text" >
-
         <requestFocus />
     </EditText>
 
