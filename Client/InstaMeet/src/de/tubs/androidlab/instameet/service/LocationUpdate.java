@@ -15,7 +15,7 @@ public class LocationUpdate extends Thread {
 	private MyLocationListener listener;
 	private Location previousBestLocation = null;
 	
-	private static final int TIME_LIMIT = 1000*60*2;
+	private static final int TIME_LIMIT = 1000*60*30;
 	
 	public LocationUpdate(InstaMeetService service) {
 		this.service = service;
