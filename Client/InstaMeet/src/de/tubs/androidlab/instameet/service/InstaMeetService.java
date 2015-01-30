@@ -81,8 +81,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 //	String securityToken = new String();
 	
 	// Location update
-	Handler handler = new Handler();
-	Runnable locationUpdate = null;
+	LocationUpdate locationUpdate = null;
 	
 	
 	@Override
@@ -91,7 +90,8 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		client = new InstaMeetClient(processor);
 		clientThread = new Thread(client);
 		clientThread.start();
-		LocationUpdate locationUpdate = new LocationUpdate(this);
+		locationUpdate = new LocationUpdate(this);
+
 	}
 	
 	@Override
@@ -240,10 +240,12 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	}
 	
 	@Override
-	public void addFriendRequest(String securityToken, String friendName) {
+	public void addFriendRequest(int friendID) {
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+
 		AddFriendRequest addFriend = AddFriendRequest.newBuilder()
-				.setSecurityToken(securityToken)
-				.setFriendName(friendName)
+				.setSecurityToken(token)
+				.setFriendID(friendID)
 				.setUserID(ownData.getId())
 				.build();
 		
@@ -364,22 +366,25 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	@Override
 	public void updateLocation(android.location.Location location)
 	{
-		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		if(ownData != null) {
+			String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
 
-		Messages.Location msgLoc = Messages.Location.newBuilder()
-				.setLattitude(location.getLatitude())
-				.setLongitude(location.getLongitude())
-				.build();
-		Messages.UpdateLocation update = Messages.UpdateLocation.newBuilder()
-				.setUserID(ownData.getId())
-				.setSecurityToken(token)
-				.setLocation(msgLoc) 
-				.build();
-		Messages.ServerRequest request = Messages.ServerRequest.newBuilder()
-				.setType(Type.UPDATE_LOCATION)
-				.setUpdateLocation(update)
-				.build();
-		client.insertToQueue(request);
+			Messages.Location msgLoc = Messages.Location.newBuilder()
+					.setLattitude(location.getLatitude())
+					.setLongitude(location.getLongitude())
+					.build();
+			Messages.UpdateLocation update = Messages.UpdateLocation.newBuilder()
+					.setUserID(ownData.getId())
+					.setSecurityToken(token)
+					.setLocation(msgLoc) 
+					.build();
+			Messages.ServerRequest request = Messages.ServerRequest.newBuilder()
+					.setType(Type.UPDATE_LOCATION)
+					.setUpdateLocation(update)
+					.build();
+			client.insertToQueue(request);
+		}
+
 	}
 	
 	
@@ -578,6 +583,8 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			service.users.put(user.getId(), user);
 			listener.notifyOwnData();
 			
+			
+	
 			//Trigger next requests
 			fetchVisitingAppointments();
 			fetchFriends();

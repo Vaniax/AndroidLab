@@ -23,7 +23,7 @@ public interface OutgoingMessages {
 //
 //	public void visitAppointment(String SecurityToken, int userId,int appointmentId);
 //
-	public void addFriendRequest(String securityToken, String friendName);
+	public void addFriendRequest(int friendID);
 //
 //	public void addFriendReply(String SecurityToken, int userId, int friendId,boolean accepted);
 //

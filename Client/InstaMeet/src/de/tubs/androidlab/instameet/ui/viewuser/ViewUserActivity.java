@@ -1,11 +1,23 @@
 package de.tubs.androidlab.instameet.ui.viewuser;
 
+import java.util.List;
+
 import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.R.id;
 import de.tubs.androidlab.instameet.R.layout;
 import de.tubs.androidlab.instameet.R.menu;
+import de.tubs.androidlab.instameet.service.InstaMeetService;
+import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
+import de.tubs.androidlab.instameet.ui.chat.ChatMessageProxy;
+import de.tubs.androidlab.instameet.ui.main.MainActivity;
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,12 +33,51 @@ import android.view.MenuItem;
 public class ViewUserActivity extends Activity {
 	
 	public static final String EXTRA_USER_ID = "de.tubs.androidlab.instameet.USER_ID";
+	private final static String TAG = ViewUserActivity.class.getSimpleName();
+
+	private int friendID;
+    private InstaMeetService service;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_user);
+		Intent intent = getIntent();
+		friendID = intent.getIntExtra(EXTRA_USER_ID, 0);
 	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+    	Intent intent = new Intent(this, InstaMeetService.class);
+    	if(!bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
+    		Log.e(TAG, "Service not available");
+    	}   
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+    	if(service != null) {
+    		unbindService(serviceConnection);
+    		service = null;
+    	}		
+	}
+	
+	private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+        	service = ( (InstaMeetServiceBinder) binder).getService();
+        }
+
+		@Override
+		public void onServiceDisconnected(ComponentName name) {
+        	Log.e(TAG, "Connection lost");
+            service = null;			
+		}
+	};
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,7 +89,7 @@ public class ViewUserActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_addFriend) {
-			//TODO: add friend to user's contacts
+			service.addFriendRequest(friendID);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

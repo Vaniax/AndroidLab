@@ -15,15 +15,16 @@ public class LocationUpdate extends Thread {
 	private MyLocationListener listener;
 	private Location previousBestLocation = null;
 	
-	private static final int TIME_LIMIT = 1000*60*30;
+	private static final int TIME_LIMIT = 30000;
 	
 	public LocationUpdate(InstaMeetService service) {
 		this.service = service;
 		
 		locationManager = (LocationManager) service.getSystemService(Context.LOCATION_SERVICE);
 	    listener = new MyLocationListener();        
-	    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
-	    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+	    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, TIME_LIMIT, 0, listener);
+	    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, TIME_LIMIT, 0, listener);
+	    service.updateLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
 	}
 	
 //	public Thread performOnBackgroundThread() {
@@ -52,7 +53,7 @@ public class LocationUpdate extends Thread {
 	    boolean isSignificantlyOlder = timeDelta < -TIME_LIMIT;
 	    boolean isNewer = timeDelta > 0;
 
-	    // If it's been more than two minutes since the current location, use the new location
+	    // If it's been more than xxx minutes since the current location, use the new location
 	    // because the user has likely moved
 	    if (isSignificantlyNewer) {
 	        return true;
