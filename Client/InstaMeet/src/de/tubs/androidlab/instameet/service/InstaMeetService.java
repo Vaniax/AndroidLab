@@ -378,7 +378,9 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	}
 	
 	public SimpleUser getUser(int userID) {
-		return users.get(userID);
+		if(users.containsKey(userID))
+			return users.get(userID);
+		return null;
 	}
 	
 	public SimpleAppointment getAppointment(int appId) {
@@ -545,7 +547,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			user.setFriends(friends);
 			
 			service.ownData = user;
-			
+			service.users.put(user.getId(), user);
 			listener.notifyOwnData();
 			
 			//Trigger next requests
@@ -607,8 +609,8 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			app.setHoster(msgApp.getHoster());
 			app.setLattitude(msgApp.getLocation().getLattitude());
 			app.setLongitude(msgApp.getLocation().getLongitude());
-			//app.setStartingTime(msgApp.getTime());
-			app.setDescription(null);
+			app.setStartingTime(msgApp.getTime());
+			app.setDescription(msgApp.getDescription());
 			if(msgApp.getParticipantsList() != null) {
 				for(int msgUser : msgApp.getParticipantsList()) {
 					app.getVisitingUsers().add(msgUser);

@@ -179,7 +179,13 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
 	        //intent.putExtra(ViewUserActivity.EXTRA_USER_ID, userMarker.get(marker).getUserId());
 		} else {
 	        intent = new Intent(getActivity(), ViewAppointmentActivity.class);
-	        intent.putExtra(ViewAppointmentActivity.EXTRA_APPOINTMENT_NAME, marker.getTitle());
+	        if(myAppMarker.containsKey(marker)) {
+		        intent.putExtra(ViewAppointmentActivity.EXTRA_APPOINTMENT_ID, myAppMarker.get(marker).getId());
+	        } else if(visitingAppMarker.containsKey(marker)) {
+		        intent.putExtra(ViewAppointmentActivity.EXTRA_APPOINTMENT_ID, visitingAppMarker.get(marker).getId());	        	
+	        } else if(nearAppMarker.containsKey(marker)) {
+		        intent.putExtra(ViewAppointmentActivity.EXTRA_APPOINTMENT_ID, visitingAppMarker.get(marker).getId());	        		        	
+	        }
 
 		}
         startActivity(intent);
