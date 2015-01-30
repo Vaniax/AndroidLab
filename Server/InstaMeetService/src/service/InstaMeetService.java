@@ -304,6 +304,10 @@ public class InstaMeetService implements ServiceInterface {
 				User friend = result.getSingleResult();
 								
 				em.getTransaction().begin();
+				if(usr.getFriends().contains(friend)) {
+					System.out.println("Friend request already accepted.");					
+					return false;
+				}
 				if(!usr.getFriendInvites().contains(friend)) {
 					UnconfirmedFriend request = new UnconfirmedFriend();
 					request.setUser(usr);
@@ -354,6 +358,8 @@ public class InstaMeetService implements ServiceInterface {
 					em.persist(confirmedFriend);
 					em.persist(confirmedFriend2);
 					
+				} else {
+					usr.getUnconfirmedFriendShips().remove(friend);
 				}
 				em.getTransaction().commit();
 				
