@@ -381,6 +381,13 @@ public class InstaMeetService implements ServiceInterface {
 		return null;
 		
 	}
+	
+	public SimpleUser getUser(int userID) {
+		TypedQuery<User> result = em.createNamedQuery("User.findIds", User.class).setParameter("userIds", userID);
+		User user = result.getSingleResult();
+
+		return user.toSimpleUser();
+	}
 
 	@Override
 	public List<SimpleUser> getUsersByName(String SecurityToken, int userId, String subName) {

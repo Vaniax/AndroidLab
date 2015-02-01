@@ -34,6 +34,7 @@ public interface ServiceInterface {
 	List<SimpleAppointment> GetMyHostedAppointments(String SecurityToken, int userId);
 	
 	List<SimpleUser> getUsers(String SecurityToken, int userId, Set<Integer> ids);
+	SimpleUser getUser(int userID);
 	List<SimpleUser> getUsersByName(String SecurityToken, int userId, String subName);
 	
 	//Passive update functions (called from android service)
