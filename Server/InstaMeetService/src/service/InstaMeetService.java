@@ -383,7 +383,7 @@ public class InstaMeetService implements ServiceInterface {
 	}
 	
 	public SimpleUser getUser(int userID) {
-		TypedQuery<User> result = em.createNamedQuery("User.findIds", User.class).setParameter("userIds", userID);
+		TypedQuery<User> result = em.createNamedQuery("User.findId", User.class).setParameter("id", userID);
 		User user = result.getSingleResult();
 
 		return user.toSimpleUser();
