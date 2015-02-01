@@ -68,6 +68,7 @@ message ClientResponse {
 		LIST_VISITING_APPOINTMENTS=10;
 		LIST_USERS = 11;
 		LIST_HOSTED_APPOINTMENTS = 12;
+		ADD_FRIEND_REQUEST = 13; // Send SimpleUser here
 		NO_MESSAGE = 20;
 	};
 	
@@ -86,6 +87,7 @@ message ClientResponse {
 	optional ListVisitingAppointments listVisitingAppointment = 13;
 	optional ListUsers listUsers = 14;
 	optional ListHostedAppointments hostedAppointments = 15;
+	optional SimpleUser user = 16;
 		
 	optional string messageID = 20;
 }
@@ -232,6 +234,7 @@ message ListVisitingAppointments {
 message ListHostedAppointments {
 	repeated SimpleAppointment appointments = 1;
 }
+
 
 /// Message types for both directions
 
