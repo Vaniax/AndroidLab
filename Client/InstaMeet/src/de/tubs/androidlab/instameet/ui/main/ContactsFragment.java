@@ -8,6 +8,7 @@ import java.util.Set;
 
 import simpleEntities.SimpleUser;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ListFragment;
 import android.content.ComponentName;
 import android.content.Context;
@@ -19,15 +20,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.client.listener.AbstractInboundMessageListener;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import de.tubs.androidlab.instameet.ui.ContactsListAdapter;
+import de.tubs.androidlab.instameet.ui.SwipeDetector.Action;
 import de.tubs.androidlab.instameet.ui.chat.ChatActivity;
+import de.tubs.androidlab.instameet.ui.SwipeDetector;
 
 /**
  * First tab of main activity 
@@ -40,6 +48,12 @@ public class ContactsFragment extends ListFragment {
     private InstaMeetService service = null;
     private ServiceListener listener = new ServiceListener();
     private Map<Integer,Integer> positionUserID = new HashMap<Integer,Integer>();
+    private boolean newFriendRequests = false;
+    private MenuItem itemFriendRequest;
+    private ContactsListAdapter requestListAdapter;
+    private Dialog dialog;
+    private SwipeDetector swipeDetector;
+    private Animation anim;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -47,16 +61,23 @@ public class ContactsFragment extends ListFragment {
 		adapter = new ContactsListAdapter((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE),this.getActivity());
 		setListAdapter(adapter);
 		setHasOptionsMenu(true);
+		swipeDetector = new SwipeDetector();
+	
+		anim = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_anim);
 	}
 	
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.contacts, menu);
+       inflater.inflate(R.menu.contacts, menu);
+       MenuItem item = menu.findItem(R.id.action_newFriendRequest);
+       itemFriendRequest = item;
+       item.setVisible(newFriendRequests);
     }
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     	View view = inflater.inflate(R.layout.fragment_contacts, container, false);
+
     	return view;
 
     }
@@ -113,9 +134,94 @@ public class ContactsFragment extends ListFragment {
 			}
 			adapter.notifyChanges();
 		}
+		@Override
+		public void friendRequest() {
+			super.friendRequest();
+    		itemFriendRequest.setVisible(true);
+		}
+		
 	}
 	
-    /** Defines callbacks for service binding, passed to bindService() */
+	
+	
+    @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+    	switch(item.getItemId()) {
+    	case R.id.action_newFriendRequest:
+    		dialog = new Dialog(getActivity());
+    		dialog.setContentView(R.layout.list);
+    		
+    		ListView view = (ListView) dialog.findViewById(R.id.result_list);
+    		requestListAdapter = new ContactsListAdapter((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE), this.getActivity());
+    		List<SimpleUser> users;
+    		if (service.areNewFriendRequests()) {
+        		users = service.getNewFriendRequests();
+        		requestListAdapter.setContacts(users);
+    		}
+    		view.setAdapter(requestListAdapter);
+    		view.setOnTouchListener(swipeDetector);
+    		view.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, final View view,
+						final int position, long id) {
+					if (swipeDetector.swipeDetected()) {
+						if (swipeDetector.getAction() == Action.RL) {
+							Log.i("Contacts","Swipe");
+							anim.setAnimationListener(new Animation.AnimationListener() {
+								
+								@Override
+								public void onAnimationStart(Animation animation) {
+									// TODO Auto-generated method stub
+									
+								}
+								
+								@Override
+								public void onAnimationRepeat(Animation animation) {
+									// TODO Auto-generated method stub
+									
+								}
+								
+								@Override
+								public void onAnimationEnd(Animation animation) {
+									SimpleUser user = requestListAdapter.getItem(position); 
+									requestListAdapter.removeItem(user);
+									service.removeFriendRequest(user);
+									service.addFriendReply(false, user.getId());
+									if (requestListAdapter.getContacts().isEmpty()) {
+										dialog.dismiss();
+										getActivity().invalidateOptionsMenu();
+									}
+								}
+							});
+							view.startAnimation(anim);
+						}
+					} else { // Normal click
+						SimpleUser user = requestListAdapter.getItem(position);
+						service.getNewFriendRequests().remove(user);
+						service.addFriend(user);
+						adapter.addContact(user);
+						requestListAdapter.removeItem(user);
+						service.addFriendReply(true, user.getId());
+					}
+					
+					if (requestListAdapter.getContacts().isEmpty()) {
+						dialog.dismiss();
+					}
+				}
+    		});
+    		dialog.setTitle("Friendship requests");
+    		
+    		dialog.show();
+    		
+    	break;
+    	}
+		return super.onOptionsItemSelected(item);
+	}
+
+
+
+	/** Defines callbacks for service binding, passed to bindService() */
     private ServiceConnection serviceConnection = new ServiceConnection() {
 
         @Override
@@ -123,6 +229,7 @@ public class ContactsFragment extends ListFragment {
         	service = ( (InstaMeetServiceBinder) binder).getService();
         	service.processor.listener.addListener(listener);
         	service.fetchOwnData();
+        	itemFriendRequest.setVisible(service.areNewFriendRequests());
         }
 
         @Override

@@ -16,14 +16,17 @@ public interface OutgoingMessages {
 	public void fetchUsersByName(String subString);
 	public void createAppointment(SimpleAppointment app);
 	public void updateLocation(Location location);
-
+	public void addFriendRequest(int friendID);
+	void addFriendReply(boolean accepted, int friendID);
+	
 //	public void createAppointment(String SecurityToken, int userId,SimpleAppointment appointment);
 //
 //	public void inviteUsertoAppointment(String SecurityToken, int userId,int appointmentId, int inviteUserId);
 //
 //	public void visitAppointment(String SecurityToken, int userId,int appointmentId);
 //
-	public void addFriendRequest(int friendID);
+
+
 //
 //	public void addFriendReply(String SecurityToken, int userId, int friendId,boolean accepted);
 //
@@ -44,5 +47,6 @@ public interface OutgoingMessages {
 //	public void getUsers(Set<Integer> ids);
 //
 //	public void UpdateLocation(String SecurityToken, int userId,Location location);
+
 
 }

@@ -70,6 +70,10 @@ public class ClientHandler extends SimpleChannelInboundHandler<ClientResponse> {
 			Log.i(TAG,"Message type" + type);
 			cb.simpleAppointment(msg.getAppointment());
 		} break;
+		case ADD_FRIEND_REQUEST: {
+			Log.i(TAG,"Message type" + type);
+			cb.addFriendRequest(msg.getUser());
+		} break;
 		default:
 			break;
 		}

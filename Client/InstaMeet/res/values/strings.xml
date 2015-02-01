@@ -35,5 +35,6 @@
     <string name="title_activity_view_user">ViewUserActivity</string>
     <string name="action_search">Search Location</string>
     <string name="action_search_hint">Location</string>
+    <string name="action_newFriendRequest">Neue Freundesanfrage</string>
 
 </resources>

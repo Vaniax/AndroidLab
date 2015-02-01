@@ -43,5 +43,10 @@ public abstract class AbstractInboundMessageListener implements InboundMessageLi
 	public void appointment() {
 		// Empty implementation
 	}
+
+	public void friendRequest() {
+		// Empty implementation
+		
+	}
 	
 }

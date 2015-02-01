@@ -42,7 +42,7 @@ public class ContactsListAdapter extends BaseAdapter
 		this.activity = activity;
 		holder = new ViewHolder();
 	}
-	
+
 	@Override
 	public int getCount() {
 		if(contacts == null) {
@@ -97,6 +97,15 @@ public class ContactsListAdapter extends BaseAdapter
 		notifyChanges();
 	}
 	
+	public List<SimpleUser> getContacts() {
+		return contacts;
+	}
+	
+	public void addContact(SimpleUser user) {
+		contacts.add(user);
+		notifyChanges();
+	}
+	
 	public void setMessageIconVisibility(int position) {
 		isVisible.put(position, true);
 	}
@@ -108,5 +117,9 @@ public class ContactsListAdapter extends BaseAdapter
 				notifyDataSetChanged();
 			}	
 		});
+	}
+	public void removeItem(SimpleUser user) {
+		contacts.remove(user);
+		notifyChanges();
 	}
 }

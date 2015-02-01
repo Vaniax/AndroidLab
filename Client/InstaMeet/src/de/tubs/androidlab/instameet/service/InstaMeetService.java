@@ -12,6 +12,7 @@ import simpleEntities.SimpleUser;
 import de.tubs.androidlab.instameet.client.InstaMeetClient;
 import de.tubs.androidlab.instameet.client.listener.InboundListener;
 import de.tubs.androidlab.instameet.server.protobuf.Messages;
+import de.tubs.androidlab.instameet.server.protobuf.Messages.AddFriendReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.AddFriendRequest;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.BoolReply;
 import de.tubs.androidlab.instameet.server.protobuf.Messages.ChatMessage;
@@ -41,7 +42,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -77,6 +77,8 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			List<ChatMessageProxy>>();
 	// Contains all friends of the user
 	List<SimpleUser> friends = new ArrayList<SimpleUser>();
+	// Contains all friend requests
+	List<SimpleUser> friendRequests = new ArrayList<SimpleUser>();
 	// SecurityToken
 //	String securityToken = new String();
 	
@@ -91,7 +93,6 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		clientThread = new Thread(client);
 		clientThread.start();
 		locationUpdate = new LocationUpdate(this);
-
 	}
 	
 	@Override
@@ -135,7 +136,9 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		return friends;
 	}
 	
-
+	public void addFriend(SimpleUser user) {
+		friends.add(user);
+	}
 	
 	public List<SimpleAppointment> getNearAppointments() {
 		List<SimpleAppointment> apps = new ArrayList<SimpleAppointment>();
@@ -178,7 +181,19 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		}
 		return hostedAppointments;
 	}		
-		
+	
+	public List<SimpleUser> getNewFriendRequests() {
+		return friendRequests;
+	}
+	
+	public boolean areNewFriendRequests() {
+		return !friendRequests.isEmpty();
+	}
+	
+	public void removeFriendRequest(SimpleUser user) {
+		friendRequests.remove(user);
+	}
+
 	// Only for some stupid dummy testing
 	// Synchronization not necessary here
 	public void sendDummyMessage(String msg) {
@@ -256,6 +271,24 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				.build();
 		this.client.insertToQueue(request);
 		Log.d(TAG,"Insert send request to queue with content:\n" + addFriend.toString());
+	}
+	
+	@Override
+	public void addFriendReply(boolean accepted, int friendID) {
+		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
+		AddFriendReply reply = AddFriendReply.newBuilder()
+				.setSecurityToken(token)
+				.setFriendID(friendID)
+				.setUserID(ownData.getId())
+				.build();
+				
+		ServerRequest response = ServerRequest
+				.newBuilder()
+				.setType(Type.ADD_FRIEND_REPLY)
+				.setAddFriendReply(reply)
+				.build();
+		this.client.insertToQueue(response);
+		Log.d(TAG,"Insert send request to queue with content:\n" + reply.toString());
 	}
 	
 	@Override	
@@ -683,6 +716,12 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				result.add(createUserFromUserMessage(u));
 			}
 			return result;
+		}
+
+		@Override
+		public void addFriendRequest(Messages.SimpleUser user) {
+			friendRequests.add(createUserFromUserMessage(user));
+			listener.notifyFriendRequest();
 		}
 	}
 

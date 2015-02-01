@@ -72,4 +72,10 @@ public class InboundListener {
 			l.appointment();
 		}
 	}
+
+	public void notifyFriendRequest() {
+		for (AbstractInboundMessageListener l : listeners) {
+			l.friendRequest();
+		}		
+	}
 }
