@@ -1,13 +1,9 @@
 package de.tubs.androidlab.instameet.ui.appointment;
 
-import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-
 import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
 import android.app.Activity;
@@ -21,8 +17,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.Editable;
@@ -33,7 +27,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -43,8 +36,6 @@ import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import de.tubs.androidlab.instameet.ui.ContactsListAdapter;
-import de.tubs.androidlab.instameet.ui.main.MainActivity;
-import de.tubs.androidlab.instameet.ui.viewuser.ViewUserActivity;
 
 /**
  * This activity displays a form to create a new appointment
@@ -67,7 +58,6 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 	private InstaMeetService service = null;
 	
 	private ContactsListAdapter adapter;
-	private Geocoder geocoder;
 	private boolean isNewAppointment;
 	private SimpleAppointment appointment;
 	
@@ -130,7 +120,6 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 
 		editTitle.addTextChangedListener(this);
 		editDescription.addTextChangedListener(this);
-		geocoder = new Geocoder(this, Locale.getDefault());
 		createDialog();
 	}
 
@@ -265,14 +254,8 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 			case REQUEST_SELECT_LOCATION:
 				double longitude = data.getExtras().getDouble(SelectLocationActivity.EXTRA_LONGITUDE);
 				double latitude  = data.getExtras().getDouble(SelectLocationActivity.EXTRA_LATITUDE);
-				List<Address> addresses;
-				String text;
-				try {
-					addresses = geocoder.getFromLocation(latitude, longitude, 1);
-					text = addresses.get(0).getAddressLine(0);
-				} catch (IOException e) {
-					text = "(" + latitude + ", " + longitude + ")";
-				}
+				String text = data.getExtras().getString(SelectLocationActivity.EXTRA_SELECT_LOCATION_RESULT);
+
 				buttonSelectLocation.setText(text);
 				appointment.setLattitude(latitude);
 				appointment.setLongitude(longitude);

@@ -33,5 +33,7 @@
     <string name="appointment_select_location">Select Location</string>
     <string name="title_activity_select_location">SelectLocationActivity</string>
     <string name="title_activity_view_user">ViewUserActivity</string>
+    <string name="action_search">Search Location</string>
+    <string name="action_search_hint">Location</string>
 
 </resources>
