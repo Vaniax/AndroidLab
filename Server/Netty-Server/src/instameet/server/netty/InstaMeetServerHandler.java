@@ -270,7 +270,17 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 					msg.getAddFriendReply().getAccepted());
 		   int userIDChannel = msg.getAddFriendReply().getUserID();
 		   checkChannel(userIDChannel,ctx.channel());
-			//TODO: notify requesting user if friendship was accepted or not			
+			//TODO: notify requesting user if friendship was accepted or not	
+		   ClientResponse response = ClientResponse.newBuilder()
+				   .setType(Type.ADD_FRIEND_REPLY)
+				   .setBoolean(msg.getAddFriendReply().getAccepted())
+				   .setUser(createMessageSimpleUser(service.getUser(msg.getAddFriendReply().getUserID())))
+				   .build();
+		   Channel channel = channels.get(msg.getAddFriendReply().getFriendID());
+		   if (channel != null) {
+			   channel.writeAndFlush(response);
+		   }
+		   
 		} break;
 		case GET_USERS_BY_NAME: {
 			Messages.GetUsersByName message = msg.getGetUsersByName();
