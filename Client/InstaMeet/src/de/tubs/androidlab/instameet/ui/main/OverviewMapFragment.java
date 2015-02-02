@@ -36,6 +36,7 @@ import de.tubs.androidlab.instameet.client.listener.AbstractInboundMessageListen
 import de.tubs.androidlab.instameet.service.InstaMeetService;
 import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 import de.tubs.androidlab.instameet.ui.appointment.ViewAppointmentActivity;
+import de.tubs.androidlab.instameet.ui.viewuser.ViewUserActivity;
 
 public class OverviewMapFragment extends Fragment implements OnInfoWindowClickListener {
 	private final static String TAG = OverviewMapFragment.class.getSimpleName();
@@ -175,8 +176,8 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
 		Intent intent;
 		if(userMarker.containsKey(marker)) {
 			//TODO: ViewUser Intent. 
-	        intent = new Intent(getActivity(), ViewAppointmentActivity.class);
-	        //intent.putExtra(ViewUserActivity.EXTRA_USER_ID, userMarker.get(marker).getUserId());
+	        intent = new Intent(getActivity(), ViewUserActivity.class);
+	        intent.putExtra(ViewUserActivity.EXTRA_USER_ID, userMarker.get(marker).getId());
 		} else {
 	        intent = new Intent(getActivity(), ViewAppointmentActivity.class);
 	        if(myAppMarker.containsKey(marker)) {
