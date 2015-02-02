@@ -59,6 +59,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 	
 	private ContactsListAdapter adapter;
 	private boolean isNewAppointment;
+	Bundle extras;
 	private SimpleAppointment appointment;
 	
 	private boolean isModified = false;
@@ -90,25 +91,21 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		buttonSelectLocation = (Button) findViewById(R.id.button_select_location);
 		
 		// fill form widgets with information
-		Bundle extras = getIntent().getExtras();
+		extras = getIntent().getExtras();
 		if(extras != null && extras.containsKey(EXTRA_APPOINTMENT_ID)) {
 			isNewAppointment = false;
-			//TODO: fetch appointment from service, like
-			appointment = new SimpleAppointment(); 
-			if(service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID)) != null) {
-				appointment = service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID));
-			}
-//			appointment.setStartingTime(new Timestamp(1422379242)); //TODO remove this
-			editTitle.setText(appointment.getTitle());
-			editDescription.setText(appointment.getDescription());
+
 		} else {
 			isNewAppointment = true;
 			setTitle("New Appointment");
 			appointment = new SimpleAppointment();
 			appointment.setStartingTime(System.currentTimeMillis());
 		}
-		refreshDateButton();
-		refreshTimeButton();
+		if (appointment != null) {
+			refreshDateButton();
+			refreshTimeButton();
+		}
+
 		adapter = new ContactsListAdapter(layoutInflater,this);
 		participantsList.setAdapter(adapter);
 		//TODO: fetch these from the appointment
@@ -334,6 +331,12 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
         	service = ( (InstaMeetServiceBinder) binder).getService();
+			appointment = new SimpleAppointment(); 
+			if(service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID)) != null) {
+				appointment = service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID));
+			}
+			editTitle.setText(appointment.getTitle());
+			editDescription.setText(appointment.getDescription());
         }
 
         @Override
