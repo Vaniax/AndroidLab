@@ -17,62 +17,33 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import simpleEntities.SensitiveData;
 
 public class CryptoService {
+	private final static String ALGORITHM = "SHA-256";
+	private final static int ITERATIONS = 50000;
+	private final static int SALT_SIZE = 8;
+	private StandardStringDigester digester;
+	
 	public CryptoService() {
+		digester = new StandardStringDigester();
+		digester.setAlgorithm(ALGORITHM);
+		digester.setIterations(ITERATIONS);
+		digester.setSaltSizeBytes(SALT_SIZE);
 	}
+	
+
 	
 	public SensitiveData generatePassword(String password) {
-		//generate salt
-		SaltGenerator saltGen = new RandomSaltGenerator();
-		byte [] salt = saltGen.generateSalt(8);
-
-		//concat password+salt
-		String saltString = null;
-		String saltedPw = null;		
-		ByteArrayOutputStream concatStream = new ByteArrayOutputStream();
-		try {
-			saltString = new String(salt, "UTF-8");
-			concatStream.write(password.getBytes());
-			concatStream.write(saltString.getBytes());
-			saltedPw = new String(concatStream.toByteArray(), "UTF-8");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-		//Encrypt password
-		StandardStringDigester digester = new StandardStringDigester();
-		digester.setAlgorithm("SHA-256");   // optionally set the algorithm
-		digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
-		String encryptedPassword = digester.digest(saltedPw);
-
-		
-		return new SensitiveData(saltString, encryptedPassword);
-		
+		String encryptedPassword = digester.digest(password);
+		return new SensitiveData(null, encryptedPassword);	// Explicit salt not necessary with jasypt
 	}
 	
-	
 	public boolean verifyLogin(String encryptedPassword, String salt, String inputPassword) {
-		String inputSaltedPw = null;
-		ByteArrayOutputStream inputEncryptStream = new ByteArrayOutputStream();
-		try {
-			inputEncryptStream.write(inputPassword.getBytes());
-			inputEncryptStream.write(salt.getBytes());
-			inputSaltedPw = new String(inputEncryptStream.toByteArray(), "UTF-8");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-		
-		StandardStringDigester digester = new StandardStringDigester();
-		digester.setAlgorithm("SHA-256");   // optionally set the algorithm
-		digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
-		if (digester.matches(inputSaltedPw, encryptedPassword)) {
-		  // correct!
-			return true;
-		} else {
-		  // bad login!
-			return false;
-		}
-		
+		if (digester.matches(inputPassword, encryptedPassword)) {
+			  // correct!
+				return true;
+			} else {
+			  // bad login!
+				return false;
+			}
 	}
 	
 	public String generateToken(int userID) {
@@ -117,5 +88,62 @@ public class CryptoService {
 		digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
 		StandardPBEStringEncryptor enc = new StandardPBEStringEncryptor();
 		return enc.decrypt(token);
+	}
+	
+	
+	// Old wrong implementation
+	public SensitiveData oldgeneratePassword(String password) {
+		//generate salt
+		SaltGenerator saltGen = new RandomSaltGenerator();
+		byte [] salt = saltGen.generateSalt(8);
+
+		//concat password+salt
+		String saltString = null;
+		String saltedPw = null;		
+		ByteArrayOutputStream concatStream = new ByteArrayOutputStream();
+		try {
+			saltString = new String(salt, "UTF-8");
+			concatStream.write(password.getBytes());
+			concatStream.write(saltString.getBytes());
+			saltedPw = new String(concatStream.toByteArray(), "UTF-8");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		//Encrypt password
+		StandardStringDigester digester = new StandardStringDigester();
+		digester.setAlgorithm("SHA-256");   // optionally set the algorithm
+		digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
+		String encryptedPassword = digester.digest(saltedPw);
+
+		
+		return new SensitiveData(saltString, encryptedPassword);
+		
+	}
+	
+	
+	public boolean oldverifyLogin(String encryptedPassword, String salt, String inputPassword) {
+		String inputSaltedPw = null;
+		ByteArrayOutputStream inputEncryptStream = new ByteArrayOutputStream();
+		try {
+			inputEncryptStream.write(inputPassword.getBytes());
+			inputEncryptStream.write(salt.getBytes());
+			inputSaltedPw = new String(inputEncryptStream.toByteArray(), "UTF-8");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+		StandardStringDigester digester = new StandardStringDigester();
+		digester.setAlgorithm("SHA-256");   // optionally set the algorithm
+		digester.setIterations(50000);  // increase security by performing 50000 hashing iterations
+		if (digester.matches(inputSaltedPw, encryptedPassword)) {
+		  // correct!
+			return true;
+		} else {
+		  // bad login!
+			return false;
+		}
+		
 	}
 }
