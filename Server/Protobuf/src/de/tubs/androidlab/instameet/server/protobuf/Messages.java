@@ -4762,9 +4762,17 @@ public final class Messages {
        */
       ADD_FRIEND_REQUEST(12, 13),
       /**
+       * <code>ADD_FRIEND_REPLY = 14;</code>
+       *
+       * <pre>
+       * Send boolean, SimpleUser
+       * </pre>
+       */
+      ADD_FRIEND_REPLY(13, 14),
+      /**
        * <code>NO_MESSAGE = 20;</code>
        */
-      NO_MESSAGE(13, 20),
+      NO_MESSAGE(14, 20),
       ;
 
       /**
@@ -4824,6 +4832,14 @@ public final class Messages {
        */
       public static final int ADD_FRIEND_REQUEST_VALUE = 13;
       /**
+       * <code>ADD_FRIEND_REPLY = 14;</code>
+       *
+       * <pre>
+       * Send boolean, SimpleUser
+       * </pre>
+       */
+      public static final int ADD_FRIEND_REPLY_VALUE = 14;
+      /**
        * <code>NO_MESSAGE = 20;</code>
        */
       public static final int NO_MESSAGE_VALUE = 20;
@@ -4846,6 +4862,7 @@ public final class Messages {
           case 11: return LIST_USERS;
           case 12: return LIST_HOSTED_APPOINTMENTS;
           case 13: return ADD_FRIEND_REQUEST;
+          case 14: return ADD_FRIEND_REPLY;
           case 20: return NO_MESSAGE;
           default: return null;
         }
@@ -34239,7 +34256,7 @@ public final class Messages {
       "T_MY_VISITING_APPOINTMENTS\020\013\022\023\n\017UPDATE_L" +
       "OCATION\020\014\022\017\n\013GET_FRIENDS\020\r\022\024\n\020ADD_FRIEND" +
       "_REPLY\020\016\022\025\n\021GET_USERS_BY_NAME\020\017\022\033\n\027GET_H",
-      "OSTED_APPOINTMENTS\020\021\022\016\n\nNO_MESSAGE\020\024\"\306\014\n" +
+      "OSTED_APPOINTMENTS\020\021\022\016\n\nNO_MESSAGE\020\024\"\334\014\n" +
       "\016ClientResponse\022[\n\004type\030\001 \002(\0162A.de.tubs." +
       "androidlab.instameet.server.protobuf.Cli" +
       "entResponse.Type:\nNO_MESSAGE\022N\n\013listFrie" +
@@ -34272,104 +34289,105 @@ public final class Messages {
       "instameet.server.protobuf.ListHostedAppo" +
       "intments\022F\n\004user\030\020 \001(\01328.de.tubs.android" +
       "lab.instameet.server.protobuf.SimpleUser" +
-      "\022\021\n\tmessageID\030\024 \001(\t\"\257\002\n\004Type\022\020\n\014LIST_FRI" +
+      "\022\021\n\tmessageID\030\024 \001(\t\"\305\002\n\004Type\022\020\n\014LIST_FRI" +
       "ENDS\020\001\022\022\n\016LIST_LOCATIONS\020\002\022\026\n\022LIST_CHAT_" +
       "MESSAGES\020\003\022\010\n\004BOOL\020\004\022\022\n\016SECURITY_TOKEN\020\005" +
       "\022\020\n\014CHAT_MESSAGE\020\006\022\014\n\010OWN_DATA\020\007\022\026\n\022SIMP" +
       "LE_APPOINTMENT\020\010\022\035\n\031LIST_NEAREST_APPOINT" +
       "MENTS\020\t\022\036\n\032LIST_VISITING_APPOINTMENTS\020\n\022" +
       "\016\n\nLIST_USERS\020\013\022\034\n\030LIST_HOSTED_APPOINTME",
-      "NTS\020\014\022\026\n\022ADD_FRIEND_REQUEST\020\r\022\016\n\nNO_MESS" +
-      "AGE\020\024\"\'\n\005Login\022\014\n\004name\030\001 \002(\t\022\020\n\010password" +
-      "\030\002 \002(\t\",\n\nCreateUser\022\014\n\004name\030\001 \002(\t\022\020\n\010pa" +
-      "ssword\030\002 \002(\t\"W\n\013ChatMessage\022\025\n\rsecurityT" +
-      "oken\030\001 \001(\t\022\017\n\007message\030\002 \002(\t\022\020\n\010friendID\030" +
-      "\003 \002(\005\022\016\n\006userID\030\004 \002(\005\"G\n\013GetMessages\022\025\n\r" +
-      "securityToken\030\001 \002(\t\022\021\n\tfriendIDs\030\002 \003(\005\022\016" +
-      "\n\006userID\030\003 \002(\005\"\220\001\n\021CreateAppointment\022\025\n\r" +
-      "securityToken\030\001 \002(\t\022T\n\013appointment\030\002 \002(\013" +
-      "2?.de.tubs.androidlab.instameet.server.p",
-      "rotobuf.SimpleAppointment\022\016\n\006userID\030\003 \002(" +
-      "\005\"P\n\020VisitAppointment\022\025\n\rsecurityToken\030\001" +
-      " \002(\t\022\025\n\rappointmentID\030\002 \002(\005\022\016\n\006userID\030\003 " +
-      "\002(\005\"\206\001\n\023GetNearAppointments\022\025\n\rsecurityT" +
-      "oken\030\001 \002(\t\022H\n\010location\030\002 \001(\01326.de.tubs.a" +
-      "ndroidlab.instameet.server.protobuf.Loca" +
-      "tion\022\016\n\006userID\030\003 \002(\005\">\n\025GetHostedAppoint" +
-      "ments\022\025\n\rsecurityToken\030\001 \002(\t\022\016\n\006userID\030\002" +
-      " \002(\005\"_\n\020AddFriendRequest\022\025\n\rsecurityToke" +
-      "n\030\001 \002(\t\022\020\n\010friendID\030\002 \001(\005\022\022\n\nfriendName\030",
-      "\003 \001(\t\022\016\n\006userID\030\004 \002(\005\"o\n\016AddFriendReply\022" +
-      "\025\n\rsecurityToken\030\001 \002(\t\022\020\n\010friendID\030\002 \001(\005" +
-      "\022\022\n\nfriendName\030\003 \001(\t\022\016\n\006userID\030\004 \002(\005\022\020\n\010" +
-      "accepted\030\005 \002(\010\"3\n\nGetOwnData\022\025\n\rsecurity" +
-      "Token\030\001 \002(\t\022\016\n\006userID\030\002 \001(\005\"F\n\nGetFriend" +
-      "s\022\025\n\rsecurityToken\030\001 \002(\t\022\021\n\tfriendIDs\030\002 " +
-      "\003(\005\022\016\n\006userID\030\003 \002(\005\"D\n\010GetUsers\022\025\n\rsecur" +
-      "ityToken\030\001 \002(\t\022\021\n\tfriendIDs\030\002 \003(\005\022\016\n\006use" +
-      "rID\030\003 \002(\005\"L\n\021GetFriendLocation\022\025\n\rsecuri" +
-      "tyToken\030\001 \002(\t\022\020\n\010friendID\030\002 \002(\005\022\016\n\006userI",
-      "D\030\003 \002(\005\"B\n\031GetMyVisitingAppointments\022\025\n\r" +
-      "securityToken\030\001 \002(\t\022\016\n\006userID\030\002 \002(\005\"\201\001\n\016" +
-      "UpdateLocation\022\025\n\rsecurityToken\030\001 \002(\t\022H\n" +
-      "\010location\030\002 \002(\01326.de.tubs.androidlab.ins" +
-      "tameet.server.protobuf.Location\022\016\n\006userI" +
-      "D\030\003 \002(\005\"H\n\016GetUsersByName\022\025\n\rsecurityTok" +
-      "en\030\001 \002(\t\022\016\n\006userID\030\002 \002(\005\022\017\n\007subName\030\003 \002(" +
-      "\t\"X\n\013ListFriends\022I\n\007friends\030\001 \003(\01328.de.t" +
+      "NTS\020\014\022\026\n\022ADD_FRIEND_REQUEST\020\r\022\024\n\020ADD_FRI" +
+      "END_REPLY\020\016\022\016\n\nNO_MESSAGE\020\024\"\'\n\005Login\022\014\n\004" +
+      "name\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\",\n\nCreateUs" +
+      "er\022\014\n\004name\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\"W\n\013Ch" +
+      "atMessage\022\025\n\rsecurityToken\030\001 \001(\t\022\017\n\007mess" +
+      "age\030\002 \002(\t\022\020\n\010friendID\030\003 \002(\005\022\016\n\006userID\030\004 " +
+      "\002(\005\"G\n\013GetMessages\022\025\n\rsecurityToken\030\001 \002(" +
+      "\t\022\021\n\tfriendIDs\030\002 \003(\005\022\016\n\006userID\030\003 \002(\005\"\220\001\n" +
+      "\021CreateAppointment\022\025\n\rsecurityToken\030\001 \002(" +
+      "\t\022T\n\013appointment\030\002 \002(\0132?.de.tubs.android",
+      "lab.instameet.server.protobuf.SimpleAppo" +
+      "intment\022\016\n\006userID\030\003 \002(\005\"P\n\020VisitAppointm" +
+      "ent\022\025\n\rsecurityToken\030\001 \002(\t\022\025\n\rappointmen" +
+      "tID\030\002 \002(\005\022\016\n\006userID\030\003 \002(\005\"\206\001\n\023GetNearApp" +
+      "ointments\022\025\n\rsecurityToken\030\001 \002(\t\022H\n\010loca" +
+      "tion\030\002 \001(\01326.de.tubs.androidlab.instamee" +
+      "t.server.protobuf.Location\022\016\n\006userID\030\003 \002" +
+      "(\005\">\n\025GetHostedAppointments\022\025\n\rsecurityT" +
+      "oken\030\001 \002(\t\022\016\n\006userID\030\002 \002(\005\"_\n\020AddFriendR" +
+      "equest\022\025\n\rsecurityToken\030\001 \002(\t\022\020\n\010friendI",
+      "D\030\002 \001(\005\022\022\n\nfriendName\030\003 \001(\t\022\016\n\006userID\030\004 " +
+      "\002(\005\"o\n\016AddFriendReply\022\025\n\rsecurityToken\030\001" +
+      " \002(\t\022\020\n\010friendID\030\002 \001(\005\022\022\n\nfriendName\030\003 \001" +
+      "(\t\022\016\n\006userID\030\004 \002(\005\022\020\n\010accepted\030\005 \002(\010\"3\n\n" +
+      "GetOwnData\022\025\n\rsecurityToken\030\001 \002(\t\022\016\n\006use" +
+      "rID\030\002 \001(\005\"F\n\nGetFriends\022\025\n\rsecurityToken" +
+      "\030\001 \002(\t\022\021\n\tfriendIDs\030\002 \003(\005\022\016\n\006userID\030\003 \002(" +
+      "\005\"D\n\010GetUsers\022\025\n\rsecurityToken\030\001 \002(\t\022\021\n\t" +
+      "friendIDs\030\002 \003(\005\022\016\n\006userID\030\003 \002(\005\"L\n\021GetFr" +
+      "iendLocation\022\025\n\rsecurityToken\030\001 \002(\t\022\020\n\010f",
+      "riendID\030\002 \002(\005\022\016\n\006userID\030\003 \002(\005\"B\n\031GetMyVi" +
+      "sitingAppointments\022\025\n\rsecurityToken\030\001 \002(" +
+      "\t\022\016\n\006userID\030\002 \002(\005\"\201\001\n\016UpdateLocation\022\025\n\r" +
+      "securityToken\030\001 \002(\t\022H\n\010location\030\002 \002(\01326." +
+      "de.tubs.androidlab.instameet.server.prot" +
+      "obuf.Location\022\016\n\006userID\030\003 \002(\005\"H\n\016GetUser" +
+      "sByName\022\025\n\rsecurityToken\030\001 \002(\t\022\016\n\006userID" +
+      "\030\002 \002(\005\022\017\n\007subName\030\003 \002(\t\"X\n\013ListFriends\022I" +
+      "\n\007friends\030\001 \003(\01328.de.tubs.androidlab.ins" +
+      "tameet.server.protobuf.SimpleUser\"T\n\tLis",
+      "tUsers\022G\n\005users\030\001 \003(\01328.de.tubs.androidl" +
+      "ab.instameet.server.protobuf.SimpleUser\"" +
+      "Y\n\rListLocations\022H\n\010location\030\001 \003(\01326.de." +
+      "tubs.androidlab.instameet.server.protobu" +
+      "f.Location\"_\n\020ListChatMessages\022K\n\010messag" +
+      "es\030\001 \003(\01329.de.tubs.androidlab.instameet." +
+      "server.protobuf.ChatMessage\"\033\n\tBoolReply" +
+      "\022\016\n\006isTrue\030\001 \002(\010\"U\n\007OwnData\022J\n\010userData\030" +
+      "\001 \002(\01328.de.tubs.androidlab.instameet.ser" +
+      "ver.protobuf.SimpleUser\"p\n\027ListNearestAp",
+      "pointments\022U\n\014appointments\030\001 \003(\0132?.de.tu" +
+      "bs.androidlab.instameet.server.protobuf." +
+      "SimpleAppointment\"q\n\030ListVisitingAppoint" +
+      "ments\022U\n\014appointments\030\001 \003(\0132?.de.tubs.an" +
+      "droidlab.instameet.server.protobuf.Simpl" +
+      "eAppointment\"o\n\026ListHostedAppointments\022U" +
+      "\n\014appointments\030\001 \003(\0132?.de.tubs.androidla" +
+      "b.instameet.server.protobuf.SimpleAppoin" +
+      "tment\"\301\001\n\021SimpleAppointment\022\n\n\002id\030\001 \002(\005\022" +
+      "\r\n\005title\030\002 \002(\t\022H\n\010location\030\003 \002(\01326.de.tu",
+      "bs.androidlab.instameet.server.protobuf." +
+      "Location\022\014\n\004time\030\004 \002(\003\022\016\n\006hoster\030\005 \002(\005\022\024" +
+      "\n\014participants\030\006 \003(\005\022\023\n\013description\030\007 \002(" +
+      "\t\"\347\001\n\nSimpleUser\022\020\n\010userName\030\001 \002(\t\022\016\n\006us" +
+      "erID\030\002 \002(\005\022\034\n\024latestLocationUpdate\030\003 \001(\003" +
+      "\022H\n\010location\030\004 \001(\01326.de.tubs.androidlab." +
+      "instameet.server.protobuf.Location\022\021\n\tfr" +
+      "iendIDs\030\005 \003(\005\022\034\n\024hostedAppointmentIDs\030\006 " +
+      "\003(\005\022\036\n\026visitingAppointmentIDs\030\007 \003(\005\"0\n\010L" +
+      "ocation\022\021\n\tlongitude\030\001 \002(\001\022\021\n\tlattitude\030",
+      "\002 \002(\001\"\036\n\rSecurityToken\022\r\n\005token\030\001 \002(\t\"\013\n" +
+      "\tNoMessage\"f\n\nMapFriends\022X\n\003map\030\001 \002(\0132K." +
+      "de.tubs.androidlab.instameet.server.prot" +
+      "obuf.Pair_Double_SimpleAppointment\"r\n\026Ma" +
+      "pAppointmentDistance\022X\n\003map\030\001 \003(\0132K.de.t" +
       "ubs.androidlab.instameet.server.protobuf" +
-      ".SimpleUser\"T\n\tListUsers\022G\n\005users\030\001 \003(\0132",
-      "8.de.tubs.androidlab.instameet.server.pr" +
-      "otobuf.SimpleUser\"Y\n\rListLocations\022H\n\010lo" +
-      "cation\030\001 \003(\01326.de.tubs.androidlab.instam" +
-      "eet.server.protobuf.Location\"_\n\020ListChat" +
-      "Messages\022K\n\010messages\030\001 \003(\01329.de.tubs.and" +
-      "roidlab.instameet.server.protobuf.ChatMe" +
-      "ssage\"\033\n\tBoolReply\022\016\n\006isTrue\030\001 \002(\010\"U\n\007Ow" +
-      "nData\022J\n\010userData\030\001 \002(\01328.de.tubs.androi" +
-      "dlab.instameet.server.protobuf.SimpleUse" +
-      "r\"p\n\027ListNearestAppointments\022U\n\014appointm",
-      "ents\030\001 \003(\0132?.de.tubs.androidlab.instamee" +
-      "t.server.protobuf.SimpleAppointment\"q\n\030L" +
-      "istVisitingAppointments\022U\n\014appointments\030" +
-      "\001 \003(\0132?.de.tubs.androidlab.instameet.ser" +
-      "ver.protobuf.SimpleAppointment\"o\n\026ListHo" +
-      "stedAppointments\022U\n\014appointments\030\001 \003(\0132?" +
-      ".de.tubs.androidlab.instameet.server.pro" +
-      "tobuf.SimpleAppointment\"\301\001\n\021SimpleAppoin" +
-      "tment\022\n\n\002id\030\001 \002(\005\022\r\n\005title\030\002 \002(\t\022H\n\010loca" +
-      "tion\030\003 \002(\01326.de.tubs.androidlab.instamee",
-      "t.server.protobuf.Location\022\014\n\004time\030\004 \002(\003" +
-      "\022\016\n\006hoster\030\005 \002(\005\022\024\n\014participants\030\006 \003(\005\022\023" +
-      "\n\013description\030\007 \002(\t\"\347\001\n\nSimpleUser\022\020\n\010us" +
-      "erName\030\001 \002(\t\022\016\n\006userID\030\002 \002(\005\022\034\n\024latestLo" +
-      "cationUpdate\030\003 \001(\003\022H\n\010location\030\004 \001(\01326.d" +
-      "e.tubs.androidlab.instameet.server.proto" +
-      "buf.Location\022\021\n\tfriendIDs\030\005 \003(\005\022\034\n\024hoste" +
-      "dAppointmentIDs\030\006 \003(\005\022\036\n\026visitingAppoint" +
-      "mentIDs\030\007 \003(\005\"0\n\010Location\022\021\n\tlongitude\030\001" +
-      " \002(\001\022\021\n\tlattitude\030\002 \002(\001\"\036\n\rSecurityToken",
-      "\022\r\n\005token\030\001 \002(\t\"\013\n\tNoMessage\"f\n\nMapFrien" +
-      "ds\022X\n\003map\030\001 \002(\0132K.de.tubs.androidlab.ins" +
-      "tameet.server.protobuf.Pair_Double_Simpl" +
-      "eAppointment\"r\n\026MapAppointmentDistance\022X" +
-      "\n\003map\030\001 \003(\0132K.de.tubs.androidlab.instame" +
-      "et.server.protobuf.Pair_Double_SimpleApp" +
-      "ointment\"k\n\020MapAppointmentID\022W\n\003map\030\001 \003(" +
-      "\0132J.de.tubs.androidlab.instameet.server." +
-      "protobuf.Pair_Int32_SimpleAppointment\"]\n" +
-      "\tMapUserID\022P\n\003map\030\001 \003(\0132C.de.tubs.androi",
+      ".Pair_Double_SimpleAppointment\"k\n\020MapApp" +
+      "ointmentID\022W\n\003map\030\001 \003(\0132J.de.tubs.androi" +
       "dlab.instameet.server.protobuf.Pair_Int3" +
-      "2_SimpleUser\"m\n\025Pair_Int32_SimpleUser\022\013\n" +
-      "\003key\030\001 \002(\005\022G\n\005value\030\002 \002(\01328.de.tubs.andr" +
-      "oidlab.instameet.server.protobuf.SimpleU" +
-      "ser\"{\n\034Pair_Int32_SimpleAppointment\022\013\n\003k" +
-      "ey\030\001 \002(\005\022N\n\005value\030\002 \002(\0132?.de.tubs.androi" +
-      "dlab.instameet.server.protobuf.SimpleApp" +
-      "ointment\"|\n\035Pair_Double_SimpleAppointmen" +
-      "t\022\013\n\003key\030\001 \002(\001\022N\n\005value\030\002 \002(\0132?.de.tubs." +
-      "androidlab.instameet.server.protobuf.Sim",
-      "pleAppointmentB\nB\010Messages"
+      "2_SimpleAppointment\"]\n\tMapUserID\022P\n\003map\030",
+      "\001 \003(\0132C.de.tubs.androidlab.instameet.ser" +
+      "ver.protobuf.Pair_Int32_SimpleUser\"m\n\025Pa" +
+      "ir_Int32_SimpleUser\022\013\n\003key\030\001 \002(\005\022G\n\005valu" +
+      "e\030\002 \002(\01328.de.tubs.androidlab.instameet.s" +
+      "erver.protobuf.SimpleUser\"{\n\034Pair_Int32_" +
+      "SimpleAppointment\022\013\n\003key\030\001 \002(\005\022N\n\005value\030" +
+      "\002 \002(\0132?.de.tubs.androidlab.instameet.ser" +
+      "ver.protobuf.SimpleAppointment\"|\n\035Pair_D" +
+      "ouble_SimpleAppointment\022\013\n\003key\030\001 \002(\001\022N\n\005" +
+      "value\030\002 \002(\0132?.de.tubs.androidlab.instame",
+      "et.server.protobuf.SimpleAppointmentB\nB\010" +
+      "Messages"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

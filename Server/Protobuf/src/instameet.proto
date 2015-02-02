@@ -69,6 +69,7 @@ message ClientResponse {
 		LIST_USERS = 11;
 		LIST_HOSTED_APPOINTMENTS = 12;
 		ADD_FRIEND_REQUEST = 13; // Send SimpleUser here
+		ADD_FRIEND_REPLY = 14; // Send boolean, SimpleUser
 		NO_MESSAGE = 20;
 	};
 	
