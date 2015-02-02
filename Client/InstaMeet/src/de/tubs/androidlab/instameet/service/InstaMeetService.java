@@ -399,7 +399,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	@Override
 	public void updateLocation(android.location.Location location)
 	{
-		if(ownData != null) {
+		if(ownData != null && location != null) {
 			String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
 
 			Messages.Location msgLoc = Messages.Location.newBuilder()
