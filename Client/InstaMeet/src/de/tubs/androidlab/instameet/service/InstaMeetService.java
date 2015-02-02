@@ -669,6 +669,20 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			listener.notifyListUsers(users);
 		}
 		
+		@Override
+		public void addFriendRequest(Messages.SimpleUser user) {
+			friendRequests.add(createUserFromUserMessage(user));
+			listener.notifyFriendRequest();
+		}
+
+		@Override
+		public void addFriendReply(boolean bool,Messages.SimpleUser user) {
+			if(bool == true) {
+				friends.add(createUserFromUserMessage(user));	
+			}		
+			listener.notifyFriendReply(bool);
+		}
+		
 		/** Converter functions **/
 		private SimpleAppointment createAppFromAppMessage(Messages.SimpleAppointment msgApp) {
 			SimpleAppointment app = new SimpleAppointment();
@@ -716,12 +730,6 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				result.add(createUserFromUserMessage(u));
 			}
 			return result;
-		}
-
-		@Override
-		public void addFriendRequest(Messages.SimpleUser user) {
-			friendRequests.add(createUserFromUserMessage(user));
-			listener.notifyFriendRequest();
 		}
 	}
 

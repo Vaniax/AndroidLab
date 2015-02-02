@@ -40,9 +40,9 @@ public class InstaMeetClient implements Runnable {
 				.channel(NioSocketChannel.class)
 				.handler(new LoggingHandler())
 				.handler(new InstaMeetClientInitializer(callbacks));
-			
-//			ChannelFuture future = bootstrap.connect("192.168.178.21",8080);
-			ChannelFuture future = bootstrap.connect("54.93.64.1",8080);
+//			
+			ChannelFuture future = bootstrap.connect("192.168.178.21",8080);
+//			ChannelFuture future = bootstrap.connect("54.93.64.1",8080);
 			
 		    future.addListener(new FutureListener<Void>() {
 

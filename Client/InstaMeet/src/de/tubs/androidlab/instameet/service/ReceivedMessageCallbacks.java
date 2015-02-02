@@ -17,4 +17,5 @@ public interface ReceivedMessageCallbacks {
 	public void listUsers(ListUsers listUsers);
 	public void simpleAppointment(SimpleAppointment app);
 	public void addFriendRequest(SimpleUser user);
+	public void addFriendReply(boolean bool, SimpleUser user);
 }

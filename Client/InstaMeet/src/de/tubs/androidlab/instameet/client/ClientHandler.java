@@ -74,6 +74,10 @@ public class ClientHandler extends SimpleChannelInboundHandler<ClientResponse> {
 			Log.i(TAG,"Message type" + type);
 			cb.addFriendRequest(msg.getUser());
 		} break;
+		case ADD_FRIEND_REPLY: {
+			Log.i(TAG,"Message type" + type);
+			cb.addFriendReply(msg.getBoolean(), msg.getUser());
+		} break;
 		default:
 			break;
 		}

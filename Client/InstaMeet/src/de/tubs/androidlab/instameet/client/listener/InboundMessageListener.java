@@ -15,4 +15,5 @@ public interface InboundMessageListener extends EventListener {
 	public void listUsers(List<SimpleUser> users);
 	public void appointment();
 	public void friendRequest();
+	public void friendReply(boolean bool);
 }

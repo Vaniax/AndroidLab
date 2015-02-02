@@ -78,4 +78,10 @@ public class InboundListener {
 			l.friendRequest();
 		}		
 	}
+
+	public void notifyFriendReply(boolean bool) {
+		for (AbstractInboundMessageListener l : listeners) {
+			l.friendReply(bool);
+		}				
+	}
 }

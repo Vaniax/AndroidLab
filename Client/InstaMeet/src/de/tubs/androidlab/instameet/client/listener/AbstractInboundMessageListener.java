@@ -48,5 +48,10 @@ public abstract class AbstractInboundMessageListener implements InboundMessageLi
 		// Empty implementation
 		
 	}
+
+	public void friendReply(boolean bool) {
+		// Empty implementation
+		
+	}
 	
 }
