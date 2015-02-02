@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -79,10 +80,16 @@ public class ContactsFragment extends ListFragment {
     	View view = inflater.inflate(R.layout.fragment_contacts, container, false);
 
     	return view;
-
     }
+       
     
     @Override
+	public void onResume() {
+    	super.onResume();
+		update();
+	}
+
+	@Override
     public void onListItemClick(ListView l, View v, int position, long id) {
     	Intent intent = new Intent(getActivity(), ChatActivity.class);
     	intent.putExtra(ChatActivity.EXTRA_NAME, adapter.getItem(position).getId());
@@ -108,6 +115,16 @@ public class ContactsFragment extends ListFragment {
     		service = null;
     	}
 	}
+	
+
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if (isVisibleToUser) {
+			update();
+		}
+	}
+
 
 	private class ServiceListener extends AbstractInboundMessageListener {
 		@Override
@@ -140,8 +157,7 @@ public class ContactsFragment extends ListFragment {
     		itemFriendRequest.setVisible(true);
 		}
 		
-	}
-	
+	}	
 	
 	
     @Override
@@ -219,6 +235,16 @@ public class ContactsFragment extends ListFragment {
 		return super.onOptionsItemSelected(item);
 	}
 
+    public void update() {
+    	if(service != null) {
+    		if (service.areNewFriendRequests()) {
+            	itemFriendRequest.setVisible(service.areNewFriendRequests());
+    		}
+    		if (adapter != null) {
+    			adapter.setContacts(service.getFriends());
+    		}
+    	}
+    }
 
 
 	/** Defines callbacks for service binding, passed to bindService() */
@@ -238,4 +264,5 @@ public class ContactsFragment extends ListFragment {
             service = null;
         }
     };
+    
 }
