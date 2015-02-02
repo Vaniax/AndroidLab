@@ -16,6 +16,9 @@ public class LocationUpdate extends Thread {
 	private Location previousBestLocation = null;
 	
 	private static final int TIME_LIMIT = 30000;
+	private boolean isGPSEnabled = false;
+	private boolean isNetworkEnabled = false;
+
 	
 	public LocationUpdate(InstaMeetService service) {
 		this.service = service;
@@ -24,7 +27,13 @@ public class LocationUpdate extends Thread {
 	    listener = new MyLocationListener();        
 	    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, TIME_LIMIT, 0, listener);
 	    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, TIME_LIMIT, 0, listener);
-	    service.updateLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+	    isGPSEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+	    isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+	    if (isGPSEnabled) {
+		    service.updateLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+	    } else if (isNetworkEnabled) {
+	    	service.updateLocation(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
+	    }
 	}
 	
 //	public Thread performOnBackgroundThread() {
@@ -96,7 +105,7 @@ public class LocationUpdate extends Thread {
 		@Override
 		public void onLocationChanged(Location location) {
 			Log.i(TAG,"Location changed");
-			if(isBetterLocation(location, previousBestLocation)) {
+			if(isBetterLocation(location, previousBestLocation) && (isGPSEnabled||isNetworkEnabled)) {
 				previousBestLocation = location;
 				service.updateLocation(location);
 			}
@@ -109,12 +118,20 @@ public class LocationUpdate extends Thread {
 
 		@Override
 		public void onProviderEnabled(String provider) {
-			
+			if (provider.equals(LocationManager.GPS_PROVIDER)) {
+				isGPSEnabled = true;
+			} else if (provider.equals(LocationManager.NETWORK_PROVIDER)) {
+				isGPSEnabled = true;
+			}
 		}
 
 		@Override
 		public void onProviderDisabled(String provider) {
-			
+			if (provider.equals(LocationManager.GPS_PROVIDER)) {
+				isGPSEnabled = false;
+			} else if (provider.equals(LocationManager.NETWORK_PROVIDER)) {
+				isGPSEnabled = false;
+			}
 		}
 		
 	}
