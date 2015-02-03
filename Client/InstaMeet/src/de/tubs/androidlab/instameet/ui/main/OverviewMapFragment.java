@@ -86,6 +86,7 @@ public class OverviewMapFragment extends Fragment implements OnInfoWindowClickLi
         super.onResume();
         setUpMapIfAvailable();
         setHasOptionsMenu(true);
+
         
     }
 

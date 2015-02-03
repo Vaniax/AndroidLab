@@ -425,6 +425,10 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 					.build();
 			client.insertToQueue(request);
 		}
+		if(locationUpdate != null && locationUpdate.getLatestLocation() != null) {
+			fetchNearAppointments();				
+		}
+
 
 	}
 	
