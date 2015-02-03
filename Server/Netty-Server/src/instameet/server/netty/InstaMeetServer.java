@@ -30,7 +30,7 @@ public class InstaMeetServer implements Runnable {
 			bootstrap
 				.group(bossEventGroup, workerEventGroup)
 				.channel(NioServerSocketChannel.class)
-				.handler(new LoggingHandler(LogLevel.DEBUG))
+//				.handler(new LoggingHandler(LogLevel.DEBUG))
 				.childHandler(new InstaMeetServerInitializer(service));
 			
 //			ChannelFuture future = bootstrap.bind(8080).sync().channel().closeFuture().sync();

@@ -38,7 +38,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, ServerRequest msg)
 			throws Exception {
-		System.out.println("Message:\n" + msg.toString());
+//		System.out.println("Message:\n" + msg.toString());
 				
 		switch (msg.getType()) {
 		
@@ -50,7 +50,7 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 				return;
 			int userID = data.getUserId();
 			channels.put(userID, ctx.channel());
-			System.out.println("Add new channel for user id: " + userID);
+//			System.out.println("Add new channel for user id: " + userID);
 			SecurityToken token = SecurityToken.newBuilder().setToken(data.getToken()).build();
 			ctx.writeAndFlush(ClientResponse.newBuilder().setType(Type.SECURITY_TOKEN).setToken(token).build());
 			break;
