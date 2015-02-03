@@ -627,6 +627,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	
 			//Trigger next requests
 			fetchVisitingAppointments();
+			fetchNearAppointments();
 			fetchFriends();
 		}
 
