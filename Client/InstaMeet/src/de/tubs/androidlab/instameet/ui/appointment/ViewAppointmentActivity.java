@@ -126,7 +126,7 @@ public class ViewAppointmentActivity extends Activity {
 		case R.id.action_edit:
 			Intent intent = new Intent(this, EditAppointmentActivity.class);
 			//TODO: this must be the correct appointment id
-			intent.putExtra(EditAppointmentActivity.EXTRA_APPOINTMENT_ID, 123);
+			intent.putExtra(EditAppointmentActivity.EXTRA_APPOINTMENT_ID, appId);
 			startActivity(intent);
 			return true;
 		}
