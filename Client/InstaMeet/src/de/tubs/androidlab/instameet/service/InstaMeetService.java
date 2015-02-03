@@ -685,10 +685,10 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		@Override
 		public void addFriendReply(boolean bool,Messages.SimpleUser user) {
 			if(bool == true) {
-				friends.add(createUserFromUserMessage(user));	
-				Set<Integer> friends = ownData.getFriends();
-				friends.add(user.getUserID());
-				ownData.setFriends(friends);
+				SimpleUser friend = createUserFromUserMessage(user);
+				ownData.getFriends().add(friend.getId());
+				users.put(friend.getId(), friend);
+				
 			}		
 			listener.notifyFriendReply(bool);
 		}
