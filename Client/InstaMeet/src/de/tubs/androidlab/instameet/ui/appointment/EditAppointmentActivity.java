@@ -36,6 +36,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView.BufferType;
 import android.widget.TimePicker;
 import de.tubs.androidlab.instameet.R;
 import de.tubs.androidlab.instameet.service.InstaMeetService;
@@ -76,6 +77,9 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 	
 	private AlertDialog dialogSaveAppointment;
 	private AlertDialog dialogAddParticipant;
+	
+	private String savedTitle = new String();
+	private String savedDescription = new String();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,11 +122,11 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		adapter = new ContactsListAdapter(layoutInflater,this);
 		participantsList.setAdapter(adapter);
 		//TODO: fetch these from the appointment
-//			List<SimpleUser> l = new ArrayList<SimpleUser>();
-//			SimpleUser s = new SimpleUser();
-//			s.setUsername("Peter");
-//			l.add(s); l.add(s); 
-//			adapter.setContacts(l);
+//				List<SimpleUser> l = new ArrayList<SimpleUser>();
+//				SimpleUser s = new SimpleUser();
+//				s.setUsername("Peter");
+//				l.add(s); l.add(s); 
+//				adapter.setContacts(l);
 
 		//register listeners
 		editTitle.addTextChangedListener(this);
@@ -136,10 +140,14 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		participantsList.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				adapter.removeContact(adapter.getItem(position-1));
+				SimpleUser user = adapter.getItem(position-1);
+				adapter.removeContact(user);
+				appointment.getVisitingUsers().remove(user.getId());
 				return true;
 			}
 		});
+	
+		
 //		createDialog();
 	}
 
@@ -147,7 +155,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 	protected void onStart() {
     	super.onStart();
     	Intent intent = new Intent(this, InstaMeetService.class);
-    	if(!bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
+    	if(service == null && !bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)) {
     		Log.e(TAG, "Service not available");
     	}   	
 	}
@@ -160,6 +168,14 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
     		service = null;
     	}		
     }
+    
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		savedTitle = editTitle.getText().toString();
+		savedDescription = editDescription.getText().toString();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -261,7 +277,9 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		builder = new AlertDialog.Builder(this);
 		builder.setAdapter(adapter,  new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int position) {
-				EditAppointmentActivity.this.adapter.addContact(adapter.getItem(position));
+				SimpleUser user = adapter.getItem(position);
+				EditAppointmentActivity.this.adapter.addContact(user);
+				appointment.getVisitingUsers().add(user.getId());
 				dialogAddParticipant.dismiss();
 			}
 		});
@@ -375,7 +393,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 				appointment = service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID));
 				adapter.setContacts(service.getFriends());
 			} else {
-	        	appointment = new SimpleAppointment();
+//	        	appointment = new SimpleAppointment();
 				appointment.setHoster(service.getOwnData().getId());
 			}
 			editTitle.setText(appointment.getTitle());
