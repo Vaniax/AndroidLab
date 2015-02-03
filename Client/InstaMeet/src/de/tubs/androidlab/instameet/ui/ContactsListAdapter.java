@@ -1,8 +1,10 @@
 package de.tubs.androidlab.instameet.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import simpleEntities.SimpleUser;
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -19,7 +21,7 @@ import de.tubs.androidlab.instameet.R;
  */
 public class ContactsListAdapter extends BaseAdapter
 {
-	private List<SimpleUser> contacts;
+	private List<SimpleUser> contacts = new ArrayList<SimpleUser>();
 	private Activity activity = null;
 	private ViewHolder holder = null;
 	private Map<Integer,Boolean> isVisible = new HashMap<Integer,Boolean>();

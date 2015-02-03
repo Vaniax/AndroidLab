@@ -118,11 +118,11 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		adapter = new ContactsListAdapter(layoutInflater,this);
 		participantsList.setAdapter(adapter);
 		//TODO: fetch these from the appointment
-			List<SimpleUser> l = new ArrayList<SimpleUser>();
-			SimpleUser s = new SimpleUser();
-			s.setUsername("Peter");
-			l.add(s); l.add(s); 
-			adapter.setContacts(l);
+//			List<SimpleUser> l = new ArrayList<SimpleUser>();
+//			SimpleUser s = new SimpleUser();
+//			s.setUsername("Peter");
+//			l.add(s); l.add(s); 
+//			adapter.setContacts(l);
 
 		//register listeners
 		editTitle.addTextChangedListener(this);
@@ -140,7 +140,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 				return true;
 			}
 		});
-		createDialog();
+//		createDialog();
 	}
 
 	@Override
@@ -250,11 +250,13 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		dialogSaveAppointment = builder.create();
 		
 		final ContactsListAdapter adapter = new ContactsListAdapter((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
+			
 			//TODO: fetch these from the service
-			List<SimpleUser> l = new ArrayList<SimpleUser>();
-			SimpleUser s = new SimpleUser();
-			s.setUsername("Peter");
-			l.add(s); l.add(s);
+//			List<SimpleUser> l = new ArrayList<SimpleUser>();
+//			SimpleUser s = new SimpleUser();
+//			s.setUsername("Peter");
+//			l.add(s); l.add(s);
+			List<SimpleUser> l = service.getFriends();
 			adapter.setContacts(l);
 		builder = new AlertDialog.Builder(this);
 		builder.setAdapter(adapter,  new DialogInterface.OnClickListener() {
@@ -371,12 +373,14 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
         	service = ( (InstaMeetServiceBinder) binder).getService();
 			if(!isNewAppointment && service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID)) != null) {
 				appointment = service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID));
+				adapter.setContacts(service.getFriends());
 			} else {
 	        	appointment = new SimpleAppointment();
 				appointment.setHoster(service.getOwnData().getId());
 			}
 			editTitle.setText(appointment.getTitle());
 			editDescription.setText(appointment.getDescription());
+			createDialog();
         }
 
         @Override
