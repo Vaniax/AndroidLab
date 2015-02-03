@@ -339,8 +339,9 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 	@Override
 	public void fetchNearAppointments() {
 		//TODO: replace dummy location
-		double lat = 5.3;
-		double lon = 3.3;
+		double lat = locationUpdate.getLatestLocation().getLatitude();
+		double lon = locationUpdate.getLatestLocation().getLongitude();
+		
 		Location loc = Location.newBuilder().setLattitude(lat).setLongitude(lon).build();
 		
 		String token = PreferenceManager.getDefaultSharedPreferences(this).getString("securityToken", "");
