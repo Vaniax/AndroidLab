@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import simpleEntities.SimpleAppointment;
@@ -15,6 +16,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.CalendarContract;
+import android.provider.CalendarContract.Events;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -107,6 +110,19 @@ public class ViewAppointmentActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
 		case R.id.action_calender:
+			Intent calIntent = new Intent(Intent.ACTION_INSERT); 
+			calIntent.setType("vnd.android.cursor.item/event");    
+			calIntent.putExtra(Events.TITLE, "My House Party"); 
+			calIntent.putExtra(Events.EVENT_LOCATION, "My Beach House"); 
+			calIntent.putExtra(Events.DESCRIPTION, "A Pig Roast on the Beach"); 
+			GregorianCalendar calDate = new GregorianCalendar(2015, 2, 2);
+			calIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true); 
+			calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, 
+			     calDate.getTimeInMillis()); 
+			calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, 
+			     calDate.getTimeInMillis()); 
+
+			startActivity(calIntent);			
 			return true;
 		case R.id.action_edit:
 			Intent intent = new Intent(this, EditAppointmentActivity.class);
