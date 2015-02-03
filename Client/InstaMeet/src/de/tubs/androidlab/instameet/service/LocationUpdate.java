@@ -50,6 +50,10 @@ public class LocationUpdate extends Thread {
 //	    return t;
 //	}
 	
+	public Location getLatestLocation() {
+		return previousBestLocation;
+	}
+	
 	boolean isBetterLocation(Location location, Location currentBestLocation) {
 	    if (currentBestLocation == null) {
 	        // A new location is always better than no location
