@@ -316,12 +316,14 @@ public class InstaMeetService implements ServiceInterface {
 					em.persist(request);
 				} else {
 					System.out.println("Friend request already sent.");
+					return false;
 				}
 								
 				em.getTransaction().commit();
 				return true;
 			} catch(NoResultException e) {
 				System.out.println("Friend request failed.");
+				return false;
 			}
 		}
 		return false;
@@ -366,6 +368,7 @@ public class InstaMeetService implements ServiceInterface {
 				return true;
 			} catch(NoResultException e) {
 				System.out.println("No request do confirm / deny.");
+				return false;
 			}
 		}
 		return false;

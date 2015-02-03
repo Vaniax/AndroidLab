@@ -251,14 +251,16 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		   int userIDChannel = msg.getAddFriendRequest().getUserID();
 		   checkChannel(userIDChannel,ctx.channel());
 			
-			//TODO: notify requested user to react
-		   ClientResponse response = ClientResponse.newBuilder()
-				   .setType(Type.ADD_FRIEND_REQUEST)
-				   .setUser(createMessageSimpleUser(service.getUser(msg.getAddFriendRequest().getUserID())))
-				   .build();
-		   Channel channel = channels.get(msg.getAddFriendRequest().getFriendID());
-		   if (channel != null) {
-			   channel.writeAndFlush(response);
+		   if(successful) {
+				//TODO: notify requested user to react
+			   ClientResponse response = ClientResponse.newBuilder()
+					   .setType(Type.ADD_FRIEND_REQUEST)
+					   .setUser(createMessageSimpleUser(service.getUser(msg.getAddFriendRequest().getUserID())))
+					   .build();
+			   Channel channel = channels.get(msg.getAddFriendRequest().getFriendID());
+			   if (channel != null) {
+				   channel.writeAndFlush(response);
+			   }
 		   }
 		} break;
 		case ADD_FRIEND_REPLY: {
