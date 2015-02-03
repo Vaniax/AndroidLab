@@ -372,6 +372,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 			if(!isNewAppointment && service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID)) != null) {
 				appointment = service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID));
 			} else {
+	        	appointment = new SimpleAppointment();
 				appointment.setHoster(service.getOwnData().getId());
 			}
 			editTitle.setText(appointment.getTitle());
