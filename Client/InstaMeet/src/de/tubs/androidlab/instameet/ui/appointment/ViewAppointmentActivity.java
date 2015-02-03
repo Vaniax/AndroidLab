@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 
 import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
@@ -91,9 +92,7 @@ public class ViewAppointmentActivity extends Activity {
 		
 		adapter = new ContactsListAdapter(layoutInflater,this);
 		adapterList = new ArrayList<SimpleUser>();
-			SimpleUser s = new SimpleUser();
-			s.setUsername("Peter");
-			adapterList.add(s); adapterList.add(s); adapterList.add(s);
+	
 			adapter.setContacts(adapterList);
 		participantsList.setAdapter(adapter);
 		
@@ -159,6 +158,16 @@ public class ViewAppointmentActivity extends Activity {
         		hosterName = service.getUser(app.getHoster()).getUsername();    		
         	} else {
         		hosterName ="ID #" +app.getHoster();
+        	}
+        	
+        	Set<Integer> userIds = app.getVisitingUsers();
+        	for(int u : userIds) {
+        		
+        		SimpleUser user = service.getUser(u);
+        		if(user != null) {
+            		adapterList.add(user);
+            		adapter.notifyDataSetChanged();        			
+        		}
         	}
     	} else {
     		app = new SimpleAppointment();
