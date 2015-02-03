@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.google.android.gms.drive.internal.ap;
+
 import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
 import de.tubs.androidlab.instameet.client.InstaMeetClient;
@@ -113,6 +115,10 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		Log.e(TAG, "Service onDestroy. This should NOT happen!");
 		Toast.makeText(getApplicationContext(), "Service destroyed :(", Toast.LENGTH_LONG).show();
 		clientThread.interrupt();
+	}
+	
+	public SimpleUser getOwnData() {
+		return ownData;
 	}
 	
 	public List<SimpleUser> getFriends() {
@@ -280,6 +286,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				.setSecurityToken(token)
 				.setFriendID(friendID)
 				.setUserID(ownData.getId())
+				.setAccepted(accepted)
 				.build();
 				
 		ServerRequest response = ServerRequest
