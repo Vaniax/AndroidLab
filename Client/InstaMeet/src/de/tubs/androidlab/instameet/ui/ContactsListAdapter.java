@@ -90,25 +90,52 @@ public class ContactsListAdapter extends BaseAdapter
 	
 	/**
 	 * Changes the adapter's data set of contacts
-	 * @param contacts
+	 * Keep in mind, that the contact data is NOT copied
+	 * If you want to change it later, you should pass a copy
+	 * here or use the addContac() / removeCOntact() methods.
+	 * @param contacts new contact data
 	 */
 	public void setContacts(List<SimpleUser> contacts) {
 		this.contacts = contacts;
 		notifyChanges();
 	}
 	
+	/**
+	 * Gets the adapter's underlying set of contacts
+	 * @return
+	 */
 	public List<SimpleUser> getContacts() {
 		return contacts;
 	}
 	
+	/**
+	 * Adds a user to the contacts list
+	 * @param user contact to add
+	 */
 	public void addContact(SimpleUser user) {
 		contacts.add(user);
 		notifyChanges();
 	}
 	
+	/**
+	 * Removes a user from the contacts list
+	 * @param user contact to remove
+	 */
+	public void removeContact(SimpleUser user) {
+		contacts.remove(user);
+		notifyChanges();
+	}
+	
+	/**
+	 * Shows a message icon at a specified position
+	 * @param position position to show a message icon at
+	 */
 	public void setMessageIconVisibility(int position) {
+		//TODO: should pass a SimpleUser instead of position
 		isVisible.put(position, true);
 	}
+	
+	//TODO: make private!
 	public void notifyChanges() {
 		activity.runOnUiThread(new Runnable() {
 			
@@ -118,8 +145,5 @@ public class ContactsListAdapter extends BaseAdapter
 			}	
 		});
 	}
-	public void removeItem(SimpleUser user) {
-		contacts.remove(user);
-		notifyChanges();
-	}
+
 }

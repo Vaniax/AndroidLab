@@ -217,7 +217,7 @@ public class ContactsFragment extends ListFragment {
 								@Override
 								public void onAnimationEnd(Animation animation) {
 									SimpleUser user = requestListAdapter.getItem(position); 
-									requestListAdapter.removeItem(user);
+									requestListAdapter.removeContact(user);
 									service.removeFriendRequest(user);
 									service.addFriendReply(false, user.getId());
 									if (requestListAdapter.getContacts().isEmpty()) {
@@ -233,7 +233,7 @@ public class ContactsFragment extends ListFragment {
 						service.getNewFriendRequests().remove(user);
 						service.addFriend(user);
 						adapter.addContact(user);
-						requestListAdapter.removeItem(user);
+						requestListAdapter.removeContact(user);
 						service.addFriendReply(true, user.getId());
 					}
 					

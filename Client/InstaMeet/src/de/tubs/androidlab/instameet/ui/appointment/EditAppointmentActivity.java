@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import simpleEntities.SimpleAppointment;
 import simpleEntities.SimpleUser;
 import android.app.Activity;
@@ -27,9 +28,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TimePicker;
 import de.tubs.androidlab.instameet.R;
@@ -70,6 +75,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 	private Button buttonSelectLocation;
 	
 	private AlertDialog dialogSaveAppointment;
+	private AlertDialog dialogAddParticipant;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +85,9 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		// construct UI
 		final ListView participantsList = new ListView(this);
 		setContentView(participantsList);
+		final ImageButton buttonAddParticipant = new ImageButton(this);
+		buttonAddParticipant.setImageResource(R.drawable.ic_action_new);
+		participantsList.addFooterView(buttonAddParticipant, null, false);
 		final View header = layoutInflater.inflate(R.layout.activity_edit_appointment, null);
 		participantsList.addHeaderView(header, null, false);
 		setContentView(participantsList);
@@ -115,8 +124,22 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 			l.add(s); l.add(s); 
 			adapter.setContacts(l);
 
+		//register listeners
 		editTitle.addTextChangedListener(this);
 		editDescription.addTextChangedListener(this);
+		buttonAddParticipant.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialogAddParticipant.show();
+			}
+		});
+		participantsList.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				adapter.removeContact(adapter.getItem(position));
+				return true;
+			}
+		});
 		createDialog();
 	}
 
@@ -225,6 +248,22 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 	           }
 	       });
 		dialogSaveAppointment = builder.create();
+		
+		final ContactsListAdapter adapter = new ContactsListAdapter((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE), this);
+			//TODO: fetch these from the service
+			List<SimpleUser> l = new ArrayList<SimpleUser>();
+			SimpleUser s = new SimpleUser();
+			s.setUsername("Peter");
+			l.add(s); l.add(s);
+			adapter.setContacts(l);
+		builder = new AlertDialog.Builder(this);
+		builder.setAdapter(adapter,  new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int position) {
+				EditAppointmentActivity.this.adapter.addContact(adapter.getItem(position));
+				dialogAddParticipant.dismiss();
+			}
+		});
+		dialogAddParticipant = builder.create();
 	}
 	
 	public void showTimePickerClicked(View view) {
