@@ -357,6 +357,9 @@ public class InstaMeetService implements ServiceInterface {
 					confirmedFriend2.setUser(friend.getUser());
 					confirmedFriend2.setFriend(usr);
 					
+					usr.addConfirmedFriendShip(confirmedFriend);
+					friend.getUser().addConfirmedFriendShip(confirmedFriend2);
+					
 					em.persist(confirmedFriend);
 					em.persist(confirmedFriend2);
 					
