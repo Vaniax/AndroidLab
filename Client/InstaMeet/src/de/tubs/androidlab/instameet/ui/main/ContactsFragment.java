@@ -154,9 +154,25 @@ public class ContactsFragment extends ListFragment {
 		@Override
 		public void friendRequest() {
 			super.friendRequest();
-    		itemFriendRequest.setVisible(true);
+    		
+			getActivity().runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					itemFriendRequest.setVisible(true);
+					
+				}
+			});
 		}
 		
+		@Override
+		public void friendReply(boolean bool) {
+			super.friendReply(bool);
+			if (bool) {
+				adapter.setContacts(service.getFriends());
+				adapter.notifyChanges();
+			}
+		}		
 	}	
 	
 	
@@ -223,6 +239,14 @@ public class ContactsFragment extends ListFragment {
 					
 					if (requestListAdapter.getContacts().isEmpty()) {
 						dialog.dismiss();
+						getActivity().runOnUiThread(new Runnable() {
+							
+							@Override
+							public void run() {
+								itemFriendRequest.setVisible(false);
+								
+							}
+						});
 					}
 				}
     		});
