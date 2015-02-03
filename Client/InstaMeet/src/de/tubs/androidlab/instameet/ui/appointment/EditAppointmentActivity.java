@@ -136,7 +136,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 		participantsList.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				adapter.removeContact(adapter.getItem(position));
+				adapter.removeContact(adapter.getItem(position-1));
 				return true;
 			}
 		});
