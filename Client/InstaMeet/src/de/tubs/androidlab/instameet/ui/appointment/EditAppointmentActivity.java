@@ -331,9 +331,10 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
         	service = ( (InstaMeetServiceBinder) binder).getService();
-			appointment = new SimpleAppointment(); 
 			if(!isNewAppointment && service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID)) != null) {
 				appointment = service.getAppointment(extras.getInt(EXTRA_APPOINTMENT_ID));
+			} else {
+				appointment.setHoster(service.getOwnData().getId());
 			}
 			editTitle.setText(appointment.getTitle());
 			editDescription.setText(appointment.getDescription());
