@@ -163,7 +163,6 @@ public class InstaMeetService implements ServiceInterface {
 			ownUser.setLattitude(location.getLattitude());
 			ownUser.setLongitude(location.getLongitude());
 			ownUser.setLatestLocationUpdate(new Timestamp(System.currentTimeMillis()));
-			em.persist(ownUser);
 			em.getTransaction().commit();
 		}
 		return false;
@@ -188,7 +187,11 @@ public class InstaMeetService implements ServiceInterface {
 			appointment.setHoster(sessions.get(SecurityToken));
 			em.getTransaction().begin();
 			em.persist(appointment);
+			sessions.get(SecurityToken).addHostedAppointment(appointment);
 			em.getTransaction().commit();
+			
+
+
 			return appointment.toSimpleAppointment();
 		}
 			
