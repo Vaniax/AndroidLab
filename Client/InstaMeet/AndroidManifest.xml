@@ -112,17 +112,21 @@
         <activity
             android:name=".ui.appointment.EditAppointmentActivity"
             android:label="@string/title_activity_edit_appointment" />
+        
         <activity
             android:name=".ui.appointment.SelectLocationActivity"
             android:label="@string/title_activity_select_location" 
             android:launchMode="singleTop" >
             <intent-filter>
             	<action android:name="android.intent.action.SEARCH" />
+            	<category android:name="android.intent.category.DEFAULT" />
         	</intent-filter>
             <meta-data android:name="android.app.searchable"
-            android:resource="@xml/searchable" />
+                    android:value=".SelectLocationActivity"
+            		android:resource="@xml/searchable" />
             
         </activity>
+        
         <activity
             android:name="de.tubs.androidlab.instameet.ui.viewuser.ViewUserActivity"
             android:label="@string/title_activity_view_user"

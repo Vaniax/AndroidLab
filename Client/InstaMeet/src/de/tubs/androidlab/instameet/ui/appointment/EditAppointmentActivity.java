@@ -227,7 +227,7 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 	}
 	
 	private void refreshTimeButton() {
-		java.text.DateFormat formatter = SimpleDateFormat.getTimeInstance(SimpleDateFormat.SHORT);
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 		buttonTime.setText(
 				formatter.format(appointment.getStartingTime())
 				);
@@ -313,18 +313,17 @@ public class EditAppointmentActivity extends Activity implements TextWatcher {
 
 			cal.setTimeInMillis(appointment.getStartingTime());
 			
-			int hour = cal.get(cal.HOUR);
+			int hour = cal.get(cal.HOUR_OF_DAY);
 			int minute = cal.get(cal.MINUTE);
 
 			// Create a new instance of TimePickerDialog and return it
-			return new TimePickerDialog(getActivity(), this, hour, minute,
-					DateFormat.is24HourFormat(getActivity()));
+			return new TimePickerDialog(getActivity(), this, hour, minute, true);
 		}
 
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 			Calendar cal = Calendar.getInstance();
-			cal.set(cal.HOUR, hourOfDay);
-			cal.set(cal.MINUTE, minute);
+			cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+			cal.set(Calendar.MINUTE, minute);
 			appointment.setStartingTime(cal.getTimeInMillis());
 
 			isModified = true;
