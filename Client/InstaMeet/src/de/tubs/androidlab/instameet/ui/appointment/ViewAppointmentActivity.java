@@ -54,6 +54,8 @@ public class ViewAppointmentActivity extends Activity {
 	private TextView date;
 	private TextView time;
 
+	private SimpleAppointment app;
+
 	
 	@Override
 	protected void onStart() {
@@ -96,6 +98,7 @@ public class ViewAppointmentActivity extends Activity {
 			adapter.setContacts(adapterList);
 		participantsList.setAdapter(adapter);
 		
+		app = new SimpleAppointment();
 		initAppointment();
 	}
 
@@ -111,15 +114,16 @@ public class ViewAppointmentActivity extends Activity {
 		case R.id.action_calender:
 			Intent calIntent = new Intent(Intent.ACTION_INSERT); 
 			calIntent.setType("vnd.android.cursor.item/event");    
-			calIntent.putExtra(Events.TITLE, "My House Party"); 
-			calIntent.putExtra(Events.EVENT_LOCATION, "My Beach House"); 
-			calIntent.putExtra(Events.DESCRIPTION, "A Pig Roast on the Beach"); 
-			GregorianCalendar calDate = new GregorianCalendar(2015, 2, 2);
-			calIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true); 
+			calIntent.putExtra(Events.TITLE, app.getTitle()); 
+//			calIntent.putExtra(Events.EVENT_LOCATION, app.get); 
+			calIntent.putExtra(Events.DESCRIPTION, app.getDescription()); 
+//			GregorianCalendar calDate = new GregorianCalendar(2015, 2, 2);
+//			calDate.setTimeInMillis(app.getStartingTime());
+			calIntent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, false); 
 			calIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, 
-			     calDate.getTimeInMillis()); 
-			calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, 
-			     calDate.getTimeInMillis()); 
+			     app.getStartingTime()); 
+//			calIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, 
+//			     calDate.getTimeInMillis()); 
 
 			startActivity(calIntent);			
 			return true;
@@ -150,7 +154,6 @@ public class ViewAppointmentActivity extends Activity {
     };
     
     private void initAppointment() {
-    	SimpleAppointment app;
     	String hosterName;
     	if(service != null) {
     		app = service.getAppointment(appId);
