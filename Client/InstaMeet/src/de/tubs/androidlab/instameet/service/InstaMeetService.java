@@ -298,7 +298,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		this.client.insertToQueue(response);
 		Log.d(TAG,"Insert send request to queue with content:\n" + reply.toString());
 		
-		fetchFriends();
+		fetchOwnData();
 
 	}
 	
@@ -705,7 +705,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				users.put(friend.getId(), friend);
 			}		
 			listener.notifyFriendReply(bool);
-			fetchFriends();
+			fetchOwnData();
 		}
 		
 		/** Converter functions **/
