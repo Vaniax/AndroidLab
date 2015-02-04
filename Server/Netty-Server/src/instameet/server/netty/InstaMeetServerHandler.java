@@ -64,7 +64,6 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		} break;			
 		case SEND_CHAT_MESSAGE: {
 		   ChatMessage message = msg.getMessage();
-		   
 		   int userIDChannel = message.getUserID();
 		   checkChannel(userIDChannel,ctx.channel());
 		   
@@ -72,7 +71,12 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		   Channel ch = null;
 		   if (channels.containsKey(id)) {
 			   ch = channels.get(id);
-			   ch.writeAndFlush(ClientResponse.newBuilder().setType(Type.CHAT_MESSAGE).setMessage(message).build());
+			   ChatMessage.Builder chatMessage = ChatMessage.newBuilder();
+			   chatMessage.setUserID(message.getUserID());
+			   chatMessage.setFriendID(message.getFriendID());
+			   chatMessage.setTime(System.currentTimeMillis());
+			   chatMessage.setMessage(message.getMessage());
+			   ch.writeAndFlush(ClientResponse.newBuilder().setType(Type.CHAT_MESSAGE).setMessage(chatMessage).build());
 		   }
 		} break;
 		case GET_OWN_DATA: {
