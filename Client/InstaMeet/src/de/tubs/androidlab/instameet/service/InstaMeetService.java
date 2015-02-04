@@ -249,6 +249,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				.setSecurityToken(token)
 				.setFriendID(friendID)
 				.setMessage(message)
+				.setTime(0)
 				.setUserID(ownData.getId())
 				.setSecurityToken(token).build();
 		ServerRequest request = ServerRequest
@@ -498,7 +499,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			Log.d(TAG,"Incoming Message:\n" + msg.toString());
 			
 			ChatMessageProxy message = 
-					 new ChatMessageProxy(msg.getMessage().toString(),DIRECTION.INCOMING);
+					 new ChatMessageProxy(msg.getMessage().toString(),DIRECTION.INCOMING, msg.getTime());
 			
 			// To history
 			if (!chatMessageHistory.containsKey(msg.getUserID())) {
