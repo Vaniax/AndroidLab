@@ -681,9 +681,11 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 		
 		@Override
 		public void listUsers(ListUsers listUsers) {
-			List<SimpleUser> users = createListUser(listUsers.getUsersList());
-			
-			listener.notifyListUsers(users);
+			List<SimpleUser> foundUsers = createListUser(listUsers.getUsersList());
+			for(SimpleUser u : foundUsers) {
+				users.put(u.getId(), u);
+			}
+			listener.notifyListUsers(foundUsers);
 		}
 		
 		@Override
