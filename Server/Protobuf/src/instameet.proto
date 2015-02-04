@@ -112,6 +112,8 @@ message ChatMessage {
 	required string message = 2;
 	required int32 friendID = 3;
 	required int32 userID = 4;
+	required int64 time = 5;
+	
 };
 
 message GetMessages { // If some sort of message history needs to be pulled from server
