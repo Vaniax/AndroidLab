@@ -57,10 +57,11 @@ public class ChatActivity extends Activity {
             @Override
             public void onClick(View v) {
 //            	service.sendDummyMessage(editText.getText().toString());
+            	Calendar c = Calendar.getInstance(); 
             	String message = editText.getText().toString();
             	service.sendMessage(message, user.getId());
-            	ChatMessageProxy proxy = new ChatMessageProxy(message, DIRECTION.OUTGOING, 0);
-            	adapter.addMessage(new ChatMessageProxy(message, DIRECTION.OUTGOING, 0));
+            	ChatMessageProxy proxy = new ChatMessageProxy(message, DIRECTION.OUTGOING, c.getTimeInMillis());
+            	adapter.addMessage(new ChatMessageProxy(message, DIRECTION.OUTGOING, c.getTimeInMillis()));
                 editText.setText(null);
                 
                 service.getHistoryMessages(friendID).add(proxy);
