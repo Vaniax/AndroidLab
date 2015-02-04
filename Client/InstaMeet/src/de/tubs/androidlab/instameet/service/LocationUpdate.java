@@ -27,11 +27,21 @@ public class LocationUpdate extends Thread {
 	    listener = new MyLocationListener();        
 	    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, TIME_LIMIT, 0, listener);
 	    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, TIME_LIMIT, 0, listener);
-	    isGPSEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-	    isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+	    isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+	    isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+	}
+	
+	public void triggerUpdate() {
+		
 	    if (isGPSEnabled) {
-		    service.updateLocation(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+	    	Location loc = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+	    	previousBestLocation = loc;
+		    service.updateLocation(loc);
 	    } else if (isNetworkEnabled) {
+	    	Location loc = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+	    	previousBestLocation = loc;
+
 	    	service.updateLocation(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
 	    }
 	}

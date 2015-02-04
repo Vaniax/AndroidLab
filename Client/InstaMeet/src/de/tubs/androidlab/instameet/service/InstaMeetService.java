@@ -631,6 +631,7 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 			
 	
 			//Trigger next requests
+			locationUpdate.triggerUpdate();
 			fetchVisitingAppointments();
 			if(locationUpdate != null && locationUpdate.getLatestLocation() != null) {
 				fetchNearAppointments();
