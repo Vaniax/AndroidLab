@@ -2,6 +2,7 @@ package simpleEntities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -87,7 +88,11 @@ public class SimpleAppointment implements Serializable {
 	}
 
 	public Set<Integer> getVisitingUsers() {
+		if(visitingUsers == null) {
+			visitingUsers = new HashSet<Integer>();
+		}
 		return visitingUsers;
+		
 	}
 
 	public void setVisitingUsers(Set<Integer> visitingUsers) {

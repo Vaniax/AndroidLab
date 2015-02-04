@@ -77,18 +77,20 @@ public class InstaMeetServerHandler extends SimpleChannelInboundHandler<ServerRe
 		} break;
 		case GET_OWN_DATA: {
 			SimpleUser own = service.getOwnData(msg.getGetOwnData().getSecurityToken(), 1);
-			Messages.SimpleUser ownUser = createMessageSimpleUser(own);
-			
-		   int userIDChannel = ownUser.getUserID();
-		   checkChannel(userIDChannel,ctx.channel());
-			   
-			System.out.println(ownUser.toString());
-			
-			ClientResponse response = ClientResponse.newBuilder()
-					.setType(Type.OWN_DATA)
-					.setUserData(Messages.OwnData.newBuilder().setUserData(ownUser)).build();
-			
-			ctx.writeAndFlush(response);
+			if(own != null) {
+				Messages.SimpleUser ownUser = createMessageSimpleUser(own);
+				
+				   int userIDChannel = ownUser.getUserID();
+				   checkChannel(userIDChannel,ctx.channel());
+					   
+					System.out.println(ownUser.toString());
+					
+					ClientResponse response = ClientResponse.newBuilder()
+							.setType(Type.OWN_DATA)
+							.setUserData(Messages.OwnData.newBuilder().setUserData(ownUser)).build();
+					
+					ctx.writeAndFlush(response);				
+			}
 		}break;
 		case GET_FRIENDS: {
 			List<SimpleUser> friends = service.GetFriends(msg.getGetFriendList().getSecurityToken(), msg.getGetFriendList().getUserID());

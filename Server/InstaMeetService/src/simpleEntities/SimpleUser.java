@@ -76,7 +76,7 @@ public class SimpleUser implements Serializable {
 		this.hostedAppointments = hostedAppointments;
 	}
 	public Set<Integer> getVisitingAppointments() {
-		if(visitingAppointments == null)
+		if(visitingAppointments == null) 
 			visitingAppointments = new HashSet<Integer>();
 		return visitingAppointments;
 	}
