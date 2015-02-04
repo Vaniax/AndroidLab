@@ -109,7 +109,7 @@ public class LocationUpdate extends Thread {
 		@Override
 		public void onLocationChanged(Location location) {
 			Log.i(TAG,"Location changed");
-			if(isBetterLocation(location, previousBestLocation) && (isGPSEnabled||isNetworkEnabled)) {
+			if(isBetterLocation(location, previousBestLocation) && (isGPSEnabled||isNetworkEnabled) && service.getOwnData().getId() != 0) {
 				previousBestLocation = location;
 				service.updateLocation(location);
 			}

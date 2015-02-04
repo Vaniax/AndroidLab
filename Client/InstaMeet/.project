@@ -64,22 +64,22 @@
 		<link>
 			<name>src/simpleEntities/Location.java</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Workspace/InstaMeetJPA/src/simpleEntities/Location.java</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Server/InstaMeetService/src/simpleEntities/Location.java</locationURI>
 		</link>
 		<link>
 			<name>src/simpleEntities/LoginData.java</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Workspace/InstaMeetJPA/src/simpleEntities/LoginData.java</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Server/InstaMeetService/src/simpleEntities/LoginData.java</locationURI>
 		</link>
 		<link>
 			<name>src/simpleEntities/SimpleAppointment.java</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Workspace/InstaMeetJPA/src/simpleEntities/SimpleAppointment.java</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Server/InstaMeetService/src/simpleEntities/SimpleAppointment.java</locationURI>
 		</link>
 		<link>
 			<name>src/simpleEntities/SimpleUser.java</name>
 			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/Workspace/InstaMeetJPA/src/simpleEntities/SimpleUser.java</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/Server/InstaMeetService/src/simpleEntities/SimpleUser.java</locationURI>
 		</link>
 		<link>
 			<name>src/de/tubs/androidlab/instameet/server/protobuf</name>

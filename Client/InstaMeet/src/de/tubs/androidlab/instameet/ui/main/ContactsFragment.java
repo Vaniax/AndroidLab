@@ -279,7 +279,9 @@ public class ContactsFragment extends ListFragment {
         	service = ( (InstaMeetServiceBinder) binder).getService();
         	service.processor.listener.addListener(listener);
         	service.fetchOwnData();
-        	itemFriendRequest.setVisible(service.areNewFriendRequests());
+        	if(itemFriendRequest != null) {
+            	itemFriendRequest.setVisible(service.areNewFriendRequests());
+        	}
         }
 
         @Override
