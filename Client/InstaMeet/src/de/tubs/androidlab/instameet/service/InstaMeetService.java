@@ -297,6 +297,9 @@ public class InstaMeetService extends Service implements OutgoingMessages {
 				.build();
 		this.client.insertToQueue(response);
 		Log.d(TAG,"Insert send request to queue with content:\n" + reply.toString());
+		
+		fetchFriends();
+
 	}
 	
 	@Override	
