@@ -1,6 +1,8 @@
 package de.tubs.androidlab.instameet.ui.chat;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -71,12 +73,16 @@ class ChatListAdapter extends BaseAdapter
 		}
 		ChatMessageProxy message = messages.get(position);
 		holder.message.setText(message.getMessage());
-		holder.timeStamp.setText("13:37");
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		
+//		holder.timeStamp.setText(sdf.format(message.getTime()));
 
 		if (message.getDirection().equals(DIRECTION.OUTGOING)){
 			rowView.setBackgroundColor(Color.LTGRAY);
+			holder.timeStamp.setText(sdf.format(System.currentTimeMillis()));
 		} else {
 			rowView.setBackgroundColor(Color.WHITE);
+			holder.timeStamp.setText(sdf.format(message.getTime()));
 		}
 		
 		return rowView;
