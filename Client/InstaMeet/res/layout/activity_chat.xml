@@ -15,8 +15,8 @@
         android:layout_above="@+id/send_message_chat"
         android:layout_alignParentLeft="true"
         android:stackFromBottom="true"
-        android:layout_alignParentTop="true" >
-
+        android:layout_alignParentTop="true" 
+		android:transcriptMode="alwaysScroll" >
     </ListView>
 
     <EditText
