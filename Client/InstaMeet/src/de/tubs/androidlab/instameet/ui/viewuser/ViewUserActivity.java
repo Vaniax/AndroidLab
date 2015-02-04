@@ -1,15 +1,6 @@
 package de.tubs.androidlab.instameet.ui.viewuser;
 
-import java.util.List;
-
-import de.tubs.androidlab.instameet.R;
-import de.tubs.androidlab.instameet.R.id;
-import de.tubs.androidlab.instameet.R.layout;
-import de.tubs.androidlab.instameet.R.menu;
-import de.tubs.androidlab.instameet.service.InstaMeetService;
-import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
-import de.tubs.androidlab.instameet.ui.chat.ChatMessageProxy;
-import de.tubs.androidlab.instameet.ui.main.MainActivity;
+import simpleEntities.SimpleUser;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -20,6 +11,10 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import de.tubs.androidlab.instameet.R;
+import de.tubs.androidlab.instameet.service.InstaMeetService;
+import de.tubs.androidlab.instameet.service.InstaMeetServiceBinder;
 
 /**
  * This activity displays information about a specific user
@@ -37,7 +32,7 @@ public class ViewUserActivity extends Activity {
 
 	private int friendID;
     private InstaMeetService service;
-
+    private TextView textUsername;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +40,7 @@ public class ViewUserActivity extends Activity {
 		setContentView(R.layout.activity_view_user);
 		Intent intent = getIntent();
 		friendID = intent.getIntExtra(EXTRA_USER_ID, 0);
+		textUsername = (TextView) findViewById(R.id.user_name);
 	}
 	
 	@Override
@@ -69,6 +65,9 @@ public class ViewUserActivity extends Activity {
         @Override
         public void onServiceConnected(ComponentName className, IBinder binder) {
         	service = ( (InstaMeetServiceBinder) binder).getService();
+        	SimpleUser friend = service.getUser(friendID);
+        	textUsername.setText(friend.getUsername());
+        	getActionBar().setTitle(friend.getUsername());
         }
 
 		@Override
